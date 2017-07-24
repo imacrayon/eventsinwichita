@@ -6,7 +6,7 @@
 @endcomponent
 @endslot
 
-# New place created: {{ $place->name }} (({{ $place->id }}))
+# New place created: {{ $place->name }} ({{ $place->id }})
 
 {{ $place->name }}<br>
 {{ $place->street }} {{ $place->city}}, {{ $place->state}} {{ $place->zip }}
