@@ -109,8 +109,6 @@ export default class {
       })
       .catch(error => {
         this.onFail(error)
-        // Resolve promise if it's a validation error
-        if (error.response.status === 422) return
         throw error
       })
   }
