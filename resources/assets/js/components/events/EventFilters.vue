@@ -1,0 +1,94 @@
+<template>
+  <form style="padding: .75rem 0 1rem 0;">
+    <div class="grid-x grid-padding-x">
+      <div class="cell">
+
+        <label for="filter-tags" class="">Tags</label>
+        <div id="filter-tags" class="tags-field">
+          <template v-for="tag in tags">
+            <input type="checkbox" name="tags[]" :value="tag.id" v-model="filters.tags" :id="'filter-tag-' + tag.id">
+            <label class="button hollow tiny" :for="'filter-tag-' + tag.id">{{ tag.name }}</label>
+          </template>
+        </div>
+
+        <label for="start_time">Start Time</label>
+        <date-picker name="start_time" id="start_time" :options="startOptions" v-model="filters.start_time"></date-picker>
+
+        <label for="end_time">End Time</label>
+        <date-picker name="end_time" id="end_time" :options="endOptions" v-model="filters.end_time"></date-picker>
+
+        <button class="button" style="margin: 0;">Filter</button>
+        <button type="button" class="button transparent" style="margin: 0;" @click="reset" v-show="query">Reset</button>
+      </div>
+    </div>
+  </form>
+</template>
+
+<script>
+import moment from 'moment'
+import DatePicker from '../DatePicker.vue'
+import { getSearchParam, formatUrlDate } from '../../helpers'
+
+export default {
+  components: { DatePicker },
+
+  data () {
+    return {
+      filters: {
+        start_time: '',
+        end_time: '',
+        tags: false
+      },
+
+      query: window.location.search,
+
+      tags: false
+    }
+  },
+
+  created () {
+    this.filters.start_time = getSearchParam('start_time', '')
+    this.filters.end_time = getSearchParam('end_time', '')
+    const tags = getSearchParam('tags', [])
+    this.filters.tags = Array.isArray(tags) ? tags : [tags]
+    this.getTags()
+  },
+
+  computed: {
+    startOptions () {
+      return {
+        static: true,
+        minDate: moment().startOf('day').toDate(),
+      }
+    },
+
+    endOptions () {
+      return {
+        static: true,
+        minDate: moment(this.filters.start_time).add(1, 'day').startOf('day').toDate(),
+      }
+    }
+  },
+
+  methods: {
+    /**
+     * Get all tags.
+     */
+    getTags () {
+      return axios.get('/api/tags')
+        .then(response => {
+          this.tags = response.data
+          return response
+        })
+    },
+
+    formatDateFilter(moment) {
+      return moment.format('YYYY-MM-DD HH:mm:ss')
+    },
+
+    reset () {
+      window.location = window.location.href.split('?')[0]
+    }
+  }
+}
+</script>

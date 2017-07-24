@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+@import 'settings';
+@import 'mixins';
+@import 'node_modules/foundation-sites/scss/foundation';
+
+// @include foundation-everything;
+
+@include foundation-global-styles;
+@include foundation-xy-grid-classes;
+//@include foundation-grid;
+//@include foundation-flex-grid;
+@include foundation-flex-classes;
+@include foundation-typography;
+@include foundation-forms;
+@include foundation-button;
+// @include foundation-accordion;
+// @include foundation-accordion-menu;
+@include foundation-badge;
+// @include foundation-breadcrumbs;
+// @include foundation-button-group;
+@include foundation-callout;
+@include foundation-card;
+// @include foundation-close-button;
+@include foundation-menu;
+@include foundation-menu-icon;
+// @include foundation-drilldown-menu;
+@include foundation-dropdown;
+// @include foundation-dropdown-menu;
+// @include foundation-responsive-embed;
+@include foundation-label;
+@include foundation-media-object;
+// @include foundation-off-canvas;
+// @include foundation-orbit;
+@include foundation-pagination;
+// @include foundation-progress-bar;
+// @include foundation-slider;
+// @include foundation-sticky;
+// @include foundation-reveal;
+// @include foundation-switch;
+// @include foundation-table;
+// @include foundation-tabs;
+// @include foundation-thumbnail;
+@include foundation-title-bar;
+// @include foundation-tooltip;
+@include foundation-top-bar;
+@include foundation-visibility-classes;
+@include foundation-float-classes;
+
+@import 'titlebar';
+@import 'topbar';
+@import 'dropdown';
+@import 'page';
+@import 'event';
+@import 'place';
+@import 'activity';
+@import 'table';
+@import 'flatpickr';
+@import 'modal';
+@import 'form';
+@import 'loader';
+@import 'callout';
+@import 'comment';
+@import 'card';
+@import 'notification';
+@import 'icon';
+@import 'headbar';
+
+[v-cloak] {
+  display: none;
+}
+
+.action-link {
+  cursor: pointer;
+  color: $primary-color;
+}
+
+.sticky {
+  position: relative;
+  z-index: 2;
+  top: 0;
+  position: sticky;
+  &.active {
+    z-index: 1;
+    .sticky-fix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+  }
+  &.top {
+    box-shadow: 0 1px 5px 0 rgba(34, 36, 38, 0.1);
+  }
+}
+
+html {
+  overflow-y: scroll; // Always show scrollbar to prevent layout jump
+}
+
+html, body {
+  height: 100%;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+}
+
+.foot {
+  padding: 1rem 0;
+  font-size: .875rem;
+  border-top: 1px solid $primary-color;
+  border-bottom: 1px solid $primary-color;
+  color: $primary-color;
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .grid-x {
+    justify-content: center;
+    @include breakpoint(medium) {
+      justify-content: space-between;
+    }
+  }
+}
+
+.grid-x.splash-image {
+  @include splash-image;
+  max-width: 100%;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .cell {
+    z-index: 2;
+  }
+  .card {
+    width: 360px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.profile {
+  .media-object-section {
+    vertical-align: middle;
+  }
+  .profile-image {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: block;
+    border: 3px solid $secondary-color;
+    overflow: hidden;
+  }
+  .profile-title {
+    font-size: 1.5em;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .profile-meta {
+    font-size: .5rem;
+    color: $dark-gray;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+}
+
+.badge {
+  border-radius: .6em;
+  margin-right: .5em;
+}
+
+@each $name, $color in $foundation-palette {
+  .text-#{$name} { color: $color; }
+}
+.text-white { color: $white; }
+.text-medium-gray { color: $medium-gray; }
+
+.text-size-h1 { @include get-header-size(h1) }
+.text-size-h2 { @include get-header-size(h2) }
+.text-size-h3 { @include get-header-size(h3) }
+.text-size-h4 { @include get-header-size(h4) }
+.text-size-h5 { @include get-header-size(h5) }
+.text-size-h6 { @include get-header-size(h6) }
+
+.button.transparent {
+  background-color: transparent;
+  border-color: transparent;
+  color: $dark-gray;
+  &:hover {
+    color: $black;
+    background-color: $light-gray;
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: all 1s
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  transform: translateY(2rem);
+}
+
+.slide-fade-enter-active {
+  transition: all .3s  cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(4rem);
+  opacity: 0;
+}

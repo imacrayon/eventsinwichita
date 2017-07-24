@@ -1,0 +1,33 @@
+.page-section {
+  margin-bottom: 2rem;
+}
+
+.page-section-title {
+  color: $dark-gray;
+  border-bottom: 1px solid $light-gray;
+  @include get-header-size(h6);
+  svg {
+    font-size: .75em;
+    vertical-align: baseline;
+  }
+}
+
+.page-section .grid-container-padded {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.call-to-action {
+  position: relative;
+  @include splash-image;
+  color: $white;
+  padding: 6vh 0;
+  & > div {
+    position: relative;
+    z-index: 2;
+  }
+  .button.white.hollow:hover {
+    color: $secondary-color;
+    border-color: $secondary-color;
+  }
+}

@@ -1,0 +1,54 @@
+.cell > .place {
+  height: 100%;
+}
+
+.place {
+  position: relative;
+  border-bottom:1px solid $light-gray;
+  &-section {
+    padding: 1rem;
+  }
+  &-name {
+    @include get-header-size(h4);
+    @include breakpoint(large) {
+      @include get-header-size(h3);
+    }
+    line-height: 1.1;
+    margin: 0 0 .5rem 0;
+    /* These are technically the same, but use both */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    /* This is the dangerous one in WebKit, as it breaks things wherever */
+    word-break: break-all;
+    /* Instead use this non-standard one: */
+    word-break: break-word;
+    /* Adds a hyphen where the word breaks, if supported (No Blink) */
+    hyphens: auto;
+  }
+  &-detail {
+    display: block;
+    font-size: .8rem;
+    color: $dark-gray;
+    padding-left: 1.5em;
+    position: relative;
+    margin: .5rem 0;
+    line-height: 1.25;
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+  &-tags {
+    .label {
+      font-size: 0.6rem;
+      border-radius: 1rem;
+      text-transform: uppercase;
+      padding: .25rem .5rem;
+      margin: .25rem .5rem 0 0;
+      letter-spacing: 1px;
+      color: $dark-gray;
+      background-color: $light-gray;
+    }
+  }
+}

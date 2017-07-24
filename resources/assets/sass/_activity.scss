@@ -1,0 +1,18 @@
+.activity {
+  padding: .5em 0;
+  border-top: 1px dotted $light-gray;
+  &:first-child {
+    border-top: none;
+  }
+  .label {
+    font-size: 1em;
+    padding: .25em;
+  }
+}
+.activity-body {
+  line-height: 1.4;
+}
+.activity-meta {
+  font-size: .75em;
+  color: $dark-gray;
+}

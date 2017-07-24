@@ -1,0 +1,41 @@
+.loader  {
+  width: 20rem;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  box-sizing: border-box;
+  &-label {
+    text-align: center;
+    text-transform: uppercase;
+    color: $primary-color;
+  }
+  &-bar {
+    position: relative;
+    height: 16px;
+    &-slide {
+      position: absolute;
+      width: 25%;
+      height: 16px;
+      background: $primary-color;
+      animation: slide 2s infinite;
+    }
+    &-slide:nth-of-type(0n+1) {
+      opacity: 0.2;
+      transform: scale(1.8, 1);
+      animation-delay: 0.2s;
+    }
+    &-slide:nth-of-type(0n+2) {
+      opacity: 0.4;
+      transform: scale(1.4, 1);
+      animation-delay: 0.1s;
+    }
+    &-slide:nth-of-type(0n+3) {
+      opacity: 0.8;
+    }
+  }
+}
+@keyframes slide {
+  0%   { left: 0; }
+  50%  { left: 75%; }
+  100% { left: 0; }
+}

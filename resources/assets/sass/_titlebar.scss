@@ -1,0 +1,66 @@
+$toggle-line-width: 2rem;
+@mixin toggle-line {
+  top: 0;
+  transform-origin: 50% 50%;
+  display: block;
+  width: $toggle-line-width;
+  height: $toggle-line-width/15;
+  background: $primary-color;
+  transition: transform 500ms ease, top 300ms ease 500ms,  background 200ms ease 500ms;
+}
+
+.title-bar {
+  justify-content: space-between;
+  border-top: 1px solid $primary-color;
+  border-right: 1px solid $primary-color;
+  border-left: 1px solid $primary-color;
+  box-shadow: 0 1px 0 $primary-color;
+  @include breakpoint (medium) {
+    display: none;
+  }
+}
+.title-bar-toggle {
+  position: relative;
+  z-index: 10;
+  padding: .875rem 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  line-height: 1;
+  transition: right .5s linear, top 0.2s ease-in-out, transform .5s linear;
+  .toggle-lines {
+    position: relative;
+    @include toggle-line;
+    &:before, &:after {
+      @include toggle-line;
+      content: ' ';
+      position: absolute;
+      left:0;
+    }
+    &:before { top: $toggle-line-width/4; }
+    &:after { top: -$toggle-line-width/4; }
+  }
+}
+
+.js-navigation-open {
+  .title-bar-toggle {
+    transform: translate3d(-.3rem, .5rem, 0);
+    .toggle-lines {
+      transition: top 300ms ease, transform 500ms ease 300ms, background 200ms ease 300ms;
+      background: transparent;
+      &:before, &:after {
+        transition: top 300ms ease, transform 500ms ease 300ms, background 200ms ease 300ms;
+        top: 0;
+        margin: -1px; // Fix for Android stock browser
+        width: $toggle-line-width;
+        background-color: $white;
+      }
+      &:before{
+        transform: rotate3d(0,0,1,45deg);
+      }
+      &:after{
+        transform: rotate3d(0,0,1,-45deg);
+      }
+    }
+  }
+}

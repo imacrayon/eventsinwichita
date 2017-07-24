@@ -1,0 +1,69 @@
+$callout-border-left-width: rem-calc(5);
+
+.callout {
+  border-left-width: $callout-border-left-width;
+  border-left-color: $medium-gray;
+
+  .icon {
+    font-size: 1.5rem;
+    margin: -.25rem .25rem 0 -.25rem;
+  }
+
+  .close-button {
+    @include vertical-center;
+  }
+
+  &.flash {
+    position: fixed;
+    left: 2rem;
+    bottom: 2rem;
+    z-index: 9999;
+  }
+
+  &.transparent {
+    background: transparent;
+    border: none;
+  }
+
+  &.primary {
+    border-left-color: $primary-color;
+
+    strong {
+      color: $primary-color;
+    }
+  }
+
+  &.secondary {
+    border-left-color: $secondary-color;
+
+    strong, .icon {
+      color: $secondary-color;
+    }
+  }
+
+  &.alert {
+    border-left-color: $alert-color;
+
+    strong, .icon {
+      color: $alert-color;
+    }
+  }
+
+  &.success {
+    border-left-color: $success-color;
+
+    strong, .icon {
+      color: $success-color;
+    }
+  }
+
+  &.warning {
+    border-left-color: $warning-color;
+
+    strong, .icon {
+      color: $warning-color;
+    }
+  }
+}
+
+

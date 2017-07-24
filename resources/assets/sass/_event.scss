@@ -1,0 +1,80 @@
+.calendar-day {
+  color: $white;
+  background: $primary-color;
+  font-weight: bold;
+}
+.calendar-next {
+  margin: 2rem 0 4rem 0;
+}
+.event {
+  position: relative;
+  border-bottom:1px solid $light-gray;
+  display: flex;
+  align-items: flex-start;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.event-section {
+  &:first-child {
+    padding: 1rem 0;
+    position: relative;
+    @include flex-grid-column(shrink, 0);
+    width: 3.2rem;
+    text-align: right;
+  }
+  &:last-child {
+    padding: 1rem 0 1rem 1rem;
+  }
+}
+.event-name {
+  @include get-header-size(h4);
+  @include breakpoint(large) {
+    @include get-header-size(h3);
+  }
+  line-height: 1.1;
+  margin: 0;
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  hyphens: auto;
+}
+.event-place {
+  display: block;
+  font-size: .8rem;
+  color: $dark-gray;
+}
+.event-start,
+.event-end {
+  font-size: .675rem;
+  color: $dark-gray;
+  width: 3rem;
+  span {
+    display: block;
+  }
+  .event-start-day-name,
+  .event-start-day,
+  .event-start-month,
+  .event-end-day-name,
+  .event-end-day,
+  .event-end-month {
+    display: none;
+  }
+}
+.event-tags {
+  .label {
+    font-size: 0.6rem;
+    border-radius: 1rem;
+    text-transform: uppercase;
+    padding: .25rem .5rem;
+    margin: .25rem .5rem 0 0;
+    letter-spacing: 1px;
+    color: $dark-gray;
+    background-color: $light-gray;
+  }
+}

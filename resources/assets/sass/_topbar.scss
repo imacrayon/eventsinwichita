@@ -1,0 +1,210 @@
+.top-bar {
+  border-top: 1px solid $primary-color;
+  border-bottom: 1px solid $primary-color;
+  margin-bottom: 2rem;
+  color: $primary-color;
+
+  &.navigation {
+    margin: 0;
+    border-bottom: none;
+    box-shadow: 0 1px 0 $primary-color;
+  }
+
+  .menu {
+    background: transparent;
+    height: 100%;
+    & > li {
+      & > .dropdown-component {
+        height: 100%;
+      }
+      & > .dropdown-component > a {
+        padding: 0.7rem 1rem;
+      }
+      & > a,
+      & > .dropdown-component > a {
+        height: 100%;
+        min-height: 51px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: $primary-color;
+        &:hover {
+          color: $white;
+          background: $primary-color;
+          .badge {
+            color: $primary-color;
+            background-color: $white;
+          }
+        }
+        &.active,
+        &.active {
+          color: $white;
+          background: $primary-color;
+          .badge {
+            color: $primary-color;
+            background-color: $white;
+          }
+        }
+        & > svg {
+          margin-right: .25em;
+        }
+      }
+    }
+  }
+
+  .profile {
+    @include media-object-container;
+    align-items: center;
+    margin: 0;
+    padding: .7rem 1rem;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    color: $white;
+    .profile-section {
+      @include media-object-section(.5rem);
+      &:last-child {
+        flex: 1 1 0px;
+      }
+    }
+    .profile-image {
+      width: 2rem;
+      height: 2rem;
+      border-width: 2px;
+      overflow: hidden;
+    }
+    .media-object-section:first-child {
+      padding-right: .5rem;
+    }
+    .profile-title {
+      line-height: 1.1;
+      font-size: 1rem;
+      display: block;
+    }
+    .profile-meta {
+      color: inherit;
+    }
+  }
+}
+
+.top-bar-container {
+  width: 100%;
+  @include xy-grid-container;
+  display: flex;
+  justify-content: space-between;
+}
+
+.top-bar-left {
+  flex: 0 0 auto;
+  // Make menus scrollable
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: auto;
+  .menu > li > a,
+  .menu > li > .dropdown-component > a {
+    border-right: 1px solid $primary-color;
+  }
+  .menu > li:first-child > a,
+  .menu > li:first-child > .dropdown-component > a {
+    border-left: 1px solid $primary-color;
+  }
+}
+
+.top-bar-right{
+  flex: 0 0 auto;
+  // Make menus scrollable
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: auto;
+  .menu > li > a,
+  .menu > li > .dropdown-component > a {
+    border-left: 1px solid $primary-color;
+  }
+  .menu > li:last-child > a,
+  .menu > li:last-child > .dropdown-component > a{
+    border-right: 1px solid $primary-color;
+  }
+}
+
+.top-bar-title {
+  @include get-header-size(h4);
+  margin: 0;
+  padding: 0.5rem 1rem;
+}
+
+@include breakpoint (small only) {
+  .top-bar.navigation {
+    display: block;
+    @include splash-image;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    z-index: 9;
+    visibility: hidden;
+    transition: visibility .3s, opacity .3s;
+    .top-bar-container {
+      position: relative;
+      z-index: 2;
+    }
+    .top-bar-left {
+      margin-top: 2rem;
+    }
+    .top-bar-right {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px dotted $white;
+    }
+    .menu {
+      transform: translateX(-100%);
+      transition: all .5s ease;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+    .menu > li {
+      display: block;
+      width: 100%;
+    }
+    .menu > li > a,
+    .menu > li > .dropdown-component > a {
+      justify-content: flex-start;
+      font-size: 1rem;
+      color: $white;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: none !important;
+    }
+  }
+
+  .top-bar-container {
+    display: block;
+  }
+
+  // Make menus scrollable
+  .top-bar-left,
+  .top-bar-right {
+    width: 100%;
+    .menu {
+      flex-wrap: nowrap;
+    }
+  }
+
+  .top-bar-right {
+    border-top: 1px solid $primary-color;
+  }
+}
+
+.js-navigation-open {
+  overflow: hidden;
+  .top-bar.navigation {
+    opacity: 1;
+    visibility: visible;
+    .menu {
+      transform: translateX(0);
+    }
+  }
+}
