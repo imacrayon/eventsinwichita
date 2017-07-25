@@ -39,8 +39,9 @@
             <div class="top-bar-right">
                 <ul class="menu">
                     @if ($authenticated)
+                        <?php $viewingProfile = request()->is("users/{$user->id}*"); ?>
                         <li class="show-for-small-only">
-                            <a class="profile" href="{{ $user->url() }}">
+                            <a class="profile{{ $viewingProfile  ? ' active' : '' }}" href="{{ $user->url() }}">
                                 <div class="profile-section">
                                     <img class="profile-image" src="{{ auth()->user()->avatar }}" alt="{{ auth()->user()->name }}" width="32" height="32">
                                 </div>
@@ -55,7 +56,7 @@
                         @include('partials.navigation-user', ['visibility' => 'show-for-small-only'])
                         <li class="hide-for-small-only">
                             <dropdown size="small">
-                                <a class="profile dropdown">
+                                <a class="profile dropdown{{ $viewingProfile ? ' active' : '' }}" href="{{ $user->url() }}">
                                     <div class="profile-section">
                                         <img class="profile-image" src="{{ auth()->user()->avatar }}" alt="{{ auth()->user()->name }}" width="32" height="32">
                                     </div>
