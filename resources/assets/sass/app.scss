@@ -64,34 +64,10 @@
 @import 'notification';
 @import 'icon';
 @import 'headbar';
-
-[v-cloak] {
-  display: none;
-}
-
-.action-link {
-  cursor: pointer;
-  color: $primary-color;
-}
-
-.sticky {
-  position: relative;
-  z-index: 2;
-  top: 0;
-  position: sticky;
-  &.active {
-    z-index: 1;
-    .sticky-fix {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-    }
-  }
-  &.top {
-    box-shadow: 0 1px 5px 0 rgba(34, 36, 38, 0.1);
-  }
-}
+@import 'sticky';
+@import 'profile';
+@import 'transitions';
+@import 'content';
 
 html {
   overflow-y: scroll; // Always show scrollbar to prevent layout jump
@@ -99,6 +75,10 @@ html {
 
 html, body {
   height: 100%;
+}
+
+[v-cloak] {
+  display: none;
 }
 
 #app {
@@ -148,76 +128,4 @@ html, body {
     margin-left: auto;
     margin-right: auto;
   }
-}
-
-.profile {
-  .media-object-section {
-    vertical-align: middle;
-  }
-  .profile-image {
-    border-radius: 50%;
-    width: 3rem;
-    height: 3rem;
-    display: block;
-    border: 3px solid $secondary-color;
-    overflow: hidden;
-  }
-  .profile-title {
-    font-size: 1.5em;
-    margin: 0;
-    line-height: 1.2;
-  }
-  .profile-meta {
-    font-size: .5rem;
-    color: $dark-gray;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-}
-
-.badge {
-  border-radius: .6em;
-  margin-right: .5em;
-}
-
-@each $name, $color in $foundation-palette {
-  .text-#{$name} { color: $color; }
-}
-.text-white { color: $white; }
-.text-medium-gray { color: $medium-gray; }
-
-.text-size-h1 { @include get-header-size(h1) }
-.text-size-h2 { @include get-header-size(h2) }
-.text-size-h3 { @include get-header-size(h3) }
-.text-size-h4 { @include get-header-size(h4) }
-.text-size-h5 { @include get-header-size(h5) }
-.text-size-h6 { @include get-header-size(h6) }
-
-.button.transparent {
-  background-color: transparent;
-  border-color: transparent;
-  color: $dark-gray;
-  &:hover {
-    color: $black;
-    background-color: $light-gray;
-  }
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: all 1s
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-  transform: translateY(2rem);
-}
-
-.slide-fade-enter-active {
-  transition: all .3s  cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-leave-active {
-  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to {
-  transform: translateX(4rem);
-  opacity: 0;
 }
