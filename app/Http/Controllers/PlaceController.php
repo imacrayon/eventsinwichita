@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Place;
 use Illuminate\Http\Request;
-use App\Repositories\placeRepository;
+use App\Repositories\PlaceRepository;
 
 class PlaceController extends Controller
 {
