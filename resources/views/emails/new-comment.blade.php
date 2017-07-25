@@ -20,7 +20,7 @@ View Comment
 @component('mail::footer')
 &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reverved.
 
-If you wish to adjust your email settings, go <a href="{{ url($comment->user->url() . '/settings') }}">here</a>. If you want to turn off all email notifications from {{ config('app.name') }}, go <a href="%unsubscribe_url%">here</a> (use with care!). You can also unsubscribe by sending a email to %unsubscribe_email%. Questions? Contact {{ config('app.name') }} through the <a href="{{ url('/contact') }}">contact form</a>.
+If you wish to adjust your email settings, go <a href="{{ url($comment->user->url() . '/settings') }}">here</a>. If you want to turn off all email notifications from {{ config('app.name') }}, go <a href="%unsubscribe_url%">here</a> (use with care!). Questions? Contact {{ config('app.name') }} through the <a href="{{ url('/contact') }}">contact form</a>.
 @endcomponent
 @endslot
 @endcomponent
