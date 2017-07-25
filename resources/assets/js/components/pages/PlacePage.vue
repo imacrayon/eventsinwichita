@@ -34,7 +34,7 @@
               </a>
             </li>
             <li>
-              <subscribe-button :active="event.is_subscribed_to"></subscribe-button>
+              <subscribe-button :active="place.is_subscribed_to"></subscribe-button>
             </li>
           </ul>
         </div>
@@ -222,9 +222,10 @@ import Form from '../../utilities/Form'
 import { parseUrlHost } from '../../helpers'
 import Events from '../events/Events.vue'
 import Comments from '../comments/Comments.vue'
+import SubscribeButton from '../SubscribeButton.vue'
 
 export default {
-  components: { Modal, Events, Comments },
+  components: { Modal, Events, Comments, SubscribeButton },
 
   props: ['attributes'],
 
