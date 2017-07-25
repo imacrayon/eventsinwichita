@@ -29,7 +29,8 @@
         justify-content: center;
         cursor: pointer;
         color: $primary-color;
-        &:hover {
+        &:hover,
+        &:focus {
           color: $white;
           background: $primary-color;
           .badge {
