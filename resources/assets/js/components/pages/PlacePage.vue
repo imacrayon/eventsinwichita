@@ -44,7 +44,7 @@
     <div class="grid-container grid-container-padded">
       <div class="grid-x grid-margin-x">
 
-        <div class="cell large-4 large-order-2">
+        <div class="cell large-4">
 
           <div class="page-section" v-if="place.street">
             <h2 class="page-section-title">
@@ -109,7 +109,7 @@
 
         </div>
 
-        <div class="cell large-8  large-order-1">
+        <div class="cell large-8">
 
           <div class="page-section">
             <h2 class="page-section-title">
