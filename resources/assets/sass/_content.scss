@@ -30,3 +30,14 @@
     background-color: $light-gray;
   }
 }
+
+.top-bar .menu > li > .subscribe-button:focus,
+.top-bar .menu > li > .subscribe-button:hover {
+  color: $primary-color;
+  background: $light-gray;
+}
+.top-bar .menu > li > .subscribe-button.active:focus,
+.top-bar .menu > li > .subscribe-button.active:hover {
+  color: $white;
+  background: $primary-color;
+}

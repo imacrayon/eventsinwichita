@@ -17,7 +17,7 @@ export default {
 
   computed: {
     classes() {
-      return [this.isActive ? 'active' : '']
+      return [this.isActive ? 'subscribe-button active' : 'subscribe-button']
     }
   },
 
