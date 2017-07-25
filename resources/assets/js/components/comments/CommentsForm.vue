@@ -63,7 +63,7 @@ export default {
           window.events.$emit('comment-created', data)
         })
         .catch(error => {
-          window.flash('Your comment wasn\'t posted.')
+          window.flash('Your comment wasn\'t posted.', 'alert')
         })
     }
   }
