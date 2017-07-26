@@ -316,7 +316,7 @@ export default {
           window.flash('Place updated.')
         })
         .catch(error => {
-          this.editModal = false
+          this.editModal = error.response.status === 422
           window.flash('Updating place failed.', 'alert')
         })
     }

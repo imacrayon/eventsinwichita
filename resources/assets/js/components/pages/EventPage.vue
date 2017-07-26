@@ -447,7 +447,7 @@ export default {
           this.update()
         })
         .catch(error => {
-          this.createPlaceModal = false
+          this.createPlaceModal = error.response.status === 422
           window.flash('Updating place failed.', 'alert')
         })
     },
@@ -504,7 +504,7 @@ export default {
             window.flash('Event updated.')
           })
           .catch(error => {
-            this.editModal = false
+            this.editModal = error.response.status === 422
             window.flash('Updating event failed.', 'alert')
           })
       }

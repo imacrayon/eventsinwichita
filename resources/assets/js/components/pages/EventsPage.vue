@@ -343,7 +343,7 @@ export default {
           this.store()
         })
         .catch(error => {
-          this.createPlaceModal = false
+          this.createPlaceModal = error.response.status === 422
           window.flash('Updating place failed.', 'alert')
         })
     },
@@ -390,7 +390,7 @@ export default {
             window.flash('Event created.')
           })
           .catch(error => {
-            this.createModal = false
+            this.createModal = error.response.status === 422
             window.flash('Creating event failed.', 'alert')
           })
       }
