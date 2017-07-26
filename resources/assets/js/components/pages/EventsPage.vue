@@ -44,7 +44,7 @@
           <h3>Add Your Own Event</h3>
           <div v-if="!authorize(user => user.id)">
             <p>
-              Just <strong>login</strong> to add your own event to our public calendar. <em>(It's free!)</em>
+              Login to add your own event. <em>(It's free!)</em>
             </p>
             <a class="button hollow white" href="/login">Login</a>
             <a class="button hollow white" href="/register">Create An Account</a>
