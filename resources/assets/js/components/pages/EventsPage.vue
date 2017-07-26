@@ -28,7 +28,7 @@
             <li v-if="authorize(user => user.id)">
               <a @click="create">
                 <svg class="icon"><use xlink:href="/images/icons.svg#icon-plus"></use></svg>
-                Add
+                Add Event
               </a>
             </li>
           </ul>
@@ -52,7 +52,7 @@
           <div v-else>
             <button class="button hollow white" @click="create">
               <svg class="icon" style="top: -.1em;"><use xlink:href="/images/icons.svg#icon-plus"></use></svg>
-              Add New Event
+              Add Event
             </button>
           </div>
       </div>
