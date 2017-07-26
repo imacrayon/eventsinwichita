@@ -94,8 +94,8 @@
           </label>
 
           <div>
-            <label for="event-edit-tags" :class="{'is-invalid-label': createForm.errors.has('tags')}">Tags</label>
-            <div id="event-edit-tags">
+            <label for="place-create-tags" :class="{'is-invalid-label': createForm.errors.has('tags')}">Tags</label>
+            <div id="place-create-tags">
               <label v-for="tag in tags" :class="{'is-invalid-label': createForm.errors.has('tags')}">
                 <input type="checkbox" :value="tag.id" v-model="createForm.tags" :class="{'is-invalid-input': createForm.errors.has('tags')}">
                 {{ tag.name }}
@@ -110,100 +110,11 @@
             <button type="button"
               class="button secondary"
               @click="createModal = false"
-              :disabled="editForm.isSubmitting()">
+              :disabled="createForm.isSubmitting()">
               Cancel
             </button>
             <button class="button loading"
               :disabled="createForm.isSubmitting()">
-              Save Changes
-            </button>
-          </div>
-        </div>
-      </form>
-    </modal>
-
-
-    <!-- Edit Place Modal -->
-    <modal v-if="editModal">
-      <div class="modal-head">
-        <div class="modal-title">Edit Place</div>
-      </div>
-      <form @submit.prevent="storePlace" @input="editForm.errors.clear($event.target.name)">
-        <div class="modal-section">
-
-          <label :class="{'is-invalid-label': editForm.errors.has('name')}">Name
-            <input type="text" v-model="editForm.name" :class="{'is-invalid-input': editForm.errors.has('name')}"></textarea>
-            <span :class="['form-error', {'is-visible': editForm.errors.has('name')}]" v-text="editForm.errors.get('name')"></span>
-          </label>
-
-          <label :class="{'is-invalid-label': editForm.errors.has('street')}">Street
-            <input type="text" v-model="editForm.street" :class="{'is-invalid-input': editForm.errors.has('street')}"></textarea>
-            <span :class="['form-error', {'is-visible': editForm.errors.has('street')}]" v-text="editForm.errors.get('street')"></span>
-          </label>
-
-          <div class="grid-x grid-margin-x">
-            <div class="small-12 medium-4 cell">
-
-              <label :class="{'is-invalid-label': editForm.errors.has('city')}">City
-                <input type="text" v-model="editForm.city" :class="{'is-invalid-input': editForm.errors.has('city')}"></textarea>
-                <span :class="['form-error', {'is-visible': editForm.errors.has('city')}]" v-text="editForm.errors.get('city')"></span>
-              </label>
-
-            </div>
-            <div class="small-12 medium-4 cell">
-
-              <label :class="{'is-invalid-label': editForm.errors.has('state')}">State
-                <input type="text" v-model="editForm.state" :class="{'is-invalid-input': editForm.errors.has('state')}"></textarea>
-                <span :class="['form-error', {'is-visible': editForm.errors.has('state')}]" v-text="editForm.errors.get('state')"></span>
-              </label>
-
-            </div>
-            <div class="small-12 medium-4 cell">
-
-              <label :class="{'is-invalid-label': editForm.errors.has('zip')}">Zip
-                <input type="text" v-model="editForm.zip" :class="{'is-invalid-input': editForm.errors.has('zip')}"></textarea>
-                <span :class="['form-error', {'is-visible': editForm.errors.has('zip')}]" v-text="editForm.errors.get('zip')"></span>
-              </label>
-
-            </div>
-          </div>
-
-          <label :class="{'is-invalid-label': editForm.errors.has('profile.website')}">Website
-            <input type="text" v-model="editForm.profile.website" :class="{'is-invalid-input': editForm.errors.has('profile.website')}"></textarea>
-            <span :class="['form-error', {'is-visible': editForm.errors.has('profile.website')}]" v-text="editForm.errors.get('profile.website')"></span>
-          </label>
-
-          <label :class="{'is-invalid-label': editForm.errors.has('profile.email')}">Email
-            <input type="email" v-model="editForm.profile.email" :class="{'is-invalid-input': editForm.errors.has('profile.email')}"></textarea>
-            <span :class="['form-error', {'is-visible': editForm.errors.has('profile.email')}]" v-text="editForm.errors.get('profile.email')"></span>
-          </label>
-
-          <label :class="{'is-invalid-label': editForm.errors.has('profile.phone')}">Phone
-            <input type="text" v-model="editForm.profile.phone" :class="{'is-invalid-input': editForm.errors.has('profile.phone')}"></textarea>
-            <span :class="['form-error', {'is-visible': editForm.errors.has('profile.phone')}]" v-text="editForm.errors.get('profile.phone')"></span>
-          </label>
-
-          <div>
-            <label for="event-edit-tags" :class="{'is-invalid-label': editForm.errors.has('tags')}">Tags</label>
-            <div id="event-edit-tags">
-              <label v-for="tag in tags" :class="{'is-invalid-label': editForm.errors.has('tags')}">
-                <input type="checkbox" :value="tag.id" v-model="editForm.tags" :class="{'is-invalid-input': editForm.errors.has('tags')}">
-                {{ tag.name }}
-              </label>
-            </div>
-            <span :class="['form-error', {'is-visible': editForm.errors.has('tags')}]" v-text="editForm.errors.get('tags')"></span>
-          </div>
-
-        </div>
-        <div class="modal-foot">
-          <div class="modal-foot-right">
-            <button type="button" class="button secondary"
-              :disabled="editForm.isSubmitting()"
-              @click="editModal = false">
-              Cancel
-            </button>
-            <button class="button loading"
-              :disabled="editForm.isSubmitting()">
               Save Changes
             </button>
           </div>
@@ -237,19 +148,7 @@ export default {
         profile: {}
       }),
 
-      createModal: false,
-
-      editForm: new Form({
-        name: '',
-        street: '',
-        city: '',
-        state: '',
-        zip: '',
-        tags: [],
-        profile: {}
-      }),
-
-      editModal: false
+      createModal: false
     }
   },
 
@@ -271,54 +170,21 @@ export default {
     create (place) {
       this.getTags()
 
-      this.editModal = true
+      this.createModal = true
     },
 
     /**
      * Store the given resource.
      */
     store () {
-      this.editForm.post('/api/places')
+      this.createForm.post('/api/places')
         .then(place => {
           this.$refs.places.getPlaces()
-          this.editModal = false
+          this.createModal = false
           window.flash('Place updated.')
         })
         .catch(error => {
-          this.editModal = error.response.status === 422
-          window.flash('Updating place failed.', 'alert')
-        })
-    },
-
-    /**
-     * Edit the given resource.
-     */
-    edit (place) {
-      this.editForm.name = place.name
-      this.editForm.street = place.street
-      this.editForm.city = place.city
-      this.editForm.state = place.state
-      this.editForm.zip = place.zip
-      this.editForm.tags = place.tags.map(tag => tag.id)
-      this.editForm.profile = place.profile
-
-      this.getTags()
-
-      this.editModal = true
-    },
-
-    /**
-     * Update the resource being edited.
-     */
-    update () {
-      this.editForm.put('/api/places/' + this.editForm.id)
-        .then(response => {
-          this.getPlaces()
-          this.editModal = false
-          window.flash('Place updated.')
-        })
-        .catch(error => {
-          this.editModal = error.response.status === 422
+          this.createModal = error.response.status === 422
           window.flash('Updating place failed.', 'alert')
         })
     }
