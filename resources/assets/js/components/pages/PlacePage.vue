@@ -196,8 +196,8 @@
           </label>
 
           <div>
-            <label for="event-edit-tags" :class="{'is-invalid-label': editForm.errors.has('tags')}">Tags</label>
-            <div id="event-edit-tags" class="tags-field">
+            <label for="place-edit-tags" :class="{'is-invalid-label': editForm.errors.has('tags')}">Tags</label>
+            <div id="place-edit-tags" class="tags-field">
               <template v-for="tag in tags">
                 <input type="checkbox" :value="tag.id" v-model="editForm.tags" :id="'edit-place-tag-' + tag.id">
                 <label class="button hollow tiny" :key="tag.id" :for="'edit-place-tag-' + tag.id">{{ tag.name }}</label>

@@ -108,8 +108,8 @@
           </label>
 
           <div>
-            <label for="event-edit-tags" :class="{'is-invalid-label': createForm.errors.has('tags')}">Tags</label>
-            <div id="event-edit-tags" class="tags-field">
+            <label for="event-create-tags" :class="{'is-invalid-label': createForm.errors.has('tags')}">Tags</label>
+            <div id="event-create-tags" class="tags-field">
               <template v-for="tag in tags">
                 <input type="checkbox" :value="tag.id" v-model="createForm.tags" :id="'edit-event-tag-' + tag.id">
                 <label class="button hollow tiny" :key="tag.id" :for="'edit-event-tag-' + tag.id">{{ tag.name }}</label>
@@ -200,8 +200,8 @@
           </label>
 
           <div>
-            <label for="event-edit-tags" :class="{'is-invalid-label': createPlaceForm.errors.has('tags')}">Tags</label>
-            <div id="event-edit-tags" class="tags-field">
+            <label for="place-create-tags" :class="{'is-invalid-label': createPlaceForm.errors.has('tags')}">Tags</label>
+            <div id="place-create-tags" class="tags-field">
               <template v-for="tag in tags">
                 <input type="checkbox" :value="tag.id" v-model="createPlaceForm.tags" :id="'edit-place-tag-' + tag.id">
                 <label class="button hollow tiny" :key="tag.id" :for="'edit-place-tag-' + tag.id">{{ tag.name }}</label>
