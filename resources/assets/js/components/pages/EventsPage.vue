@@ -76,7 +76,10 @@
             <div class="small-12 medium-6 cell">
 
               <label :class="{'is-invalid-label': createForm.errors.has('start_time')}">Start
-                <date-picker type="text" :options="startTimeOptions" v-model="createForm.start_time" :class="{'is-invalid-input': createForm.errors.has('start_time')}"></date-picker>
+                 <date-picker
+                  v-model="createForm.start_time"
+                  :class="{'is-invalid-input': createForm.errors.has('start_time')}"
+                ></date-picker>
                 <span :class="['form-error', {'is-visible': createForm.errors.has('start_time')}]" v-text="createForm.errors.get('start_time')"></span>
               </label>
 
@@ -84,7 +87,10 @@
             <div class="small-12 medium-6 cell">
 
               <label :class="{'is-invalid-label': createForm.errors.has('end_time')}">End
-                <date-picker type="text" :options="endTimeOptions" v-model="createForm.end_time" :class="{'is-invalid-input': createForm.errors.has('end_time')}"></date-picker>
+                <date-picker
+                  v-model="createForm.end_time"
+                  :class="{'is-invalid-input': createForm.errors.has('end_time')}"
+                ></date-picker>
                 <span :class="['form-error', {'is-visible': createForm.errors.has('end_time')}]" v-text="createForm.errors.get('end_time')"></span>
               </label>
 
@@ -225,14 +231,13 @@
 </template>
 
 <script>
-import moment from 'moment'
 import Modal from '../Modal.vue'
 import Form from '../../utilities/Form'
 import Events from '../events/Events.vue'
 import DatePicker from '../DatePicker.vue'
 import EventFilters from '../events/EventFilters.vue'
 import PlacePicker from '../PlacePicker.vue'
-import { serialize, formatUrlDate } from '../../helpers'
+import { serialize } from '../../helpers'
 
 export default {
   components: { Events, Modal, DatePicker, PlacePicker, EventFilters },
@@ -248,8 +253,8 @@ export default {
       createForm: new Form({
         id: null,
         name: '',
-        start_time: null,
-        end_time: null,
+        start_time: undefined,
+        end_time: undefined,
         place_id: null,
         place: { name: '', id: null },
         description: null,
@@ -271,27 +276,7 @@ export default {
       }),
 
       createPlaceModal: false,
-
-      startTimeOptions: {
-        enableTime: true,
-        minDate: moment().startOf('day').toDate(),
-        dateFormat: 'Y-m-d H:i:S',
-        altInput: true,
-        altFormat: 'F j, Y h:i K'
-      }
     }
-  },
-
-  computed: {
-    endTimeOptions () {
-      return {
-        enableTime: true,
-        minDate: moment(this.createForm.start_time).startOf('day').toDate(),
-        dateFormat: 'Y-m-d H:i:S',
-        altInput: true,
-        altFormat: 'F j, Y h:i K'
-      }
-    },
   },
 
   methods: {

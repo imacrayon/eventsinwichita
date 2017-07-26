@@ -25,7 +25,7 @@
 
 <script>
 import moment from 'moment'
-import { urlMap, diffForHumans, serialize, formatUrlDate } from '../../helpers'
+import { urlMap, diffForHumans, serialize } from '../../helpers'
 
 export default {
   props: {

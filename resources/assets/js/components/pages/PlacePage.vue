@@ -227,7 +227,6 @@
 </template>
 
 <script>
-import moment from 'moment'
 import Modal from '../Modal.vue'
 import Form from '../../utilities/Form'
 import { parseUrlHost } from '../../helpers'

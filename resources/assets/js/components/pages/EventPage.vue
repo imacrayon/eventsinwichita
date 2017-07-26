@@ -124,7 +124,10 @@
             <div class="small-12 medium-6 cell">
 
               <label :class="{'is-invalid-label': editForm.errors.has('start_time')}">Start
-                <date-picker type="text" :options="startTimeOptions" v-model="editForm.start_time" :class="{'is-invalid-input': editForm.errors.has('start_time')}"></date-picker>
+                <date-picker
+                  v-model="editForm.start_time"
+                  :class="{'is-invalid-input': editForm.errors.has('start_time')}">
+                </date-picker>
                 <span :class="['form-error', {'is-visible': editForm.errors.has('start_time')}]" v-text="editForm.errors.get('start_time')"></span>
               </label>
 
@@ -132,7 +135,10 @@
             <div class="small-12 medium-6 cell">
 
               <label :class="{'is-invalid-label': editForm.errors.has('end_time')}">End
-                <date-picker type="text" :options="endTimeOptions" v-model="editForm.end_time" :class="{'is-invalid-input': editForm.errors.has('end_time')}"></date-picker>
+                <date-picker
+                  v-model="editForm.end_time"
+                  :class="{'is-invalid-input': editForm.errors.has('end_time')}">
+                </date-picker>
                 <span :class="['form-error', {'is-visible': editForm.errors.has('end_time')}]" v-text="editForm.errors.get('end_time')"></span>
               </label>
 
@@ -310,6 +316,7 @@ import PlacePicker from '../PlacePicker.vue'
 import Comments from '../comments/Comments.vue'
 import CommentsForm from '../comments/CommentsForm.vue'
 import SubscribeButton from '../SubscribeButton.vue'
+import { formatUrlDate } from '../../helpers'
 
 export default {
   components: { Modal, DatePicker, PlacePicker, Comments, CommentsForm, SubscribeButton },
@@ -327,8 +334,8 @@ export default {
       editForm: new Form({
         id: null,
         name: '',
-        start_time: null,
-        end_time: null,
+        start_time: undefined,
+        end_time: undefined,
         place_id: null,
         place: { name: '', id: null },
         description: null,
@@ -349,14 +356,6 @@ export default {
 
       createPlaceModal: false,
 
-      startTimeOptions: {
-        enableTime: true,
-        minDate: moment().startOf('day').toDate(),
-        dateFormat: 'Y-m-d H:i:S',
-        altInput: true,
-        altFormat: 'F j, Y h:i K'
-      },
-
       confirmDestroyModal: false
     }
   },
@@ -370,16 +369,6 @@ export default {
       }
 
       return `${start.format('dddd, MMMM D [at] h:mm A')} &ndash; ${end.format('h:mm A [on] dddd, MMM D')}`
-    },
-
-    endTimeOptions () {
-      return {
-        enableTime: true,
-        minDate: moment(this.editForm.start_time).startOf('day').toDate(),
-        dateFormat: 'Y-m-d H:i:S',
-        altInput: true,
-        altFormat: 'F j, Y h:i K'
-      }
     }
   },
 
@@ -487,8 +476,8 @@ export default {
     edit (event) {
       this.editForm.id = event.id
       this.editForm.name = event.name
-      this.editForm.start_time = moment(event.start_time).format('YYYY-MM-DD HH:mm:ss')
-      this.editForm.end_time = moment(event.end_time).format('YYYY-MM-DD HH:mm:ss')
+      this.editForm.start_time = formatUrlDate(event.start_time)
+      this.editForm.end_time = formatUrlDate(event.end_time)
       this.editForm.place = event.place
       this.editForm.description = event.description
       this.editForm.tags = event.tags.map(tag => tag.id)

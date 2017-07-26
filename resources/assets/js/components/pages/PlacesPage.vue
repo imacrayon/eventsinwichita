@@ -215,7 +215,6 @@
 </template>
 
 <script>
-import moment from 'moment'
 import Modal from '../Modal.vue'
 import Form from '../../utilities/Form'
 import Places from '../places/Places.vue'
@@ -251,18 +250,6 @@ export default {
       }),
 
       editModal: false
-    }
-  },
-
-  computed: {
-    endTimeOptions () {
-      return {
-        enableTime: true,
-        minDate: moment(this.editForm.start_time).startOf('day').toDate(),
-        dateFormat: 'Y-m-d H:i:S',
-        altInput: true,
-        altFormat: 'F j, Y h:i K'
-      }
     }
   },
 

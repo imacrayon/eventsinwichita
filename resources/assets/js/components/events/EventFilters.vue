@@ -12,10 +12,20 @@
         </div>
 
         <label for="start_time">Start Time</label>
-        <date-picker name="start_time" id="start_time" :options="startOptions" v-model="filters.start_time"></date-picker>
+        <date-picker name="start_time" id="start_time"
+          :config="{
+            static: true
+          }"
+          v-model="filters.start_time"
+        ></date-picker>
 
         <label for="end_time">End Time</label>
-        <date-picker name="end_time" id="end_time" :options="endOptions" v-model="filters.end_time"></date-picker>
+        <date-picker name="end_time" id="end_time"
+          :config="{
+            static: true
+          }"
+          v-model="filters.end_time"
+        ></date-picker>
 
         <button class="button" style="margin: 0;">Filter</button>
         <button type="button" class="button transparent" style="margin: 0;" @click="reset" v-show="query">Reset</button>
@@ -25,9 +35,8 @@
 </template>
 
 <script>
-import moment from 'moment'
 import DatePicker from '../DatePicker.vue'
-import { getSearchParam, formatUrlDate } from '../../helpers'
+import { getSearchParam } from '../../helpers'
 
 export default {
   components: { DatePicker },
@@ -47,27 +56,11 @@ export default {
   },
 
   created () {
-    this.filters.start_time = getSearchParam('start_time', '')
+    this.filters.start_time = getSearchParam('start_time', new Date())
     this.filters.end_time = getSearchParam('end_time', '')
     const tags = getSearchParam('tags', [])
     this.filters.tags = Array.isArray(tags) ? tags : [tags]
     this.getTags()
-  },
-
-  computed: {
-    startOptions () {
-      return {
-        static: true,
-        minDate: moment().startOf('day').toDate(),
-      }
-    },
-
-    endOptions () {
-      return {
-        static: true,
-        minDate: moment(this.filters.start_time).add(1, 'day').startOf('day').toDate(),
-      }
-    }
   },
 
   methods: {
@@ -80,10 +73,6 @@ export default {
           this.tags = response.data
           return response
         })
-    },
-
-    formatDateFilter(moment) {
-      return moment.format('YYYY-MM-DD HH:mm:ss')
     },
 
     reset () {

@@ -1,5 +1,11 @@
 <template>
-  <input type="text" :placeholder="placeholder" :value="value" required>
+  <input type="text"
+    :id="id"
+    :class="inputClass"
+    :name="name"
+    :placeholder="placeholder"
+    :required="required"
+    v-model="mutableValue">
 </template>
 
 <script>
@@ -7,67 +13,97 @@ import Flatpickr from 'flatpickr';
 
 export default {
   props: {
+    value: {
+      default: null,
+      required: true,
+      validate (value){
+        return value === null || value instanceof Date || typeof value === 'string' || value instanceof String || value instanceof Array
+      }
+    },
+    // https://chmln.github.io/flatpickr/options/
+    config: {
+      type: Object,
+      default: () => ({
+        wrap: false
+      })
+    },
     placeholder: {
       type: String,
       default: ''
     },
-    options: {
-      type: Object,
-      default: () => ({})
-    },
-    value: {
+    inputClass: {
+      type: [String, Object],
       default: ''
-    }
+    },
+    name: {
+      type: String,
+      default: 'date-time'
+    },
+    required: {
+      type: Boolean,
+      default: false
+    },
+    id: {
+      type: String,
+    },
   },
   data () {
     return {
-      fp: null,
+      mutableValue: this.value,
+      fp: null
     };
   },
-  computed: {
-    fpOptions () {
-      return JSON.stringify(this.options)
-    },
+  mounted () {
+    // Load flatPickr if not loaded yet
+    if (!this.fp) {
+      // Bind on parent element if wrap is true
+      let elem = this.config.wrap ? this.$el.parentNode : this.$el;
+      this.fp = new Flatpickr(elem, Object.assign(
+        {
+          enableTime: true,
+          dateFormat: 'Y-m-d H:i:S',
+          altInput: true,
+          altFormat: 'F j, Y h:i K',
+          defaultDate: new Date()
+        },
+        this.config
+      ));
+    }
+  },
+  beforeDestroy () {
+    // Free up memory
+    if (this.fp) {
+      this.fp.destroy()
+      this.fp = null
+    }
   },
   watch: {
-    value (val) {
-      if (this.fp) this.fp.setDate(val)
+    /**
+      * Watch for any config changes and redraw date-picker
+      *
+      * @param newConfig Object
+      */
+    config (newConfig) {
+      this.fp.config = Object.assign(this.fp.config, newConfig)
+      this.fp.redraw()
+      this.fp.setDate(this.value, true)
     },
-    fpOptions (newOpt) {
-      const option = JSON.parse(newOpt)
-      for (let o in option) {
-        if (option.hasOwnProperty(o)) {
-          this.fp.set(o, option[o])
-        }
-      }
+    /**
+      * Watch for value changed by date-picker itself and notify parent component
+      *
+      * @param newValue
+      */
+    mutableValue (newValue) {
+      this.$emit('input', newValue)
     },
-  },
-  mounted () {
-    const self = this;
-    const origOnValUpdate = this.options.onValueUpdate;
-    this.$nextTick(() => {
-      this.fp = new Flatpickr(this.$el, Object.assign(this.options, {
-        onValueUpdate () {
-          self.onInput(self.$el.value)
-          if (typeof origOnValUpdate === 'function') {
-            origOnValUpdate()
-          }
-        },
-        enableTime: true,
-        dateFormat: 'Y-m-d H:i:S',
-        altInput: true,
-        altFormat: 'F j, Y h:i K'
-      }));
-    })
-  },
-  destroyed () {
-    this.fp.destroy()
-    this.fp = null
-  },
-  methods: {
-    onInput (e) {
-      typeof e === 'string' ? this.$emit('input', e) : this.$emit('input', e.target.value)
-    },
-  },
-};
+    /**
+      * Watch for changes from parent component and update DOM
+      *
+      * @param newValue
+      */
+    value (newValue) {
+      this.fp && this.fp.setDate(newValue, true)
+    }
+  }
+}
 </script>
