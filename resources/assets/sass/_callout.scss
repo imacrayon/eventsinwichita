@@ -3,10 +3,13 @@ $callout-border-left-width: rem-calc(5);
 .callout {
   border-left-width: $callout-border-left-width;
   border-left-color: $medium-gray;
+  position: relative;
 
   .icon {
     font-size: 1.5rem;
-    margin: -.25rem .25rem 0 -.25rem;
+    position: absolute;
+    left: .5rem;
+    top: 1rem;
   }
 
   .close-button {
@@ -15,9 +18,22 @@ $callout-border-left-width: rem-calc(5);
 
   &.flash {
     position: fixed;
-    left: 2rem;
-    bottom: 2rem;
+    left: 1rem;
+    bottom: 1rem;
+    padding: .5em .5em .5em 2.5rem;
+    margin: 0;
     z-index: 9999;
+    .icon {
+      top: .5rem;
+    }
+    @include breakpoint(medium) {
+      padding: 1em 1em 1em 2.5rem;
+      left: 2rem;
+      bottom: 2rem;
+      .icon {
+        top: 1rem;
+      }
+    }
   }
 
   &.transparent {
