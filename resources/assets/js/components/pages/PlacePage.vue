@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-bottom: 2rem;">
+  <div>
 
     <div class="head-bar">
       <div class="head-bar-container">
@@ -121,6 +121,17 @@
 
         </div>
 
+      </div>
+    </div>
+
+    <div class="call-to-action text-center">
+      <div class="grid-container grid-container-padded">
+          <svg class="icon" style="font-size: 3rem;margin-bottom: .5rem;"><use xlink:href="/images/icons.svg#icon-flag"></use></svg>
+          <h3>Do You Own This Place?</h3>
+          <p>Please contact us and we will give you access to edit the info on this page.</p>
+          <a class="button hollow white" href="/contact">
+            Claim My Place
+          </a>
       </div>
     </div>
 
