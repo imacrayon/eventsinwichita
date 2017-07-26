@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-bottom: 2rem;">
+  <div>
 
     <div class="head-bar">
       <div class="head-bar-container">
@@ -85,6 +85,25 @@
           </div>
 
         </div>
+      </div>
+    </div>
+
+    <div class="call-to-action text-center">
+      <div class="grid-container grid-container-padded">
+          <svg class="icon" style="font-size: 3rem;"><use xlink:href="/images/icons.svg#icon-eye"></use></svg>
+          <h3>Keep an Eye on Things</h3>
+          <div v-if="!authorize(user => user.id)">
+            <p>
+              Login to get notifications when this event is updated.
+            </p>
+            <a class="button hollow white" href="/login">Login</a>
+            <a class="button hollow white" href="/register">Create An Account</a>
+          </div>
+          <div v-else>
+            <p>
+              Click the <strong>Watch</strong> button at the top of the page. To get notifications when this event is updated.
+            </p>
+          </div>
       </div>
     </div>
 
