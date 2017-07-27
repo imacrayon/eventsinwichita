@@ -168,8 +168,8 @@ class PlaceRepository extends Repository
         if (isset($data['latitude']) && isset($data['longitude'])) {
             // Try to find by coordinates.
             $place = $this->model
-                ->whereRaw('TRUNCATE(latitude, 3) = ' . bcdiv($data['latitude'], 1, 3))
-                ->whereRaw('TRUNCATE(longitude, 3) = ' . bcdiv($data['longitude'], 1, 3))
+                ->whereRaw('TRUNCATE(latitude, 2) = ' . bcdiv($data['latitude'], 1, 3))
+                ->whereRaw('TRUNCATE(longitude, 2) = ' . bcdiv($data['longitude'], 1, 3))
                 ->first();
             if ($place) return $place;
         }
