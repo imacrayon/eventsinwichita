@@ -24,8 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('collect:facebook')
+                 ->twiceDaily(3, 2)
+                 ->sendOutputTo('storage/logs/collector-facebook.log')
+                 ->emailOutputTo(env('MAIL_CONTACT_ADDRESS'));
     }
 
     /**
