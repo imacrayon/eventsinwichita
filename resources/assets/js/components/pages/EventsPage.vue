@@ -321,7 +321,7 @@ export default {
       this.createPlaceForm.city = place.city
       this.createPlaceForm.state = place.state
       this.createPlaceForm.zip = place.zip
-      this.createPlaceForm.profile = place.profile
+      this.createPlaceForm.profile = place.profile || {}
       this.createPlaceForm.tags = place.tags.map(tag => tag.id)
 
       this.getTags()
