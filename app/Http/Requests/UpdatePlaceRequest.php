@@ -32,8 +32,8 @@ class UpdatePlaceRequest extends FormRequest
             'facebook_id'     => ['nullable', 'unique:places,facebook_id,' . $this->input('id')],
             'meetup_id'       => ['nullable', 'unique:places,meetup_id,' . $this->input('id')],
             'profile'         => ['filled', 'array'],
-            'profile.website' => ['url'],
-            'profile.email'   => ['email'],
+            'profile.website' => ['nullable', 'url'],
+            'profile.email'   => ['nullable', 'email'],
         ];
     }
 }
