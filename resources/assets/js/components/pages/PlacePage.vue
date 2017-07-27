@@ -46,8 +46,8 @@
 
         <div class="cell large-4">
 
-          <div class="page-section" v-if="place.street">
-            <h2 class="page-section-title">
+          <div class="profile-section" v-if="place.street">
+            <h2 class="profile-section-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-pin"></use></svg>
               Location
             </h2>
@@ -57,8 +57,8 @@
             </a>
           </div>
 
-          <div class="page-section" v-if="place.profile.website">
-            <h2 class="page-section-title">
+          <div class="profile-section" v-if="place.profile.website">
+            <h2 class="profile-section-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-earth"></use></svg>
               Website
             </h2>
@@ -67,8 +67,8 @@
             </a>
           </div>
 
-          <div class="page-section" v-if="place.facebook_id">
-            <h2 class="page-section-title">
+          <div class="profile-section" v-if="place.facebook_id">
+            <h2 class="profile-section-title">
               <svg class="icon" style="vertical-align: text-top;"><use xlink:href="/images/icons.svg#icon-facebook"></use></svg>
               Facebook
             </h2>
@@ -77,8 +77,8 @@
             </a>
           </div>
 
-          <div class="page-section" v-if="place.profile.phone">
-            <h2 class="page-section-title">
+          <div class="profile-section" v-if="place.profile.phone">
+            <h2 class="profile-section-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-smartphone"></use></svg>
               Phone
             </h2>
@@ -87,8 +87,8 @@
             </a>
           </div>
 
-          <div class="page-section" v-if="place.tags.length > 0">
-            <h2 class="page-section-title">
+          <div class="profile-section" v-if="place.tags.length > 0">
+            <h2 class="profile-section-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-tag"></use></svg>
               Tags
             </h2>
@@ -97,8 +97,8 @@
             </div>
           </div>
 
-          <div class="page-section">
-            <h2 class="page-section-title">
+          <div class="profile-section">
+            <h2 class="profile-section-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-user"></use></svg>
               Posted By
             </h2>
@@ -111,8 +111,8 @@
 
         <div class="cell large-8">
 
-          <div class="page-section">
-            <h2 class="page-section-title">
+          <div class="profile-section">
+            <h2 class="profile-section-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-comment"></use></svg>
               Comments
             </h2>
@@ -124,7 +124,7 @@
       </div>
     </div>
 
-    <div class="call-to-action text-center">
+    <div class="section bg-image splash text-center">
       <div class="grid-container grid-container-padded">
           <svg class="icon" style="font-size: 3rem;margin-bottom: .5rem;"><use xlink:href="/images/icons.svg#icon-flag"></use></svg>
           <h3>Do You Own This Place?</h3>

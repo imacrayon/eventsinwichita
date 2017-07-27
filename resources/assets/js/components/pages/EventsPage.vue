@@ -38,7 +38,7 @@
 
     <events ref="events"></events>
 
-    <div class="call-to-action text-center">
+    <div class="section bg-image splash text-center">
       <div class="grid-container grid-container-padded">
           <svg class="icon" style="font-size: 3rem;margin-bottom: .5rem;"><use xlink:href="/images/icons.svg#icon-calendar"></use></svg>
           <h3>Add Your Own Event</h3>

@@ -29,16 +29,16 @@
       <div class="grid-x grid-margin-x">
         <div class="cell large-8 small-order-2 large-order-1">
 
-          <div class="page-section">
-            <h2 class="page-section-title">
+          <div class="profile-section">
+            <h2 class="profile-section-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-list"></use></svg>
               Description
             </h2>
             {{ event.description }}
           </div>
 
-          <div class="page-section">
-            <h2 class="page-section-title">
+          <div class="profile-section">
+            <h2 class="profile-section-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-comment"></use></svg>
               Comments
             </h2>
@@ -48,24 +48,24 @@
         </div>
         <div class="cell large-4 small-order-1 large-order-2">
 
-          <div class="page-section">
-            <h2 class="page-section-title">
+          <div class="profile-section">
+            <h2 class="profile-section-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-clock"></use></svg>
               Time
             </h2>
             <span v-html="displayTime"></span>
           </div>
 
-          <div class="page-section">
-            <h2 class="page-section-title">
+          <div class="profile-section">
+            <h2 class="profile-section-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-pin"></use></svg>
               Location
             </h2>
             <a :href="`/places/${event.place.id}`">{{ event.place.name }}</a>
           </div>
 
-          <div class="page-section">
-            <h2 class="page-section-title">
+          <div class="profile-section">
+            <h2 class="profile-section-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-user"></use></svg>
               Posted By
             </h2>
@@ -74,8 +74,8 @@
             </a>
           </div>
 
-          <div class="page-section" v-if="event.tags.length > 0">
-              <h2 class="page-section-title">
+          <div class="profile-section" v-if="event.tags.length > 0">
+              <h2 class="profile-section-title">
                 <svg class="icon"><use xlink:href="/images/icons.svg#icon-tag"></use></svg>
                 Tags
               </h2>
@@ -88,7 +88,7 @@
       </div>
     </div>
 
-    <div class="call-to-action text-center">
+    <div class="section bg-image splash text-center">
       <div class="grid-container grid-container-padded">
           <svg class="icon" style="font-size: 3rem;"><use xlink:href="/images/icons.svg#icon-eye"></use></svg>
           <h3>Keep an Eye on Things</h3>

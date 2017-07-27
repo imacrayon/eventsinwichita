@@ -14,12 +14,12 @@
 .text-white { color: $white; }
 .text-medium-gray { color: $medium-gray; }
 
-.text-size-h1 { @include get-header-size(h1) }
-.text-size-h2 { @include get-header-size(h2) }
-.text-size-h3 { @include get-header-size(h3) }
-.text-size-h4 { @include get-header-size(h4) }
-.text-size-h5 { @include get-header-size(h5) }
-.text-size-h6 { @include get-header-size(h6) }
+.text-h1 { @include get-header-size(h1) }
+.text-h2 { @include get-header-size(h2) }
+.text-h3 { @include get-header-size(h3) }
+.text-h4 { @include get-header-size(h4) }
+.text-h5 { @include get-header-size(h5) }
+.text-h6 { @include get-header-size(h6) }
 
 .button.transparent {
   background-color: transparent;

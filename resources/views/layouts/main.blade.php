@@ -97,9 +97,6 @@
             <div class="cell shrink">
                 &copy; {{ date('Y') }} <a href="{{ url('/') }}">{{ config('app.name') }}</a>
             </div>
-            <div class="cell shrink">
-                <a href="https://linearicons.com" target="_blank">Icons</a> designed by <a href="https://perxis.com/" target="_blank">Perxis</a>.
-            </div>
         </div>
     </div>
 </footer>

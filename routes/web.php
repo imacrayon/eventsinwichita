@@ -17,6 +17,10 @@ Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallb
 
 Route::get('/', 'EventController@index');
 
+Route::get('about', function () {
+    return view('about');
+});
+
 Route::get('/events', 'EventController@index');
 Route::get('/events/{event}', 'EventController@show');
 

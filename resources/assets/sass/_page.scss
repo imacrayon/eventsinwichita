@@ -1,8 +1,8 @@
-.page-section {
+.profile-section {
   margin-bottom: 2rem;
 }
 
-.page-section-title {
+.profile-section-title {
   color: $dark-gray;
   border-bottom: 1px solid $light-gray;
   @include get-header-size(h6);
@@ -12,19 +12,35 @@
   }
 }
 
-.page-section .grid-container-padded {
+.profile-section .grid-container-padded {
   padding-left: 0;
   padding-right: 0;
 }
 
-.call-to-action {
-  position: relative;
-  @include splash-image;
-  color: $white;
+.section {
   padding: 6vh 0;
+}
+
+.splash {
+  @include splash-image;
   & > div {
     position: relative;
     z-index: 2;
+  }
+}
+
+.bg-image {
+  color: $white;
+  position: relative;
+  a {
+    color: $white;
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  .button {
+    text-decoration: none;
   }
   .button.white.hollow {
     transform: scale(1);
