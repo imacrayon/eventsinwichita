@@ -62,13 +62,11 @@ class EventsTest extends TestCase
 
         $this->signIn();
 
-        $event = create('App\Event', [
-            'place_id' => 3
-        ]);
+        $event = create('App\Event');
 
         $updates = [
             'name'        => 'TESTING',
-            'place_id'    => 1,
+            'place_id'    => 120,
             'start_time'  => '2017-05-19 06:08:08',
             'description' => 'TESTING'
         ];
@@ -83,12 +81,11 @@ class EventsTest extends TestCase
 
         $event = create('App\Event', [
             'user_id'  => auth()->id(),
-            'place_id' => 3
         ]);
 
         $updates = [
             'name'        => 'TESTING',
-            'place_id'    => 1,
+            'place_id'    => 120,
             'start_time'  => '2017-05-19 06:08:08',
             'description' => 'TESTING'
         ];

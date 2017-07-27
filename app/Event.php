@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Mail;
 use Carbon\Carbon;
+use App\Mail\NewEvent;
 use App\Traits\Commentable;
 use App\Traits\Subscribable;
 use App\Filters\EventFilters;
@@ -45,6 +47,21 @@ class Event extends Model
      * @var array
      */
     protected $appends = ['is_subscribed_to'];
+
+    /**
+     * Boot the event instance.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($event) {
+            if (!$event->user->isAdmin()) {
+                $event->load('tags');
+                Mail::to(env('MAIL_CONTACT_ADDRESS'))->send(new NewEvent($event));
+            }
+        });
+    }
 
     public function url()
     {
