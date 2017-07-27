@@ -90,7 +90,7 @@ class PlaceRepository extends Repository
         if ($place) return $place;
 
         if (!isset($data['latitude']) && !isset($data['longitude'])) {
-            $data = array_merge($data, $this->getGeocoder()->getData($data['name']));
+            $data = array_merge($this->getGeocoder()->getData($data['name']), $data);
         }
 
         $place = $this->findByLocation($data);
