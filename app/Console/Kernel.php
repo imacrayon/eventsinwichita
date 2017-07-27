@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('collect:facebook')
-                 ->twiceDaily(3, 2)
+                 ->twiceDaily(3, 14)
                  ->sendOutputTo('storage/logs/collector-facebook.log')
                  ->emailOutputTo(env('MAIL_CONTACT_ADDRESS'));
     }
