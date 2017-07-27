@@ -74,12 +74,8 @@ class Facebook extends AbstractCollector implements Collector
                 'http_errors' => true
             ]
         );
-        return json_decode($response->getBody())->data;
-    }
 
-    protected function store(array $data) {
-        $event = $this->event->updateOrCreate(['facebook_id' => $data['facebook_id']], $data);
-        $event->tags()->sync($data['tags'], false);
+        return json_decode($response->getBody())->data;
     }
 
     /**
@@ -90,6 +86,7 @@ class Facebook extends AbstractCollector implements Collector
      */
     public function collectEvents(Place $place)
     {
+        $updated = [];
         foreach($this->getEvents($place) as $event)
         {
             // Ignore the event if there is no place set
@@ -100,18 +97,20 @@ class Facebook extends AbstractCollector implements Collector
                         'facebook_id' => $place->id,
                     ]);
                 }
-                $this->storeOrUpdateEvent(['facebook_id' => $event->id], [
+                $updated[] = $this->storeOrUpdateEvent(['facebook_id' => $event->id], [
                     'name'        => $event->name,
                     'facebook_id' => $event->id,
                     'start_time'  => $this->castToDateTime($event->start_time),
                     'end_time'    => isset($event->end_time) ? $this->castToDateTime($event->end_time) : null,
                     'place'       => $place,
-                    'description' => isset($event->description) ? $event->description : null,
+                    'description' => isset($event->description) ? $this->truncate($event->description) : null,
                     'tags'        => isset($event->category)
                                           ? strtolower(trim(str_replace(['_', 'EVENT'], [' ', ''], $event->category)))
                                           : $place->tags->pluck('id')->all()
                 ]);
             }
         }
+
+        return $updated;
     }
 }

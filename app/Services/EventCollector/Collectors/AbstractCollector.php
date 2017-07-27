@@ -39,6 +39,17 @@ abstract class AbstractCollector implements Collector
         $data['place_id'] = $data['place']->id;
 
         return $this->events->storeOrUpdate($attributes, $data, $user_id);
+    }
 
+    protected function truncate($string, $length = 1000, $append = "&hellip;") {
+        $string = trim($string);
+
+        if(strlen($string) > $length) {
+            $string = wordwrap($string, $length);
+            $string = explode("\n", $string, 2);
+            $string = $string[0] . $append;
+        }
+
+        return $string;
     }
 }

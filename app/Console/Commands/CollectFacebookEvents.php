@@ -53,12 +53,11 @@ class CollectFacebookEvents extends Command
     public function handle()
     {
         $places = $this->place->whereNotNull('facebook_id')->get();
-        $now = (new \DateTime('NOW'))->format('Y-m-d g:i:s');
-        $this->info("[{$now}] Start fetching new Facebook events.");
+        $this->info('[' . $this->getTimestamp() .'] Start fetching new Facebook events.');
         foreach($places as $place) {
             try {
-                $this->info("Fetching events for {$place->name} ({$place->id})");
-                $this->collector->collectEvents($place);
+                $events = $this->collector->collectEvents($place);
+                $this->info(count($events) . " events updated {$place->name}");
             } catch (\GuzzleHttp\Exception\ClientException $e) {
                 $this->error("Error fetching events for {$place->name}:\n{$e->getResponse()->getBody()}");
             } catch (\Exception $e) {
@@ -66,7 +65,11 @@ class CollectFacebookEvents extends Command
             }
             sleep(1);
         }
-        $time = (new \DateTime('NOW'))->format('Y-m-d g:i:s');
-        $this->info("[{$now}] Finish fetching new Facebook events.");
+        $this->info('[' . $this->getTimestamp() .'] Finish fetching new Facebook events.');
+    }
+
+    protected function getTimestamp()
+    {
+        return (new \DateTime('NOW'))->format('Y-m-d g:i:s');
     }
 }
