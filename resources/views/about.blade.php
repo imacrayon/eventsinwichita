@@ -30,7 +30,7 @@
             <div class="cell">
                 <svg class="icon" style="font-size: 3rem;margin-bottom:.25rem;"><use xlink:href="/images/icons.svg#icon-calendar"></use></svg>
                 <h3>New Name</h3>
-                <strong>eventinwichita.com</strong><br>
+                <strong>eventsinwichita.com</strong><br>
                 Simple. Easy to remember.
             </div>
             <div class="cell">
