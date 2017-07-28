@@ -64,6 +64,14 @@
             <a :href="`/places/${event.place.id}`">{{ event.place.name }}</a>
           </div>
 
+          <div class="group" v-if="event.facebook_id">
+            <h2 class="group-title">
+              <svg class="icon"><use xlink:href="/images/icons.svg#icon-facebook"></use></svg>
+              Facebook <span class="show-for-sr">for {{ event.name }}</span>
+            </h2>
+            <a :href="`https://www.facebook.com/events/${event.facebook_id}`">Facebook Page</a>
+          </div>
+
           <div class="group">
             <h2 class="group-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-user"></use></svg>

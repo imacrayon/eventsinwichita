@@ -72,7 +72,7 @@
               <svg class="icon" style="vertical-align: text-top;"><use xlink:href="/images/icons.svg#icon-facebook"></use></svg>
               Facebook
             </h2>
-            <a target="_blank" :href="'http://www.facebook.com/' + place.facebook_id">
+            <a :href="`https://www.facebook.com/${place.facebook_id}`">
               Facebook Page <span class="show-for-sr">for {{ place.name }}</span>
             </a>
           </div>
