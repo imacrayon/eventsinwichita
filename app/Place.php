@@ -89,7 +89,7 @@ class Place extends Model
     public function scopeFilter($query, PlaceFilters $filters)
     {
         return $filters->apply($query)
-                       ->orderBy('name', 'asc')
+                       ->orderByRaw("REPLACE(`name`, 'The ', '')", 'asc')
                        ->with('tags', 'user');
     }
 
