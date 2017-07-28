@@ -3,7 +3,10 @@
 @section('content')
 <div class="head-bar" style="margin-bottom: 2rem;">
     <div class="head-bar-container">
-        <h1 class="head-bar-title">About</h1>
+        <h1 class="head-bar-title">
+            <svg class="icon icon-bullhorn"><use xlink:href="/images/icons.svg#icon-bullhorn"></use></svg>
+            About
+        </h1>
     </div>
 </div>
 

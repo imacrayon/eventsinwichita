@@ -29,6 +29,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ url('/about') }}" class="{{ Request::is('about') ? ' active' : '' }}">
+                            <svg class="icon icon-bullhorn show-for-small-only"><use xlink:href="{{ asset('/images/icons.svg#icon-bullhorn') }}"></use></svg>
+                            About
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ url('/contact') }}" class="{{ Request::is('contact') ? ' active' : '' }}">
                             <svg class="icon icon-mail show-for-small-only"><use xlink:href="{{ asset('/images/icons.svg#icon-mail') }}"></use></svg>
                             Contact Us

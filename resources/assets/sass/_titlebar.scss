@@ -15,7 +15,7 @@ $toggle-line-width: 2rem;
   border-right: 1px solid $primary-color;
   border-left: 1px solid $primary-color;
   box-shadow: 0 1px 0 $primary-color;
-  @include breakpoint (medium) {
+  @include breakpoint (large) {
     display: none;
   }
 }
