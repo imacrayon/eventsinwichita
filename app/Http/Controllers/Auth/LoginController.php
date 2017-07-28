@@ -51,6 +51,14 @@ class LoginController extends Controller
         $this->socialite = $socialite;
     }
 
+    public function showLoginForm()
+    {
+        if(!session()->has('url.intended')) {
+            session(['url.intended' => url()->previous()]);
+        }
+        return view('auth.login');
+    }
+
     /**
      * Redirect the user to the Facebook authentication page.
      *
