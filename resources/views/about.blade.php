@@ -66,7 +66,7 @@
 
 <div class="section text-center">
     <div class="grid-container grid-container-padded">
-        <p><strong>Events in Wichita</strong> is maintained by <a href="http://imacrayon" target="_blank">Christian Taylor</a>. The website's <a href="https://linearicons.com" target="_blank">icons</a> are designed by <a href="https://perxis.com/" target="_blank">Perxis</a>.</p>
+        <p><strong>Events in Wichita</strong> is maintained by <a href="http://imacrayon.com" target="_blank">Christian Taylor</a>. The website's <a href="https://linearicons.com" target="_blank">icons</a> are designed by <a href="https://perxis.com/" target="_blank">Perxis</a>.</p>
     </div>
 </div>
 
