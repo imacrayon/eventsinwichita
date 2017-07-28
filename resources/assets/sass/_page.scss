@@ -1,8 +1,8 @@
-.profile-section {
+.group {
   margin-bottom: 2rem;
 }
 
-.profile-section-title {
+.group-title {
   color: $dark-gray;
   border-bottom: 1px solid $light-gray;
   @include get-header-size(h6);
@@ -12,7 +12,7 @@
   }
 }
 
-.profile-section .grid-container-padded {
+.group .grid-container-padded {
   padding-left: 0;
   padding-right: 0;
 }
