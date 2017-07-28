@@ -18,6 +18,16 @@
     <meta name="msapplication-config" content="/favicons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
+    <!-- Open Graph & Twitter share data -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@eventsinwichita">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ config('app.name') }}">
+    <meta property="og:url" content="{{ request()->url() }}">
+    <meta property="og:description" content="A calendar of events happening in Wichita, Kansas.">
+    <meta property="og:image" content="{{ asset('images/social.jpg') }}">
+    <meta property="og:site_name" content="{{ config('app.name') }}">
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
