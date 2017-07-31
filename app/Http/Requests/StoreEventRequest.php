@@ -29,7 +29,7 @@ class StoreEventRequest extends FormRequest
             'place_id'    => ['required', 'numeric'],
             'start_time'  => ['required', 'date_format:Y-m-d H:i:s'],
             'end_time'    => ['nullable', 'after:start_time', 'date_format:Y-m-d H:i:s'],
-            'description' => ['nullable', 'max:500']
+            'description' => ['nullable', 'max:1000']
         ];
     }
 }
