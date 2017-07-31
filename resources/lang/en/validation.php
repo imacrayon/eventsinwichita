@@ -116,6 +116,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'facebook_id'     => 'Facebook',
+        'meetup_id'       => 'Meetup',
+        'profile.email'   => 'Email',
+        'profile.website' => 'Website',
+        'profile.phone'   => 'Phone',
+    ],
 
 ];
