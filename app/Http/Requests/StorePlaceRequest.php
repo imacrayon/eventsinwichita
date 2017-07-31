@@ -27,10 +27,14 @@ class StorePlaceRequest extends FormRequest
             'name'            => ['required', 'max:191'],
             'facebook_id'     => ['nullable', 'unique:places'],
             'meetup_id'       => ['nullable', 'unique:places'],
-            'street'          => ['nullable'],
-            'profile'         => ['array'],
-            'profile.website' => ['url'],
-            'profile.email'   => ['email'],
+            'street'          => ['nullable', 'max:191'],
+            'city'            => ['nullable', 'max:191'],
+            'state'           => ['nullable', 'size:2'],
+            'zip'             => ['nullable', 'between:4,10'],
+            'profile'         => ['nullable', 'array'],
+            'profile.phone'   => ['nullable'],
+            'profile.website' => ['nullable', 'url'],
+            'profile.email'   => ['nullable', 'email'],
         ];
     }
 }

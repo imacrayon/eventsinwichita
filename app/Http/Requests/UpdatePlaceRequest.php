@@ -24,14 +24,15 @@ class UpdatePlaceRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'            => ['filled', 'max:191'],
-            'street'          => ['filled', 'max:191'],
-            'city'            => ['filled', 'max:191'],
-            'state'           => ['filled', 'size:2'],
-            'zip'             => ['filled', 'between:4,10'],
+            'name'            => ['required', 'max:191'],
+            'street'          => ['nullable', 'max:191'],
+            'city'            => ['nullable', 'max:191'],
+            'state'           => ['nullable', 'size:2'],
+            'zip'             => ['nullable', 'between:4,10'],
             'facebook_id'     => ['nullable', 'unique:places,facebook_id,' . $this->input('id')],
             'meetup_id'       => ['nullable', 'unique:places,meetup_id,' . $this->input('id')],
-            'profile'         => ['filled', 'array'],
+            'profile'         => ['nullable', 'array'],
+            'profile.phone'   => ['nullable'],
             'profile.website' => ['nullable', 'url'],
             'profile.email'   => ['nullable', 'email'],
         ];

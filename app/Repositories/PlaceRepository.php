@@ -67,6 +67,12 @@ class PlaceRepository extends Repository
      */
     protected function save(Place $place, array $inputs, $user_id = null)
     {
+        $inputs['profile'] = [
+            'website' => array_get($inputs, 'profile.website'),
+            'phone'   => array_get($inputs, 'profile.phone'),
+            'email'   => array_get($inputs, 'profile.email'),
+        ];
+
         $place->fill($inputs);
 
         if ($user_id) {

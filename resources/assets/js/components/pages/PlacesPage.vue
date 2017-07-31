@@ -140,10 +140,10 @@ export default {
 
       createForm: new Form({
         name: '',
-        street: '',
-        city: '',
-        state: '',
-        zip: '',
+        street: null,
+        city: null,
+        state: null,
+        zip: null,
         tags: [],
         profile: {}
       }),

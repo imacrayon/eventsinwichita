@@ -248,14 +248,12 @@ export default {
       editForm: new Form({
         id: null,
         name: '',
-        start_time: null,
-        end_time: null,
-        place_id: null,
-        place: { name: '', id: null },
-        description: null,
-        user_id: null,
-        profile: {},
-        tags: []
+        street: null,
+        city: null,
+        state: null,
+        zip: null,
+        tags: [],
+        profile: {}
       }),
 
       editModal: false,
