@@ -122,7 +122,7 @@
     </div>
 
     <!-- Edit Event Modal -->
-    <modal v-if="editModal">
+    <modal v-if="editModal" @close="editModal = false">
       <div class="modal-head">
         <div class="modal-title">Edit Event</div>
       </div>
@@ -199,7 +199,7 @@
 
 
     <!-- Add Place Modal -->
-    <modal v-if="createPlaceModal">
+    <modal v-if="createPlaceModal" @close="createPlaceModal = false">
       <div class="modal-head">
         <div class="modal-title">Add Place Information</div>
       </div>
@@ -288,7 +288,7 @@
     </modal>
 
     <!-- Destroy event confirmation -->
-    <modal v-if="confirmDestroyModal">
+    <modal v-if="confirmDestroyModal" @close="confirmDestroyModal = false">
       <div class="modal-head">
         <div class="modal-title">Confirm Destruction</div>
       </div>

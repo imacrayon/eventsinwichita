@@ -1,5 +1,5 @@
 <template>
-  <modal v-if="visible" class="alert">
+  <modal v-if="visible" @close="visible = false" class="alert">
     <div class="modal-head">
       <div class="modal-title">Error</div>
     </div>

@@ -59,7 +59,7 @@
     </div>
 
     <!-- Create Event Modal -->
-    <modal v-if="createModal">
+    <modal v-if="createModal" @close="createModal = false">
       <div class="modal-head">
         <div class="modal-title">New Event</div>
       </div>
@@ -136,7 +136,7 @@
     </modal>
 
     <!-- Add Place Modal -->
-    <modal v-if="createPlaceModal">
+    <modal v-if="createPlaceModal" @close="createPlaceModal = false">
       <div class="modal-head">
         <div class="modal-title">Add Place Information</div>
       </div>

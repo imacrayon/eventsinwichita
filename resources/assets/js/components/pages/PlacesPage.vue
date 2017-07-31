@@ -33,7 +33,7 @@
     <places ref="places"></places>
 
     <!-- Create Place Modal -->
-    <modal v-if="createModal">
+    <modal v-if="createModal" @close="createModal = false">
       <div class="modal-head">
         <div class="modal-title">Create Place</div>
       </div>

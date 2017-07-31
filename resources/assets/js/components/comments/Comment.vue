@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <modal v-if="confirming">
+    <modal v-if="confirming" @close="confirming = false">
       <div class="modal-head">
         <div class="modal-title">Confirm Destruction</div>
       </div>

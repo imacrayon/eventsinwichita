@@ -136,7 +136,7 @@
     </div>
 
     <!-- Edit Place Modal -->
-    <modal v-if="editModal">
+    <modal v-if="editModal" @close="editModal = false">
       <div class="modal-head">
         <div class="modal-title">Add Place Information</div>
       </div>
