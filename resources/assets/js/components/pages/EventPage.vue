@@ -18,6 +18,12 @@
               </a>
             </li>
             <li>
+              <a href="#" @click="confirmDestroy">
+                <svg class="icon"><use xlink:href="/images/icons.svg#icon-alert"></use></svg>
+                <span>Destroy</span>
+              </a>
+            </li>
+            <li>
               <subscribe-button :active="event.is_subscribed_to"></subscribe-button>
             </li>
           </ul>
@@ -187,13 +193,6 @@
               Save Changes
             </button>
           </div>
-          <div class="modal-foot-left">
-            <button type="button" class="button alert hollow"
-              @click="confirmDestroy"
-              :disabled="editForm.isSubmitting()">
-              Destroy
-            </button>
-          </div>
         </div>
       </form>
     </modal>
@@ -294,18 +293,18 @@
         <div class="modal-title">Confirm Destruction</div>
       </div>
       <div class="modal-section">
-        <p>Are you super sure you want to destroy <strong>{{ editForm.name }}</strong>?</p>
+        <p>Are you super sure you want to destroy <strong>{{ destroyForm.name }}</strong>?</p>
       </div>
       <div class="modal-foot">
         <div class="modal-foot-right">
           <button class="button transparent"
             @click="confirmDestroyModal = false"
-            :disabled="editForm.isSubmitting()">
+            :disabled="destroyForm.isSubmitting()">
             Keep
           </button>
           <button class="button loading"
             @click="destroy"
-            :disabled="editForm.isSubmitting()">
+            :disabled="destroyForm.isSubmitting()">
             Destroy
           </button>
         </div>
@@ -363,6 +362,11 @@ export default {
       }),
 
       createPlaceModal: false,
+
+      destroyForm: new Form({
+        id: null,
+        name: '',
+      }),
 
       confirmDestroyModal: false
     }
@@ -519,14 +523,16 @@ export default {
     },
 
     confirmDestroy () {
+      this.destroyForm.id = this.event.id
+      this.destroyForm.name = this.event.name
+
       this.confirmDestroyModal = true
     },
 
-    destroy  () {
-      this.editForm.delete(`/api/events/${this.editForm.id}`)
+    destroy () {
+      this.destroyForm.delete(`/api/events/${this.destroyForm.id}`)
         .then(data => {
           this.confirmDestroyModal = false
-          this.editModal = false
           window.location = `/users/${window.App.user.id}/events`
         })
     }
