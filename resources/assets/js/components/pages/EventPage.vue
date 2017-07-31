@@ -134,8 +134,8 @@
               <label :class="{'is-invalid-label': editForm.errors.has('start_time')}">Start
                 <date-picker
                   v-model="editForm.start_time"
-                  :class="{'is-invalid-input': editForm.errors.has('start_time')}">
-                </date-picker>
+                  :class="{'is-invalid-input': editForm.errors.has('start_time')}"
+                ></date-picker>
                 <span :class="['form-error', {'is-visible': editForm.errors.has('start_time')}]" v-text="editForm.errors.get('start_time')"></span>
               </label>
 
@@ -145,8 +145,8 @@
               <label :class="{'is-invalid-label': editForm.errors.has('end_time')}">End
                 <date-picker
                   v-model="editForm.end_time"
-                  :class="{'is-invalid-input': editForm.errors.has('end_time')}">
-                </date-picker>
+                  :class="{'is-invalid-input': editForm.errors.has('end_time')}"
+                ></date-picker>
                 <span :class="['form-error', {'is-visible': editForm.errors.has('end_time')}]" v-text="editForm.errors.get('end_time')"></span>
               </label>
 
@@ -342,8 +342,8 @@ export default {
       editForm: new Form({
         id: null,
         name: '',
-        start_time: undefined,
-        end_time: undefined,
+        start_time: formatUrlDate(),
+        end_time: formatUrlDate(moment().endOf('day')),
         place_id: null,
         place: { name: '', id: null },
         description: null,

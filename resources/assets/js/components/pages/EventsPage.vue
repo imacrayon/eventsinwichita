@@ -231,13 +231,14 @@
 </template>
 
 <script>
+import moment from 'moment'
 import Modal from '../Modal.vue'
 import Form from '../../utilities/Form'
 import Events from '../events/Events.vue'
 import DatePicker from '../DatePicker.vue'
 import EventFilters from '../events/EventFilters.vue'
 import PlacePicker from '../PlacePicker.vue'
-import { serialize } from '../../helpers'
+import { serialize, formatUrlDate } from '../../helpers'
 
 export default {
   components: { Events, Modal, DatePicker, PlacePicker, EventFilters },
@@ -253,8 +254,8 @@ export default {
       createForm: new Form({
         id: null,
         name: '',
-        start_time: undefined,
-        end_time: undefined,
+        start_time: formatUrlDate(),
+        end_time: formatUrlDate(moment().endOf('day')),
         place_id: null,
         place: { name: '', id: null },
         description: null,

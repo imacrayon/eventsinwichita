@@ -13,17 +13,13 @@
 
         <label for="start_time">Start Time</label>
         <date-picker name="start_time" id="start_time"
-          :config="{
-            static: true
-          }"
+          :config="{static: true, defaultDate: new Date()}"
           v-model="filters.start_time"
         ></date-picker>
 
         <label for="end_time">End Time</label>
         <date-picker name="end_time" id="end_time"
-          :config="{
-            static: true
-          }"
+          :config="{static: true}"
           v-model="filters.end_time"
         ></date-picker>
 

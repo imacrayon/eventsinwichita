@@ -57,14 +57,13 @@ export default {
     // Load flatPickr if not loaded yet
     if (!this.fp) {
       // Bind on parent element if wrap is true
-      let elem = this.config.wrap ? this.$el.parentNode : this.$el;
+      let elem = this.config.wrap ? this.$el.parentNode : this.$el
       this.fp = new Flatpickr(elem, Object.assign(
         {
           enableTime: true,
           dateFormat: 'Y-m-d H:i:S',
           altInput: true,
-          altFormat: 'F j, Y h:i K',
-          defaultDate: new Date()
+          altFormat: 'F j, Y h:i K'
         },
         this.config
       ));
