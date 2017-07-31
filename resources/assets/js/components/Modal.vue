@@ -12,8 +12,6 @@
 
 <script>
 export default {
-  props: ['title'],
-
   created () {
     this.escListener = (e) => {
       if (e.keyCode === 27) {
