@@ -103,6 +103,7 @@ export default {
   watch: {
     filters () {
       this.getEvents()
+      window.flash('Events filtered.')
     }
   },
 

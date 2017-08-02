@@ -51,6 +51,7 @@ export default {
   watch: {
     filters () {
       this.getPlaces()
+      window.flash('Places filtered.')
     }
   },
 
