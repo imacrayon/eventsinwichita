@@ -11,18 +11,20 @@
       <div class="top-bar-container">
         <div class="top-bar-right" v-if="authorize(user => user.id)">
           <ul class="menu">
-            <li v-if="authorize(user => event.user_id === user.id)">
-              <a href="#" @click="edit(event)">
-                <svg class="icon"><use xlink:href="/images/icons.svg#icon-pencil"></use></svg>
-                <span>Edit</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" @click="confirmDestroy">
-                <svg class="icon"><use xlink:href="/images/icons.svg#icon-alert"></use></svg>
-                <span>Destroy</span>
-              </a>
-            </li>
+            <template v-if="authorize(user => event.user_id === user.id)">
+              <li>
+                <a href="#" @click="edit(event)">
+                  <svg class="icon"><use xlink:href="/images/icons.svg#icon-pencil"></use></svg>
+                  <span>Edit</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" @click="confirmDestroy">
+                  <svg class="icon"><use xlink:href="/images/icons.svg#icon-alert"></use></svg>
+                  <span>Destroy</span>
+                </a>
+              </li>
+            </template>
             <li>
               <subscribe-button :active="event.is_subscribed_to"></subscribe-button>
             </li>
