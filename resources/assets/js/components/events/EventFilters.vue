@@ -1,5 +1,5 @@
 <template>
-  <form ref="form" class="grid-y" style="height:100%;">
+  <div class="grid-y" style="height:100%;">
     <div class="cell auto" style="padding: .75rem; overflow:auto;">
 
       <label for="filter-tags" class="">Filter By Date</label>
@@ -30,7 +30,7 @@
       </div>
 
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
