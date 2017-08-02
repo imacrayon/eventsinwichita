@@ -40,11 +40,11 @@ const app = new Vue({
   data () {
     return {
       filters: {
-        start_time: getSearchParam('start_time', null),
-        end_time: getSearchParam('end_time', null),
+        start_time: getSearchParam('start_time', ''),
+        end_time: getSearchParam('end_time', ''),
         tags: getSearchParam('tags', []),
-        user_id: getSearchParam('user_id', null),
-        place_id: getSearchParam('place_id', null)
+        user_id: getSearchParam('user_id', ''),
+        place_id: getSearchParam('place_id', '')
       }
     }
   },
