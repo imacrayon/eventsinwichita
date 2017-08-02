@@ -44,7 +44,7 @@
     <div class="grid-container grid-container-padded">
       <div class="grid-x grid-margin-x">
 
-        <div class="cell large-4">
+        <div class="cell large-8">
 
           <div class="group" v-if="place.street">
             <h2 class="group-title">
@@ -87,6 +87,9 @@
             </a>
           </div>
 
+        </div>
+        <div class="cell large-4">
+
           <div class="group" v-if="place.tags.length > 0">
             <h2 class="group-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-tag"></use></svg>
@@ -108,7 +111,6 @@
           </div>
 
         </div>
-
         <div class="cell large-8">
 
           <div class="group">
