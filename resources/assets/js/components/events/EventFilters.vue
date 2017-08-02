@@ -26,8 +26,7 @@
     <div class="cell shrink">
 
       <div style="padding: .75rem; border-top: 1px solid #cecece; box-shadow: 0 0 8px rgba(0, 0, 0, .15);">
-        <button type="button" class="button expanded hollow" style="margin-bottom:.5rem;" @click="reset" v-show="dirty">Reset</button>
-        <button class="button expanded" style="margin-bottom:0">Filter</button>
+        <button type="button" class="button expanded" style="margin-bottom:0;" @click="reset" v-show="dirty">Reset</button>
       </div>
 
     </div>
