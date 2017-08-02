@@ -48,19 +48,23 @@ export default {
 
   data () {
     return {
-      filters: Object.assign({
-        start_time: null,
-        end_time: null,
-        tags: null,
-        user_id: null,
-        place_id: null
-      }, this.scope),
-
       events: false
     }
   },
 
   computed: {
+    filters () {
+      let filters = Object.assign({}, this.$root.filters, this.scope)
+      filters.tags = Array.isArray(filters.tags) ? filters.tags : [filters.tags]
+      filters.start_time = filters.start_time || formatUrlDate(moment())
+      // Don't mess with the end time if there are tag filters
+      if (filters.tags.length === 0) {
+        filters.end_time = filters.end_time || formatUrlDate(moment(filters.start_time).add(6, 'days'))
+      }
+
+      return filters
+    },
+
     calendar () {
       const formatString = 'ddd MMM DD'
       if (this.events === false) {
@@ -89,27 +93,20 @@ export default {
 
     showNextWeek () {
       return !!this.filters.end_time && this.events.length > 0
-    },
+    }
   },
 
   created () {
-    this.filters.start_time = this.getFilter('start_time', formatUrlDate(moment()))
-    this.filters.end_time = this.getFilter('end_time', formatUrlDate(moment(this.filters.start_time).add(6, 'days')))
-    this.filters.user_id = this.getFilter('user_id', '')
-    this.filters.place_id = this.getFilter('place_id', '')
-    const tags = this.getFilter('tags', [])
-    this.filters.tags = Array.isArray(tags) ? tags : [tags]
-
     this.getEvents()
   },
 
-  methods: {
-    getFilter (name, defaultVal) {
-      return this.filters[name] !== null
-        ? this.filters[name]
-        : getSearchParam(name, defaultVal)
-    },
+  watch: {
+    filters () {
+      this.getEvents()
+    }
+  },
 
+  methods: {
     /**
      * Get all events.
      */

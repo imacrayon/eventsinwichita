@@ -28,16 +28,7 @@ import moment from 'moment'
 import { urlMap, diffForHumans, serialize } from '../../helpers'
 
 export default {
-  props: {
-    filters: {
-      default () {
-        return {
-          limit: 50,
-          user_id: ''
-        }
-      }
-    }
-  },
+  props: ['scope'],
 
   data () {
     return {
@@ -71,7 +62,7 @@ export default {
      * Get all events.
      */
     getActivities () {
-      return axios.get(`/api/activities?${serialize(this.filters)}`)
+      return axios.get(`/api/activities?${serialize(this.scope)}`)
         .then(({data}) => {
           this.activities = data
           return data

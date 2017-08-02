@@ -33,8 +33,26 @@ Vue.component('notifications', require('./components/notifications/Notifications
 
 Vue.component('notifications-dropdown', require('./components/notifications/NotificationsDropdown.vue'))
 
+import { getSearchParam } from './helpers'
+
 const app = new Vue({
-    el: '#app'
+  el: '#app',
+  data () {
+    return {
+      filters: {
+        start_time: getSearchParam('start_time', null),
+        end_time: getSearchParam('end_time', null),
+        tags: getSearchParam('tags', []),
+        user_id: getSearchParam('user_id', null),
+        place_id: getSearchParam('place_id', null)
+      }
+    }
+  },
+  created () {
+    this.filters.tags = Array.isArray(this.filters.tags)
+      ? this.filters.tags
+      : [this.filters.tags]
+  }
 });
 
 require('what-input')

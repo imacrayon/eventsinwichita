@@ -28,16 +28,7 @@ import { serialize, getSearchParam } from '../../helpers'
 export default {
   components: { Loader, Place },
 
-  props: {
-    filters: {
-      default () {
-        return {
-          user_id: '',
-          tags: false
-        }
-      }
-    }
-  },
+  props: ['scope'],
 
   data () {
     return {
@@ -45,11 +36,22 @@ export default {
     }
   },
 
+  computed: {
+    filters () {
+      let filters = Object.assign({}, this.$root.filters, this.scope)
+      filters.tags = Array.isArray(filters.tags) ? filters.tags : [filters.tags]
+      return filters
+    },
+  },
+
   created () {
-    this.filters.user_id = this.filters.user_id || getSearchParam('user_id', '')
-    const tags = this.filters.tags || getSearchParam('tags', [])
-    this.filters.tags = Array.isArray(tags) ? tags : [tags]
     this.getPlaces()
+  },
+
+  watch: {
+    filters () {
+      this.getPlaces()
+    }
   },
 
   methods: {
