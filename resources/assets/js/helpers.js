@@ -4,17 +4,20 @@ export function serialize (params, prefix) {
   const query = Object.keys(params).reduce((items, key) => {
     const value  = params[key];
 
-    if (params.constructor === Array) {
-      key = `${prefix}[]`
-    } else if (params.constructor === Object) {
-      key = (prefix ? `${prefix}[${key}]` : key)
-    }
+    // Ignore "blank" values
+    if (value !== null && value !== '' && value !== undefined) {
+      if (params.constructor === Array) {
+        key = `${prefix}[]`
+      } else if (params.constructor === Object) {
+        key = prefix ? `${prefix}[${key}]` : key
+      }
 
-    if (typeof value === 'object') {
-      const segment = serialize(value, key)
-      if (segment.length) items.push(segment)
-    } else if (value !== '') {
-      items.push(`${key}=${encodeURIComponent(value)}`)
+      if (typeof value === 'object') {
+        const segment = serialize(value, key)
+        if (segment.length) items.push(segment)
+      } else {
+        items.push(`${key}=${encodeURIComponent(value)}`)
+      }
     }
 
     return items
