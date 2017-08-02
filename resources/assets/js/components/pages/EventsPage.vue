@@ -15,15 +15,10 @@
         <div class="top-bar-right">
           <ul class="menu">
             <li>
-              <dropdown>
-                <a class="dropdown">
-                  <svg class="icon"><use xlink:href="/images/icons.svg#icon-funnel"></use></svg>
-                  Filter
-                </a>
-                <div slot="menu">
-                    <event-filters></event-filters>
-                </div>
-              </dropdown>
+              <a @click="showFilters = !showFilters">
+                <svg class="icon"><use xlink:href="/images/icons.svg#icon-funnel"></use></svg>
+                Filter
+              </a>
             </li>
             <li v-if="authorize(user => user.id)">
               <a @click="create">
@@ -58,6 +53,10 @@
       </div>
     </div>
 
+    <panel v-if="showFilters" @close="showFilters = false">
+      <event-filters></event-filters>
+    </panel>
+
     <!-- Create Event Modal -->
     <modal v-if="createModal" @close="createModal = false">
       <div class="modal-head">
@@ -76,7 +75,7 @@
             <div class="small-12 medium-6 cell">
 
               <label :class="{'is-invalid-label': createForm.errors.has('start_time')}">Start
-                 <date-picker
+                <date-picker
                   v-model="createForm.start_time"
                   :class="{'is-invalid-input': createForm.errors.has('start_time')}"
                 ></date-picker>
@@ -233,6 +232,7 @@
 <script>
 import moment from 'moment'
 import Modal from '../Modal.vue'
+import Panel from '../Panel.vue'
 import Form from '../../utilities/Form'
 import Events from '../events/Events.vue'
 import DatePicker from '../DatePicker.vue'
@@ -241,7 +241,7 @@ import PlacePicker from '../PlacePicker.vue'
 import { serialize, formatUrlDate } from '../../helpers'
 
 export default {
-  components: { Events, Modal, DatePicker, PlacePicker, EventFilters },
+  components: { Events, Modal, DatePicker, PlacePicker, EventFilters, Panel },
 
   data () {
     return {
@@ -277,6 +277,8 @@ export default {
       }),
 
       createPlaceModal: false,
+
+      showFilters: false
     }
   },
 

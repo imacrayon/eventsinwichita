@@ -50,13 +50,3 @@
 .flatpickr-calendar.arrowTop:after {
     border-bottom-color: $primary-color;
 }
-
-
-.dropdown-pane {
-  .flatpickr-wrapper {
-    width: 100%;
-    .flatpickr-calendar {
-      right: 0;
-    }
-  }
-}

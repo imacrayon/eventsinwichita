@@ -1,31 +1,37 @@
 <template>
-  <form style="padding: .75rem 0 1rem 0;">
-    <div class="grid-x grid-padding-x">
-      <div class="cell">
+  <form ref="form" class="grid-y" style="height:100%;">
+    <div class="cell auto" style="padding: .75rem; overflow:auto;">
 
-        <label for="filter-tags" class="">Tags</label>
-        <div id="filter-tags" class="tags-field">
-          <template v-for="tag in tags">
-            <input type="checkbox" name="tags[]" :value="tag.id" v-model="filters.tags" :id="'filter-tag-' + tag.id">
-            <label class="button hollow tiny" :for="'filter-tag-' + tag.id">{{ tag.name }}</label>
-          </template>
-        </div>
+      <label for="filter-tags" class="">Filter By Date</label>
+      <date-picker name="start_time" id="start_time"
+        :config="{
+          defaultDate: new Date(),
+          enableTime: false,
+          altInput: false,
+          static: true,
+          inline: true,
+          minDate: new Date(),
+        }"
+        v-model="filters.start_time"
+        @input="submit()"
+      ></date-picker>
 
-        <label for="start_time">Start Time</label>
-        <date-picker name="start_time" id="start_time"
-          :config="{static: true, defaultDate: new Date()}"
-          v-model="filters.start_time"
-        ></date-picker>
-
-        <label for="end_time">End Time</label>
-        <date-picker name="end_time" id="end_time"
-          :config="{static: true}"
-          v-model="filters.end_time"
-        ></date-picker>
-
-        <button class="button" style="margin: 0;">Filter</button>
-        <button type="button" class="button transparent" style="margin: 0;" @click="reset" v-show="query">Reset</button>
+      <label for="filter-tags" class="">Filter By Tag</label>
+      <div id="filter-tags" class="tags-field">
+        <template v-for="tag in tags">
+          <input type="checkbox" name="tags[]" :value="tag.id" v-model="filters.tags" :id="'filter-tag-' + tag.id">
+          <label :for="'filter-tag-' + tag.id">{{ tag.name }}</label>
+        </template>
       </div>
+
+    </div>
+    <div class="cell shrink">
+
+      <div style="padding: .75rem; border-top: 1px solid #cecece; box-shadow: 0 0 8px rgba(0, 0, 0, .15);">
+        <button type="button" class="button expanded hollow" style="margin-bottom:.5rem;" @click="reset" v-show="query">Reset</button>
+        <button class="button expanded" style="margin-bottom:0">Filter</button>
+      </div>
+
     </div>
   </form>
 </template>
@@ -40,9 +46,9 @@ export default {
   data () {
     return {
       filters: {
-        start_time: '',
-        end_time: '',
-        tags: false
+        start_time: getSearchParam('start_time', ''),
+        end_time: getSearchParam('end_time', ''),
+        tags: getSearchParam('tags', [])
       },
 
       query: window.location.search,
@@ -52,11 +58,21 @@ export default {
   },
 
   created () {
-    this.filters.start_time = getSearchParam('start_time', new Date())
-    this.filters.end_time = getSearchParam('end_time', '')
-    const tags = getSearchParam('tags', [])
-    this.filters.tags = Array.isArray(tags) ? tags : [tags]
+    this.filters.tags = Array.isArray(this.filters.tags)
+      ? this.filters.tags
+      : [this.filters.tags]
     this.getTags()
+
+    this.escListener = (e) => {
+      if (e.keyCode === 27) {
+        this.close()
+      }
+    }
+    document.addEventListener('keydown', this.escListener)
+  },
+
+  beforeDestroy () {
+    document.removeEventListener('keydown', this.escListener)
   },
 
   methods: {
@@ -69,6 +85,10 @@ export default {
           this.tags = response.data
           return response
         })
+    },
+
+    submit () {
+      this.$refs.form.submit()
     },
 
     reset () {

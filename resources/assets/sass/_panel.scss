@@ -1,0 +1,87 @@
+.panel-wrapper {
+  transition: all .7s ease;
+}
+.panel-overlay {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: .5rem;
+  background: rgba(0, 0, 0, .25);
+  transition: all .5s ease;
+}
+$panel-width: 275px;
+$calendar-width: $panel-width - 24px;
+$calendar-day-height: 36px;
+.panel {
+  position: fixed;
+  z-index: 11;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: $panel-width;
+  height: 100%;
+  background: $white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+  transition: all .5s ease;
+
+  .flatpickr-input {
+    display: none;
+  }
+
+  .flatpickr-calendar {
+    width: $calendar-width;
+    margin-bottom: 1rem;
+    &:before, &:after {
+      display: none;
+    }
+    .dayContainer,
+    .flatpickr-days {
+      width: $calendar-width;
+      min-width: $calendar-width;
+      max-width: $calendar-width
+    }
+    .flatpickr-day {
+      height: $calendar-day-height;
+      line-height: $calendar-day-height;
+    }
+  }
+
+  @include breakpoint(375px) {
+    $panel-width: 325px;
+    $calendar-width: $panel-width - 24px;
+    $calendar-day-height: 43px;
+
+    width: $panel-width;
+
+    .flatpickr-calendar {
+      width: $calendar-width;
+      .dayContainer,
+      .flatpickr-days {
+        width: $calendar-width;
+        min-width: $calendar-width;
+        max-width: $calendar-width
+      }
+      .flatpickr-day {
+        height: $calendar-day-height;
+        line-height: $calendar-day-height;
+      }
+    }
+  }
+
+}
+.panel-section {
+  padding: .75rem;
+}
+
+.panel-enter .panel , .panel-leave-to .panel {
+  transform: translateX(100%);
+}
+.panel-enter .panel-overlay , .panel-leave-to .panel-overlay {
+  opacity: 0;
+}

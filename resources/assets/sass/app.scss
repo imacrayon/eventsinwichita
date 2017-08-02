@@ -68,6 +68,8 @@
 @import 'profile';
 @import 'transitions';
 @import 'content';
+@import 'panel';
+
 
 html {
   overflow-y: scroll; // Always show scrollbar to prevent layout jump
