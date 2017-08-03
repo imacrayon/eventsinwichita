@@ -10,10 +10,10 @@
     </div>
 
     <transition-group name="fade" tag="div">
-      <div v-for="(day, date) in calendar" :key="date">
+      <div v-for="(day, index) in calendar" :key="index">
         <div class="sticky">
             <div class="sticky-fix calendar-day">
-                <div class="grid-container grid-container-padded" v-html="date">
+                <div class="grid-container grid-container-padded" v-html="displayCalendarDay(index)">
                 </div>
             </div>
         </div>
@@ -67,7 +67,47 @@ export default {
     calendar () {
       if (this.events === false) return {}
 
-      const formatString = 'ddd MMM DD'
+      const setPlacementData = (event, day) => {
+        event.calendar_day = day
+        event.starts_today = false
+        event.ends_today = false
+
+       /*
+        * Notes About sort_score
+        *
+        * We score events based on the number of minutes since 00:00
+        * Certain types of events get bonus points based on 1440 minutes
+        * 1440 is the total number of minutes in a day
+        *
+        * Events happening all day + 0 (sorted by ending soonest)
+        * Events ending on this day + 1440 (sorted by ending soonest)
+        * Events starting and ending on this day + 2880 (sorted by upcoming)
+        *
+        * The bonus points ensure that events that are happening
+        * all day long get listed fist, then events ending on this day,
+        * and finally "normal" events that start and end on the same day.
+        */
+
+        // Events happening all day or ending on this day are
+        // sorted by end_time
+        const startOfEndDay = moment(event.end_time).startOf('day')
+        event.sort_score = event.end_time.diff(startOfEndDay) / 60000
+
+        if (event.end_time.isSame(day, 'day')) {
+          event.ends_today = true
+          // Bonus points for events ending on this day
+          event.sort_score += 1440
+        }
+
+        if (event.start_time.isSame(day, 'day')) {
+          event.starts_today = true
+          // Events starting on this day are sorted by start_time
+          const startOfStartDay = moment(event.start_time).startOf('day')
+          event.sort_score = event.start_time.diff(startOfStartDay) / 60000
+          // Bonus points for events starting and ending on the same day
+          event.sort_score += 2880
+        }
+      }
 
       /*
        * Adds an event to an array of events for each day that it
@@ -75,18 +115,20 @@ export default {
        *
        * @param  Object events  The master list of events.
        * @param  Object event  A single event with a start and end time.
-       * @param  Moment dayToCheck The day to check if the event occurs on.
+       * @param  Moment day The day to check if the event occurs on (with time 11::59:59).
        */
-      const splitEventDays = (events, event, dayToCheck = null) => {
-        dayToCheck = dayToCheck || moment(event.start_time).endOf('day')
+      const splitEventDays = (events, event, day = null) => {
+        day = day || moment(event.start_time).endOf('day')
         // Ignore any events that fall outside the filter
-        if (dayToCheck.isSameOrAfter(moment(this.filters.start_time))) {
-          let date = dayToCheck.format(formatString)
+        if (day.isSameOrAfter(moment(this.filters.start_time), 'day')) {
+          let date = day.format('YYYY-MM-DD')
           events[date] = events[date] || []
+          event = Object.assign({}, event)
+          setPlacementData(event, day)
           events[date].push(event)
         }
-        if (event.end_time.isAfter(dayToCheck)) {
-          splitEventDays(events, event, moment(dayToCheck).add(1, 'day'))
+        if (event.end_time.isAfter(day)) {
+          splitEventDays(events, event, moment(day).add(1, 'day'))
         }
       }
 
@@ -94,18 +136,13 @@ export default {
         event.start_time = moment(event.start_time)
         event.end_time = moment(event.end_time)
         splitEventDays(events, event)
+
         return events
       }, {})
 
       // Sort by start time ignoring the day & year of the DateTime
       Object.keys(calendar).map(key => {
-        calendar[key].sort((a, b) => {
-          // Make times relative to the day the event occurs on by taking the
-          // milliseconds the have past since 00:00:00.
-          let startOfA = moment(a.start_time).startOf('day')
-          let startOfB = moment(b.start_time).startOf('day')
-          return a.start_time.diff(startOfA) - b.start_time.diff(startOfB)
-        })
+        calendar[key].sort((a, b) => a.sort_score - b.sort_score)
       })
 
       return calendar
@@ -137,6 +174,15 @@ export default {
           this.events = data
           return data
         })
+    },
+
+    displayCalendarDay (day) {
+      day = moment(day)
+      if (day.isSame(moment(), 'day')) {
+        return `Today &middot ${day.format('ddd MMM DD')}`
+      } else {
+        return day.format('ddd MMM DD')
+      }
     },
 
     nextWeek () {
