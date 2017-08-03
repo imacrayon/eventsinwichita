@@ -84,7 +84,7 @@ export default {
         * Events starting and ending on this day + 2880 (sorted by upcoming)
         *
         * The bonus points ensure that events that are happening
-        * all day long get listed fist, then events ending on this day,
+        * all day long get listed first, then events ending on this day,
         * and finally "normal" events that start and end on the same day.
         */
 
