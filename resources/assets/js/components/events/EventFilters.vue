@@ -17,8 +17,8 @@
       <label for="filter-tags">Filter By Tag</label>
       <div id="filter-tags" class="tags-field">
         <template v-for="tag in tags">
-          <input type="checkbox" name="tags[]" :value="tag.id" v-model="$root.filters.tags" :id="'filter-tag-' + tag.id">
-          <label :for="'filter-tag-' + tag.id">{{ tag.name }}</label>
+          <input type="checkbox" name="tags[]" :value="tag.id" v-model="$root.filters.tags" :id="`filter-tag-${tag.id}`">
+          <label :for="`filter-tag-${tag.id}`">{{ tag.name }}</label>
         </template>
       </div>
 
@@ -42,20 +42,26 @@ export default {
 
   data () {
     return {
-      origFilters: Object.assign({}, this.$root.filters),
-
-      tags: false
+      tags: false,
+      filters: {
+        start_time: getSearchParam('start_time', ''),
+        tags: getSearchParam('tags', [])
+      }
     }
   },
 
   computed: {
     dirty () {
-      return this.$root.filters.start_time != this.origFilters.start_time || this.$root.filters.tags != this.origFilters.tags
+      // Have to join arrays before comparing because of Object identity
+      return this.$root.filters.start_time !== this.filters.start_time || this.$root.filters.tags.join(',') !== this.filters.tags.join(',')
     }
   },
 
   created () {
     this.getTags()
+    this.filters.tags = Array.isArray(this.filters.tags)
+      ? this.filters.tags
+      : [this.filters.tags]
   },
 
   methods: {
@@ -71,7 +77,8 @@ export default {
     },
 
     reset () {
-      this.$root.filters = Object.assign(this.$root.filters, this.origFilters)
+      this.$root.filters.start_time = this.filters.start_time
+      this.$root.filters.tags = this.filters.tags
     }
   }
 }

@@ -33,7 +33,7 @@
     @include get-header-size(h3);
   }
   line-height: 1.1;
-  margin: 0;
+  margin: 0 0 .25rem 0;
   /* These are technically the same, but use both */
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -43,14 +43,34 @@
   word-break: break-word;
   /* Adds a hyphen where the word breaks, if supported (No Blink) */
   hyphens: auto;
+  display: block;
+  a {
+    display: block;
+    &:before {
+      content: '';
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
 }
 .event-place {
+  // Move it in front of event link
+  position: relative;
+  z-index: 2;
   display: inline-block;
   font-size: .8rem;
   color: $dark-gray;
+  margin: 0 0 .5rem 0;
 }
 .event-start,
 .event-end {
+  // Move it in front of event link
+  position: relative;
+  z-index: 2;
   font-size: .675rem;
   color: $dark-gray;
   width: 3rem;
@@ -76,14 +96,15 @@
   }
 }
 .event-tags {
-  .label {
-    font-size: 0.6rem;
-    border-radius: 1rem;
-    text-transform: uppercase;
-    padding: .25rem .5rem;
-    margin: .25rem .5rem 0 0;
-    letter-spacing: 1px;
+  // Move it in front of event link
+  position: relative;
+  z-index: 2;
+}
+.event .tags-field {
+  margin-bottom: 0;
+  & > input:checked + label {
     color: $dark-gray;
-    background-color: $light-gray;
+    background: $light-gray;
+    border-color: $light-gray;
   }
 }

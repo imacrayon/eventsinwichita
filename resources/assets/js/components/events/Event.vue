@@ -21,8 +21,11 @@
       <a class="event-place" v-if="event.place" :href="`/places/${event.place.id}`">
         {{ event.place.name }}
       </a>
-      <div class="event-tags" v-if="event.tags.length > 0">
-        <span v-for="tag in event.tags" class="label" :key="tag.id">{{ tag.name }}</span>
+      <div class="event-tags tags-field">
+        <template v-for="tag in event.tags">
+          <input type="checkbox" name="tags[]" :value="tag.id" v-model="$root.filters.tags" :id="`filter-tag-${event.id}-${tag.id}`">
+          <label :for="`filter-tag-${event.id}-${tag.id}`">{{ tag.name }}</label>
+        </template>
       </div>
     </div>
   </div>

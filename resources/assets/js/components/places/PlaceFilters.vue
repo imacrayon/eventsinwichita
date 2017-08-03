@@ -6,8 +6,8 @@
         <label for="filter-tags" class="">Tags</label>
         <div id="filter-tags" class="tags-field">
           <template v-for="tag in tags">
-            <input type="checkbox" name="tags[]" :value="tag.id" v-model="filters.tags" :id="'filter-tag-' + tag.id">
-            <label class="button hollow tiny" :for="'filter-tag-' + tag.id">{{ tag.name }}</label>
+            <input type="checkbox" name="tags[]" :value="tag.id" v-model="filters.tags" :id="`filter-tag-${tag.id}`">
+            <label class="button hollow tiny" :for="`filter-tag-${tag.id}`">{{ tag.name }}</label>
           </template>
         </div>
 
