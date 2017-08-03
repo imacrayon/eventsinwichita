@@ -80,13 +80,13 @@ export default {
       const splitEventDays = (events, event, dayToCheck = null) => {
         dayToCheck = dayToCheck || moment(event.start_time).endOf('day')
         // Ignore any events that fall outside the filter
-        if (dayToCheck.isAfter(moment(this.filters.start_time))) {
+        if (dayToCheck.isSameOrAfter(moment(this.filters.start_time))) {
           let date = dayToCheck.format(formatString)
           events[date] = events[date] || []
           events[date].push(event)
-          if (event.end_time.isAfter(dayToCheck)) {
-            splitEventDays(events, event, moment(dayToCheck).add(1, 'day'))
-          }
+        }
+        if (event.end_time.isAfter(dayToCheck)) {
+          splitEventDays(events, event, moment(dayToCheck).add(1, 'day'))
         }
       }
 
