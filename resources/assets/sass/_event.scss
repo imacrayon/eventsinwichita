@@ -57,6 +57,9 @@
   span {
     display: block;
   }
+  a {
+    color: $dark-gray;
+  }
   .event-start-day-name,
   .event-start-day,
   .event-start-month,
@@ -68,6 +71,9 @@
 }
 .event-start {
   color: $black;
+  a {
+    color: $black;
+  }
 }
 .event-tags {
   .label {
