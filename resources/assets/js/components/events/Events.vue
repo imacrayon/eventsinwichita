@@ -9,19 +9,19 @@
       <h4 class="text-medium-gray">There aren't any events right now. Go read a book.</h4>
     </div>
 
-  <transition-group name="fade" tag="div">
-    <div v-for="(day, date) in calendar" :key="date">
-      <div class="sticky">
-          <div class="sticky-fix calendar-day">
-              <div class="grid-container grid-container-padded" v-html="date">
-              </div>
-          </div>
+    <transition-group name="fade" tag="div">
+      <div v-for="(day, date) in calendar" :key="date">
+        <div class="sticky">
+            <div class="sticky-fix calendar-day">
+                <div class="grid-container grid-container-padded" v-html="date">
+                </div>
+            </div>
+        </div>
+        <div class="grid-container grid-container-padded">
+            <event v-for="event in day" :key="event.id" :event="event" @edit="$emit('edit', event)"></event>
+        </div>
       </div>
-      <div class="grid-container grid-container-padded">
-          <event v-for="event in day" :key="event.id" :event="event" @edit="$emit('edit', event)"></event>
-      </div>
-    </div>
-  </transition-group>
+    </transition-group>
 
     <div class="grid-container grid-container-padded" v-if="showNextWeek">
       <div class="grid-x grid-margin-x align-center">
@@ -30,7 +30,6 @@
         </div>
       </div>
     </div>
-
 
   </div>
 </template>
@@ -66,29 +65,50 @@ export default {
     },
 
     calendar () {
+      if (this.events === false) return {}
+
       const formatString = 'ddd MMM DD'
-      if (this.events === false) {
-        return {}
+
+      /*
+       * Adds an event to an array of events for each day that it
+       * occurs based on it's the range of its start and end time.
+       *
+       * @param  Object events  The master list of events.
+       * @param  Object event  A single event with a start and end time.
+       * @param  Moment dayToCheck The day to check if the event occurs on.
+       */
+      const splitEventDays = (events, event, dayToCheck = null) => {
+        dayToCheck = dayToCheck || moment(event.start_time).endOf('day')
+        // Ignore any events that fall outside the filter
+        if (dayToCheck.isAfter(moment(this.filters.start_time))) {
+          let date = dayToCheck.format(formatString)
+          events[date] = events[date] || []
+          events[date].push(event)
+          if (event.end_time.isAfter(dayToCheck)) {
+            splitEventDays(events, event, moment(dayToCheck).add(1, 'day'))
+          }
+        }
       }
-      const startFilter = moment(this.filters.start_time)
-      const startOfToday = moment().startOf('day')
-      const endOfToday = moment().endOf('day')
-      const todaysDate = moment().format(formatString)
-      let date = ''
-      return this.events.reduce((events, event) => {
+
+      let calendar = this.events.reduce((events, event) => {
         event.start_time = moment(event.start_time)
         event.end_time = moment(event.end_time)
-        date = event.start_time.format(formatString)
-        if (event.start_time.isBefore(endOfToday)
-          && event.end_time.isAfter(startOfToday)) {
-          date = startFilter.isAfter(startOfToday)
-            ? `Today &middot; ${todaysDate}`
-            : `${date} &middot; Happening Today`
-        }
-        events[date] = events[date] || []
-        events[date].push(event)
+        splitEventDays(events, event)
         return events
       }, {})
+
+      // Sort by start time ignoring the day & year of the DateTime
+      Object.keys(calendar).map(key => {
+        calendar[key].sort((a, b) => {
+          // Make times relative to the day the event occurs on by taking the
+          // milliseconds the have past since 00:00:00.
+          let startOfA = moment(a.start_time).startOf('day')
+          let startOfB = moment(b.start_time).startOf('day')
+          return a.start_time.diff(startOfA) - b.start_time.diff(startOfB)
+        })
+      })
+
+      return calendar
     },
 
     showNextWeek () {
