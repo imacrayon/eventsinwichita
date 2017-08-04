@@ -127,7 +127,7 @@ export default {
           setPlacementData(event, day)
           events[date].push(event)
         }
-        if (event.end_time.isAfter(day)) {
+        if (event.end_time.isAfter(day) && day.isBefore(moment(this.filters.end_time), 'day')) {
           splitEventDays(events, event, moment(day).add(1, 'day'))
         }
       }
