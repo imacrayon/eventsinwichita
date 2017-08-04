@@ -45,6 +45,13 @@ const app = new Vue({
         tags: getSearchParam('tags', []),
         user_id: getSearchParam('user_id', ''),
         place_id: getSearchParam('place_id', '')
+      },
+      cleanFilters: {
+        start_time: getSearchParam('start_time', ''),
+        end_time: getSearchParam('end_time', ''),
+        tags: getSearchParam('tags', []),
+        user_id: getSearchParam('user_id', ''),
+        place_id: getSearchParam('place_id', '')
       }
     }
   },
@@ -52,6 +59,10 @@ const app = new Vue({
     this.filters.tags = Array.isArray(this.filters.tags)
       ? this.filters.tags
       : [this.filters.tags]
+
+    this.cleanFilters.tags = Array.isArray(this.cleanFilters.tags)
+      ? this.cleanFilters.tags
+      : [this.cleanFilters.tags]
   }
 });
 

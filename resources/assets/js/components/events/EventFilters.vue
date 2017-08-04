@@ -42,26 +42,19 @@ export default {
 
   data () {
     return {
-      tags: false,
-      filters: {
-        start_time: getSearchParam('start_time', ''),
-        tags: getSearchParam('tags', [])
-      }
+      tags: false
     }
   },
 
   computed: {
     dirty () {
       // Have to join arrays before comparing because of Object identity
-      return this.$root.filters.start_time !== this.filters.start_time || this.$root.filters.tags.join(',') !== this.filters.tags.join(',')
+      return this.$root.filters.start_time !== this.$root.cleanFilters.start_time || this.$root.filters.tags.join(',') !== this.$root.cleanFilters.tags.join(',')
     }
   },
 
   created () {
     this.getTags()
-    this.filters.tags = Array.isArray(this.filters.tags)
-      ? this.filters.tags
-      : [this.filters.tags]
   },
 
   methods: {
@@ -77,8 +70,8 @@ export default {
     },
 
     reset () {
-      this.$root.filters.start_time = this.filters.start_time
-      this.$root.filters.tags = this.filters.tags
+      this.$root.filters.start_time = this.$root.cleanFilters.start_time
+      this.$root.filters.tags = this.$root.cleanFilters.tags
     }
   }
 }
