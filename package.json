@@ -14,7 +14,7 @@
     "autosize": "^3.0.21",
     "axios": "^0.15.3",
     "cross-env": "^3.2.3",
-    "flatpickr": "^3.0.5-1",
+    "flatpickr": "^3.0.6",
     "foundation-sites": "^6.4.1",
     "laravel-mix": "^0.12.1",
     "moment": "^2.18.1",
