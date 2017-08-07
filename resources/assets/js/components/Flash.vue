@@ -38,9 +38,7 @@
         this.show({body: this.message, level: this.level})
       }
 
-      window.events.$on(
-        'flash', (data) => this.show(data)
-      )
+      window.events.$on('flash', data => this.show(data))
     },
 
     methods: {
