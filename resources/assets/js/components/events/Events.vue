@@ -186,15 +186,8 @@ export default {
     },
 
     nextWeek () {
-      this.filters.end_time = formatUrlDate(moment(this.filters.end_time).add(7, 'days'))
-      this.getEvents()
-      this.updateUrl()
-    },
-
-    updateUrl () {
-      history.pushState(null, null, '?' + setSearchParam('end_time', this.filters.end_time))
+      window.filter({end_time: formatUrlDate(moment(this.filters.end_time).add(7, 'days'))})
     }
-
   }
 }
 </script>

@@ -16,6 +16,8 @@ window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
 };
 
+require('what-input')
+
 window.events = new Vue();
 
 window.flash = (body, level = 'success') => {
@@ -24,4 +26,8 @@ window.flash = (body, level = 'success') => {
 
 window.error = message => {
   window.events.$emit('error', message)
+}
+
+window.filter = filters => {
+  window.events.$emit('filter', filters)
 }

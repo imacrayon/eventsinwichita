@@ -36,7 +36,7 @@
       </a>
       <div class="event-tags tags-field">
         <template v-for="tag in event.tags">
-          <input type="checkbox" name="tags[]" :value="tag.id" v-model="$root.filters.tags" :id="`filter-tag-${event.id}-${tag.id}`">
+          <input type="checkbox" :id="`filter-tag-${event.id}-${tag.id}`" :value="tag.id" :checked="$root.filters.tags.indexOf(tag.id) !== -1" @change="filterByTag">
           <label :for="`filter-tag-${event.id}-${tag.id}`">{{ tag.name }}</label>
         </template>
       </div>
@@ -53,7 +53,18 @@ export default {
 
   methods: {
     filterByDate (date) {
-      this.$root.filters.start_time = formatUrlDate(date)
+      window.filter({start_time: formatUrlDate(date)})
+    },
+
+    filterByTag (e) {
+      const tags = this.$root.filters.tags
+      if (e.target.checked === true) {
+        tags.push(Number(e.target.value))
+      } else {
+        const index = tags.indexOf(Number(e.target.value))
+        tags.splice(index, 1)
+      }
+      window.filter({tags: tags})
     }
   }
 }

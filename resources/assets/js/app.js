@@ -33,7 +33,7 @@ Vue.component('notifications', require('./components/notifications/Notifications
 
 Vue.component('notifications-dropdown', require('./components/notifications/NotificationsDropdown.vue'))
 
-import { getSearchParam } from './helpers'
+import { serialize, getSearchParam, toArray } from './helpers'
 
 const app = new Vue({
   el: '#app',
@@ -45,25 +45,25 @@ const app = new Vue({
         tags: getSearchParam('tags', []),
         user_id: getSearchParam('user_id', ''),
         place_id: getSearchParam('place_id', '')
-      },
-      cleanFilters: {
-        start_time: getSearchParam('start_time', ''),
-        end_time: getSearchParam('end_time', ''),
-        tags: getSearchParam('tags', []),
-        user_id: getSearchParam('user_id', ''),
-        place_id: getSearchParam('place_id', '')
       }
     }
   },
   created () {
-    this.filters.tags = Array.isArray(this.filters.tags)
-      ? this.filters.tags
-      : [this.filters.tags]
+    this.filters.tags = toArray(this.filters.tags)
 
-    this.cleanFilters.tags = Array.isArray(this.cleanFilters.tags)
-      ? this.cleanFilters.tags
-      : [this.cleanFilters.tags]
+    window.onpopstate = event => {
+      this.filters = event.state || this.filters
+    }
+    window.events.$on('filter', filters => {
+      // If the search string is different that the current one
+      this.filters = Object.assign(this.filters, filters)
+      const search = serialize(this.filters)
+      if (search && search !== window.location.href.split('?')[1]) {
+        window.history.pushState(this.filters, window.document.title, search ? `?${search}` : location.pathname)
+      }
+    })
+    // Initialize the app history
+    const search = serialize(this.filters)
+    window.history.pushState(this.filters, window.document.title, search ? `?${search}`: location.pathname)
   }
-});
-
-require('what-input')
+})

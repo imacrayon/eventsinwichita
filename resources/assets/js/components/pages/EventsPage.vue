@@ -15,7 +15,7 @@
         <div class="top-bar-right">
           <ul class="menu">
             <li>
-              <a @click="showFilters = !showFilters">
+              <a @click="showFilters = true">
                 <svg class="icon"><use xlink:href="/images/icons.svg#icon-funnel"></use></svg>
                 Filter
               </a>
@@ -53,9 +53,7 @@
       </div>
     </div>
 
-    <panel v-if="showFilters" @close="showFilters = false">
-      <event-filters></event-filters>
-    </panel>
+    <event-filters :panel="showFilters" @close="showFilters = false"></event-filters>
 
     <!-- Create Event Modal -->
     <modal v-if="createModal" @close="createModal = false">
@@ -232,7 +230,6 @@
 <script>
 import moment from 'moment'
 import Modal from '../Modal.vue'
-import Panel from '../Panel.vue'
 import Form from '../../utilities/Form'
 import Events from '../events/Events.vue'
 import DatePicker from '../DatePicker.vue'
@@ -241,7 +238,7 @@ import PlacePicker from '../PlacePicker.vue'
 import { serialize, formatUrlDate } from '../../helpers'
 
 export default {
-  components: { Events, Modal, DatePicker, PlacePicker, EventFilters, Panel },
+  components: { Events, Modal, DatePicker, PlacePicker, EventFilters },
 
   data () {
     return {
