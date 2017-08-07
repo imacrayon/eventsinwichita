@@ -23,7 +23,7 @@
 <script>
 import Place from './Place.vue'
 import Loader from '../Loader.vue'
-import { serialize, getSearchParam } from '../../helpers'
+import { serialize, getSearchParam, toArray } from '../../helpers'
 
 export default {
   components: { Loader, Place },
@@ -39,7 +39,7 @@ export default {
   computed: {
     filters () {
       let filters = Object.assign({}, this.$root.filters, this.scope)
-      filters.tags = Array.isArray(filters.tags) ? filters.tags : [filters.tags]
+      filters.tags = toArray(filters.tags)
       return filters
     },
   },

@@ -99,3 +99,6 @@ export const urlMap = {
   'App\\Place': '/places/'
 }
 
+export function toArray (value) {
+  return Array.isArray(value) ? value : [value]
+}

@@ -38,7 +38,7 @@
 import moment from 'moment'
 import Event from './Event.vue'
 import Loader from '../Loader.vue'
-import { serialize, getSearchParam, setSearchParam, formatUrlDate } from '../../helpers'
+import { serialize, getSearchParam, setSearchParam, formatUrlDate, toArray } from '../../helpers'
 
 export default {
   components: { Loader, Event },
@@ -54,7 +54,7 @@ export default {
   computed: {
     filters () {
       let filters = Object.assign({}, this.$root.filters, this.scope)
-      filters.tags = Array.isArray(filters.tags) ? filters.tags : [filters.tags]
+      filters.tags = toArray(filters.tags)
       filters.start_time = filters.start_time || formatUrlDate(moment())
       // Don't mess with the end time if there are tag filters
       if (filters.tags.length === 0) {

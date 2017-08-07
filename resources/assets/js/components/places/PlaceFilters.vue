@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { getSearchParam } from '../../helpers'
+import { getSearchParam, toArray } from '../../helpers'
 
 export default {
   data () {
@@ -28,15 +28,12 @@ export default {
         tags: false
       },
 
-      query: window.location.search,
-
       tags: false,
     }
   },
 
   created () {
-    const tags = getSearchParam('tags', [])
-    this.filters.tags = Array.isArray(tags) ? tags : [tags]
+    this.filters.tags = toArray(getSearchParam('tags', []))
     this.getTags()
   },
 
