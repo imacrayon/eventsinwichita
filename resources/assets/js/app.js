@@ -58,7 +58,7 @@ const app = new Vue({
       // If the search string is different that the current one
       this.filters = Object.assign(this.filters, filters)
       const search = serialize(this.filters)
-      if (search && search !== window.location.href.split('?')[1]) {
+      if (search !== window.location.href.split('?')[1]) {
         window.history.pushState(this.filters, window.document.title, search ? `?${search}` : location.pathname)
       }
     })
