@@ -64,6 +64,6 @@ const app = new Vue({
     })
     // Initialize the app history
     const search = serialize(this.filters)
-    window.history.pushState(this.filters, window.document.title, search ? `?${search}`: location.pathname)
+    window.history.replaceState(this.filters, window.document.title, search ? `?${search}`: location.pathname)
   }
 })
