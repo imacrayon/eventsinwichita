@@ -21,7 +21,7 @@
           </form>
         </div>
 
-        <div v-else v-html="safeHtml"></div>
+        <div v-else v-html="safeHtml(attributes.body)"></div>
       </div>
       <div class="comment-meta">
         <a :href="url">
@@ -68,9 +68,8 @@
 <script>
 import Modal from '../Modal.vue'
 import autosize from 'autosize'
-import anchorme from 'anchorme';
 import Form from '../../utilities/Form'
-import { diffForHumans, urlMap } from '../../helpers'
+import { diffForHumans, urlMap, safeHtml } from '../../helpers'
 
 export default {
   props: ['comment', 'admin'],
@@ -94,9 +93,7 @@ export default {
   },
 
   computed: {
-    safeHtml () {
-      return anchorme(this.attributes.body.replace(/(?:\r\n|\r|\n)/g, '<br>'))
-    },
+    safeHtml,
 
     isEdited () {
       return this.attributes.updated_at !== this.attributes.created_at

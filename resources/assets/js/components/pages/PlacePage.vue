@@ -231,8 +231,8 @@
 <script>
 import Modal from '../Modal.vue'
 import Form from '../../utilities/Form'
-import { parseUrlHost } from '../../helpers'
 import Events from '../events/Events.vue'
+import { parseUrlHost } from '../../helpers'
 import Comments from '../comments/Comments.vue'
 import SubscribeButton from '../SubscribeButton.vue'
 

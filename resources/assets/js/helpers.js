@@ -1,4 +1,5 @@
 import moment from 'moment'
+import anchorme from 'anchorme'
 
 export function serialize (params, prefix) {
   const query = Object.keys(params).reduce((items, key) => {
@@ -101,4 +102,8 @@ export const urlMap = {
 
 export function toArray (value) {
   return Array.isArray(value) ? value : [value]
+}
+
+export function safeHtml (markup) {
+  return anchorme(markup.replace(/(?:\r\n|\r|\n)/g, '<br>'))
 }

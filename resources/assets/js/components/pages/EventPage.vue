@@ -42,7 +42,7 @@
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-list"></use></svg>
               Description
             </h2>
-            {{ event.description }}
+            <div v-html="safeHtml(event.description)"></div>
           </div>
 
           <div class="group">
@@ -323,9 +323,9 @@ import Form from '../../utilities/Form'
 import DatePicker from '../DatePicker.vue'
 import PlacePicker from '../PlacePicker.vue'
 import Comments from '../comments/Comments.vue'
-import CommentsForm from '../comments/CommentsForm.vue'
 import SubscribeButton from '../SubscribeButton.vue'
-import { formatUrlDate } from '../../helpers'
+import CommentsForm from '../comments/CommentsForm.vue'
+import { formatUrlDate, safeHtml } from '../../helpers'
 
 export default {
   components: { Modal, DatePicker, PlacePicker, Comments, CommentsForm, SubscribeButton },
@@ -387,6 +387,8 @@ export default {
   },
 
   methods: {
+    safeHtml,
+
     /**
      * Get event.
      */
