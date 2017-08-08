@@ -1,3 +1,7 @@
+require('svgxuse')
+
+require('what-input')
+
 window.Vue = require('vue');
 
 window.Vue.prototype.authorize = function (handler) {
@@ -15,8 +19,6 @@ window.axios.defaults.headers.common = {
     'X-CSRF-TOKEN': window.App.csrfToken,
     'X-Requested-With': 'XMLHttpRequest'
 };
-
-require('what-input')
 
 window.events = new Vue();
 
