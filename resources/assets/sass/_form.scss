@@ -41,3 +41,26 @@ textarea {
     }
   }
 }
+
+.filters-reset {
+  position:fixed;
+  z-index: 11;
+  bottom: 0;
+  right: 0;
+  padding: 1rem;
+  width: 100%;
+  .button {
+    padding: .5rem 1rem;
+    font-size: .875rem;
+    background: $white;
+    color: $primary-color;
+    border-radius: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid $primary-color;
+    box-shadow:  0 1px 4px rgba(0, 0, 0, .15);
+    &:hover {
+      background: $light-gray;
+    }
+  }
+}

@@ -27,8 +27,12 @@
         </div>
     </panel>
 
-    <div style="position:fixed; z-index: 11; background: #fff; bottom: 0; left: 0; width: 100%; padding: .75rem; border-top: 1px solid #cecece; box-shadow: 0 0 8px rgba(0, 0, 0, .15);" v-show="dirty">
-      <button type="button" class="button expanded" style="margin-bottom:0;" @click="reset">Clear Filters</button>
+    <div class="filters-reset" v-show="dirty">
+      <div class="grid-container">
+        <div class="grid-x grid-padding-x align-right">
+          <button type="button" class="button" style="margin-bottom:0;" @click="reset">Clear Filters</button>
+        </div>
+      </div>
     </div>
 
   </div>
