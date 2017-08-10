@@ -22,10 +22,9 @@ class NotificationsTest extends TestCase
     {
         create(DatabaseNotification::class);
 
-        $this->assertCount(
-            1,
-            $this->getJson('/api/users/' . auth()->id() . '/notifications')->json()
-        );
+        $response = $this->getJson('/api/users/' . auth()->id() . '/notifications')->json();
+
+        $this->assertCount(1, $response['data']);
     }
     /** @test */
     function user_can_mark_a_notification_as_read()
