@@ -102,9 +102,10 @@ class PlaceController extends Controller
      */
     public function geocode(GeocodeRequest $request)
     {
-        return response()->json(
-            $this->places->findOrNew($request->all())
-                         ->load('tags')
-        );
+        $data = $request->all();
+        $place = $this->places->find($data);
+        if ($place === null) $place = new Place($data);
+
+        return response()->json($place->load('tags'));
     }
 }

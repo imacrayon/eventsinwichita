@@ -77,10 +77,7 @@ class PlacesTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'name' => 'Wichita KS',
-                'street' => '',
-                'city' => 'Wichita',
-                'state' => 'KS',
-                'zip' => ''
+                'slug' => "wichita-ks"
             ]);
     }
 

@@ -92,14 +92,7 @@ class PlaceRepository extends Repository
      */
     public function store(array $data, $user_id)
     {
-        $place = $this->findByName($data);
-        if ($place) return $place;
-
-        if (!isset($data['latitude']) && !isset($data['longitude'])) {
-            $data = array_merge($this->getGeocoder()->getData($data['name']), $data);
-        }
-
-        $place = $this->findByLocation($data);
+        $place = $this->find($data);
         if ($place) return $place;
 
         $place = $this->save(new Place(), $data, $user_id);
@@ -144,17 +137,6 @@ class PlaceRepository extends Repository
     }
 
      /**
-     * Find a place by name
-     *
-     * @param  array $data
-     * @return \App\Place | null
-     */
-    public function findByName(array $data)
-    {
-        return $this->model->where('name', 'like', $data['name'])->first();
-    }
-
-     /**
      * Find a place by coordinates
      *
      * @param  array $data
@@ -189,18 +171,19 @@ class PlaceRepository extends Repository
      * @param  array $data
      * @return \App\Place
      */
-    public function findOrNew(array $data)
+    public function find(array $data)
     {
-        $place = $this->findByName($data);
+        // Name
+        $place = $this->model->where('name', 'like', $data['name'])->first();
         if ($place) return $place;
 
+        // Location
         if (!isset($data['latitude']) && !isset($data['longitude'])) {
             $data = array_merge($data, $this->getGeocoder()->getData($data['name']));
         }
-
         $place = $this->findByLocation($data);
         if ($place) return $place;
 
-        return new Place($data);
+        return null;
     }
 }
