@@ -105,5 +105,7 @@ export function toArray (value) {
 }
 
 export function safeHtml (markup) {
+  if (!markup) return ''
+
   return anchorme(markup.replace(/(?:\r\n|\r|\n)/g, '<br>'))
 }
