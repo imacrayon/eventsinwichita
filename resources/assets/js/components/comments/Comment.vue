@@ -93,8 +93,6 @@ export default {
   },
 
   computed: {
-    safeHtml,
-
     isEdited () {
       return this.attributes.updated_at !== this.attributes.created_at
     },
@@ -114,6 +112,8 @@ export default {
 
   methods: {
     diffForHumans,
+
+    safeHtml,
 
     cancel () {
       this.editing = false
