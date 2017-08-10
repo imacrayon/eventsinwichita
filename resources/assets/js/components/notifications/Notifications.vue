@@ -1,11 +1,11 @@
 <template>
   <div>
 
-    <div class="grid-container grid-container-padded" v-if="notifications === false">
+    <div class="grid-container grid-container-padded" v-if="items === false">
       <loader>Fetching notifications</loader>
     </div>
 
-    <div class="grid-container grid-container-padded" v-if="notifications !== false && notifications.length === 0">
+    <div class="grid-container grid-container-padded" v-if="items !== false && items.length === 0">
         <h4 class="text-medium-gray">There aren't any notifications right now.</h4>
     </div>
 
@@ -20,7 +20,7 @@
         <a
           v-for="notification in day"
           :key="notification.id"
-          class="notification"
+          :class="{'notification': true, 'read': notification.read_at !== null}"
           :href="notification.data.url"
           @click="markAsRead(notification)"
         >
@@ -34,37 +34,41 @@
       </div>
     </template>
 
+    <paginator :pageData="pageData" @changed="getNotifications"></paginator>
+
   </div>
 </template>
 
 <script>
 import moment from 'moment'
 import Loader from '../Loader.vue'
+import Paginator from '../Paginator.vue'
 import { diffForHumans } from '../../helpers'
+import collection from '../../mixins/collection';
 
 export default {
-  components: { Loader },
+  components: { Loader, Paginator },
+
+  mixins: [collection],
 
   data () {
     return {
-      notifications: false,
-
-      user: window.App.user
+      pageData: false,
     }
   },
 
   computed: {
     calendar () {
-      if (this.notifications === false) {
+      if (this.items === false) {
         return {}
       }
-      return this.notifications.reduce((notifications, notification) => {
-        notification.created_at = moment.utc(notification.created_at)
-        const date = (notification.created_at.isSame(moment(), 'day') ? 'Today &middot; ' : '')
-          + notification.created_at.format('ddd MMM DD')
-        notifications[date] = notifications[date] || []
-        notifications[date].push(notification)
-        return notifications
+      return this.items.reduce((items, item) => {
+        item.created_at = moment.utc(item.created_at)
+        const date = (item.created_at.isSame(moment(), 'day') ? 'Today &middot; ' : '')
+          + item.created_at.format('ddd MMM DD')
+        items[date] = items[date] || []
+        items[date].push(item)
+        return items
       }, {})
     }
   },
@@ -76,18 +80,29 @@ export default {
   methods: {
     diffForHumans,
 
-    getNotifications () {
-      axios.get('/api/users/' + this.user.id + '/notifications')
-      .then(({ data }) => {
-        this.notifications = data
-      })
+    getNotifications (page) {
+      axios.get(this.url(page)).then(this.refresh)
+    },
+
+    url (page) {
+      if (!page) {
+        let query = location.search.match(/page=(\d+)/)
+        page = query ? query[1] : 1;
+      }
+      return `/api${location.pathname.replace(location.origin, '')}?read=true&page=${page}`
     },
 
     markAsRead (notification) {
-      axios.delete('/api/users/' + this.user.id + '/notifications/' + notification.id)
+      axios.delete(`/api${location.pathname.replace(location.origin, '')}/${notification.id}`)
         .then(response => {
           this.getNotifications()
         })
+    },
+
+    refresh ({data}) {
+      this.pageData = data
+      this.items = data.data
+      window.scrollTo(0, 0)
     }
   }
 }

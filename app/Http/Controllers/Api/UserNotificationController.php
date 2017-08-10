@@ -22,15 +22,13 @@ class UserNotificationController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->has('limit')) {
-            return response()->json(
-                auth()->user()->unreadNotifications()
-                    ->limit($request->limit)
-                    ->get()
-            );
-        }
+        $notifications = !$request->has('read')
+            ? auth()->user()->unreadNotifications()
+            : auth()->user()->notifications();
 
-        return response()->json(auth()->user()->unreadNotifications);
+        return response()->json(
+            $notifications->paginate($request->input('limit', 20))
+        );
     }
     /**
      * Mark a specific notification as read.

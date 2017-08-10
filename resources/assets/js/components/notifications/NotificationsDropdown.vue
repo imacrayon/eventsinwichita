@@ -61,8 +61,9 @@ export default {
     getNotifications () {
       axios.get('/api/users/' + this.user.id + '/notifications')
       .then(({ data }) => {
-        this.count = data.length
-        this.notifications = data.slice(0, 5)
+        // Paginated
+        this.count = data.data.length
+        this.notifications = data.data.slice(0, 5)
       })
     },
 

@@ -5,6 +5,9 @@
   &:first-child {
     border-top: none;
   }
+  &.read {
+    color: $dark-gray;
+  }
 }
 .notification-body {
   line-height: 1.25;
