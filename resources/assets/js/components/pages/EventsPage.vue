@@ -62,59 +62,7 @@
       </div>
       <form @submit.prevent="store" @input="createForm.errors.clear($event.target.name)">
         <div class="modal-section">
-
-
-          <label :class="{'is-invalid-label': createForm.errors.has('name')}">Name
-            <input type="text" v-model="createForm.name" :class="{'is-invalid-input': createForm.errors.has('name')}" required>
-            <span :class="['form-error', {'is-visible': createForm.errors.has('name')}]" v-text="createForm.errors.get('name')"></span>
-          </label>
-
-          <div class="grid-x grid-margin-x">
-            <div class="small-12 medium-6 cell">
-
-              <label :class="{'is-invalid-label': createForm.errors.has('start_time')}">Start
-                <date-picker
-                  v-model="createForm.start_time"
-                  :class="{'is-invalid-input': createForm.errors.has('start_time')}"
-                ></date-picker>
-                <span :class="['form-error', {'is-visible': createForm.errors.has('start_time')}]" v-text="createForm.errors.get('start_time')"></span>
-              </label>
-
-            </div>
-            <div class="small-12 medium-6 cell">
-
-              <label :class="{'is-invalid-label': createForm.errors.has('end_time')}">End
-                <date-picker
-                  v-model="createForm.end_time"
-                  :class="{'is-invalid-input': createForm.errors.has('end_time')}"
-                ></date-picker>
-                <span :class="['form-error', {'is-visible': createForm.errors.has('end_time')}]" v-text="createForm.errors.get('end_time')"></span>
-              </label>
-
-            </div>
-          </div>
-
-          <label :class="{'is-invalid-label': createForm.errors.has('place_id')}">Place
-            <place-picker v-model="createForm.place" :source="places" :class="{'is-invalid-input': createForm.errors.has('place_id')}"></place-picker>
-            <span :class="['form-error', {'is-visible': createForm.errors.has('place_id')}]" v-text="createForm.errors.get('place_id')"></span>
-          </label>
-
-          <label :class="{'is-invalid-label': createForm.errors.has('description')}">Description
-            <textarea v-model="createForm.description" :class="{'is-invalid-input': createForm.errors.has('description')}"></textarea>
-            <span :class="['form-error', {'is-visible': createForm.errors.has('description')}]" v-text="createForm.errors.get('description')"></span>
-          </label>
-
-          <div>
-            <label for="event-create-tags" :class="{'is-invalid-label': createForm.errors.has('tags')}">Tags</label>
-            <div id="event-create-tags" class="tags-field">
-              <template v-for="tag in tags">
-                <input type="checkbox" :value="tag.id" v-model="createForm.tags" :id="'edit-event-tag-' + tag.id">
-                <label class="button hollow tiny" :key="tag.id" :for="'edit-event-tag-' + tag.id">{{ tag.name }}</label>
-              </template>
-            </div>
-            <span :class="['form-error', {'is-visible': createForm.errors.has('tags')}]" v-text="createForm.errors.get('tags')"></span>
-          </div>
-
+          <create-event-form :form="createForm"></create-event-form>
         </div>
         <div class="modal-foot">
           <div class="modal-foot-right">
@@ -235,10 +183,11 @@ import Events from '../events/Events.vue'
 import DatePicker from '../DatePicker.vue'
 import EventFilters from '../events/EventFilters.vue'
 import PlacePicker from '../PlacePicker.vue'
+import CreateEventForm from '../events/CreateEventForm.vue'
 import { serialize, formatUrlDate } from '../../helpers'
 
 export default {
-  components: { Events, Modal, DatePicker, PlacePicker, EventFilters },
+  components: { Events, Modal, DatePicker, PlacePicker, EventFilters, CreateEventForm },
 
   data () {
     return {
@@ -256,7 +205,8 @@ export default {
         place_id: null,
         place: { name: '', id: null },
         description: null,
-        tags: []
+        tags: [],
+        facebook_id: null
       }),
 
       createModal: false,

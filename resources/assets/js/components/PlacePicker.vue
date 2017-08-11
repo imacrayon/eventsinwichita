@@ -73,12 +73,18 @@ export default {
         this.selected = null
         this.results = []
         this.$emit('input', {name: e.target.value})
-        if (e.target.value.trim()) {
-          const query = e.target.value.toUpperCase()
+        const value = e.target.value.trim()
+        if (value) {
+          const query = value.toUpperCase()
           this.results = this.source.filter(place => {
             return (place.name && place.name.toUpperCase().indexOf(query) !== -1) ||
               (place.street && place.street.toUpperCase().indexOf(query) !== -1)
           }).slice(0, 4)
+          // Automatically select if there is an exact match.
+          // This is used to select programmatically set values
+          if (this.results.length && value === this.results[0].name) {
+            this.select(this.results[0])
+          }
         }
       }
     },

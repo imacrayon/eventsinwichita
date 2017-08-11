@@ -38,7 +38,8 @@
     <script>
         window.App = {!! json_encode([
             'csrfToken' => csrf_token(),
-            'user' => Auth::user()
+            'user' => Auth::user(),
+            'facebook_token' => env('FACEBOOK_CLIENT_TOKEN')
         ]) !!};
     </script>
 </head>
