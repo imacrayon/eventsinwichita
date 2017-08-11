@@ -92,6 +92,10 @@ class PlaceRepository extends Repository
      */
     public function store(array $data, $user_id)
     {
+        if (!isset($data['latitude']) && !isset($data['longitude'])) {
+            $data = array_merge($data, $this->getGeocoder()->getData($data['name']));
+        }
+
         $place = $this->find($data);
         if ($place) return $place;
 
@@ -136,35 +140,6 @@ class PlaceRepository extends Repository
         return $place->delete();
     }
 
-     /**
-     * Find a place by coordinates
-     *
-     * @param  array $data
-     * @return \App\Place | null
-     */
-    public function findByLocation(array $data)
-    {
-        $place = null;
-
-        if (isset($data['street'])) {
-            $place = $this->model
-                ->where('street', $data['street'])
-                ->first();
-            if ($place) return $place;
-        }
-
-        if (isset($data['latitude']) && isset($data['longitude'])) {
-            // Try to find by coordinates.
-            $place = $this->model
-                ->whereRaw('TRUNCATE(latitude, 2) = ' . bcdiv($data['latitude'], 1, 3))
-                ->whereRaw('TRUNCATE(longitude, 2) = ' . bcdiv($data['longitude'], 1, 3))
-                ->first();
-            if ($place) return $place;
-        }
-
-        return $place;
-    }
-
     /**
      * Find an existing place or new one up
      *
@@ -173,16 +148,35 @@ class PlaceRepository extends Repository
      */
     public function find(array $data)
     {
-        // Name
-        $place = $this->model->where('name', 'like', $data['name'])->first();
-        if ($place) return $place;
-
-        // Location
-        if (!isset($data['latitude']) && !isset($data['longitude'])) {
-            $data = array_merge($data, $this->getGeocoder()->getData($data['name']));
+        // Facebook
+        if (isset($data['facebook_id'])) {
+            $place = $this->model->where('facebook_id', $data['facebook_id'])->first();
+            if ($place) return $place;
         }
-        $place = $this->findByLocation($data);
-        if ($place) return $place;
+
+        // Name
+        if (isset($data['name'])) {
+            $place = $this->model->where('name', 'like', $data['name'])->first();
+            if ($place) return $place;
+        }
+
+        // Street
+        if (isset($data['street'])) {
+            $place = $this->model
+                ->where('street', $data['street'])
+                ->first();
+            if ($place) return $place;
+        }
+
+        // Latitude & Longitude
+        if (isset($data['latitude']) && isset($data['longitude'])) {
+            // Try to find by coordinates.
+            $place = $this->model
+                ->whereRaw('TRUNCATE(latitude, 2) = ' . bcdiv($data['latitude'], 1, 3))
+                ->whereRaw('TRUNCATE(longitude, 2) = ' . bcdiv($data['longitude'], 1, 3))
+                ->first();
+            if ($place) return $place;
+        }
 
         return null;
     }

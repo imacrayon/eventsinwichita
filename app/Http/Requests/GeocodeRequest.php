@@ -24,7 +24,8 @@ class GeocodeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string']
+            'name'        => ['filled', 'string'],
+            'facebook_id' => ['filled', 'numeric']
         ];
     }
 }

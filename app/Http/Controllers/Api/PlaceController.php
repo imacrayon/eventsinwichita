@@ -103,6 +103,11 @@ class PlaceController extends Controller
     public function geocode(GeocodeRequest $request)
     {
         $data = $request->all();
+
+        if (isset($data['name']) && !isset($data['latitude']) && !isset($data['longitude'])) {
+            $data = array_merge($data, $this->places->getGeocoder()->getData($data['name']));
+        }
+
         $place = $this->places->find($data);
         if ($place === null) $place = new Place($data);
 

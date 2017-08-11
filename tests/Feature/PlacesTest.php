@@ -59,29 +59,6 @@ class PlacesTest extends TestCase
     }
 
     /** @test */
-    function unauthenticated_user_cannot_geocode()
-    {
-        $this->disableExceptionHandling();
-
-        $this->expectException('Illuminate\Auth\AuthenticationException');
-
-        $this->post('/api/geocode', []);
-    }
-
-    /** @test */
-    function authenticated_user_can_geocode()
-    {
-        $this->signIn();
-
-        $this->post('/api/geocode', ['name' => 'Wichita KS'])
-            ->assertStatus(200)
-            ->assertJson([
-                'name' => 'Wichita KS',
-                'slug' => "wichita-ks"
-            ]);
-    }
-
-    /** @test */
     function user_can_filter_places_by_user_id()
     {
         $user = create('App\User');
@@ -93,5 +70,46 @@ class PlacesTest extends TestCase
         $this->get('/api/places?user_id=' . urlencode($user->id))
              ->assertJsonFragment(['name' => $placebyUser->name])
              ->assertJsonMissing(['name' => $placeNotByUser->name]);
+    }
+
+    /** @test */
+    function unauthenticated_user_cannot_geocode()
+    {
+        $this->disableExceptionHandling();
+
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+
+        $this->post('/api/geocode', []);
+    }
+
+
+    /** @test */
+    function authenticated_user_can_geocode_by_name()
+    {
+        $this->signIn();
+
+        $this->post('/api/geocode', ['name' => 'Wichita KS'])
+            ->assertStatus(200)
+            ->assertJson([
+                'name' => 'Wichita KS',
+                'street' => '',
+                'city' => 'Wichita',
+                'state' => 'KS',
+                'zip' => ''
+            ]);
+    }
+
+    /** @test */
+    function authenticated_user_can_geocode_by_facebook_id()
+    {
+        $this->signIn();
+
+        $place = create('App\Place', [
+            'facebook_id' => 123
+        ]);
+
+        $this->post('/api/geocode', ['facebook_id' => $place->facebook_id])
+            ->assertStatus(200)
+            ->assertJson($place->attributesToArray());
     }
 }
