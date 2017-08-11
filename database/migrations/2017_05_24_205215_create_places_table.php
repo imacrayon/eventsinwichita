@@ -21,8 +21,8 @@ class CreatePlacesTable extends Migration
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('zip')->nullable();
-            $table->decimal('longitude', 10, 6)->nullable();
             $table->decimal('latitude', 10, 6)->nullable();
+            $table->decimal('longitude', 10, 6)->nullable();
             $table->integer('user_id')->unsigned()->default(1);
             $table->bigInteger('facebook_id')->unsigned()->nullable()->index();
             $table->bigInteger('meetup_id')->unsigned()->nullable()->index();

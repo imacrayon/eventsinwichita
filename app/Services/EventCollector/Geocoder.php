@@ -59,8 +59,8 @@ class Geocoder implements Contracts\Geocoder
                 'city'      => array_key_exists('locality', $components) ? $components['locality'] : 'Wichita',
                 'state'     => array_key_exists('administrative_area_level_1', $components) ? $components['administrative_area_level_1'] : 'KS',
                 'zip'       => array_key_exists('postal_code', $components) ? $components['postal_code'] : '',
-                'longitude' => $location->lng,
                 'latitude'  => $location->lat,
+                'longitude' => $location->lng,
                 'profile'   => []
             ];
         }

@@ -26,8 +26,8 @@ class Place extends Model
         'city',
         'state',
         'zip',
-        'longitude',
         'latitude',
+        'longitude',
         'facebook_id',
         'meetup_id',
         'profile'
