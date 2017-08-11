@@ -110,6 +110,12 @@ class PlacesTest extends TestCase
 
         $this->post('/api/geocode', ['facebook_id' => $place->facebook_id])
             ->assertStatus(200)
-            ->assertJson($place->attributesToArray());
+            ->assertJson([
+                'name' => $place->name,
+                'street' => $place->street,
+                'city' => $place->city,
+                'state' => $place->state,
+                'zip' => $place->zip
+            ]);
     }
 }
