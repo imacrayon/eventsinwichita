@@ -15,15 +15,10 @@
         <div class="top-bar-right">
           <ul class="menu">
             <li>
-              <dropdown>
-                <a class="dropdown">
-                  <svg class="icon"><use xlink:href="/images/icons.svg#icon-funnel"></use></svg>
-                  Filter
-                </a>
-                <div slot="menu">
-                    <place-filters></place-filters>
-                </div>
-              </dropdown>
+              <a @click="showFilters = true">
+                <svg class="icon"><use xlink:href="/images/icons.svg#icon-funnel"></use></svg>
+                Filter
+              </a>
             </li>
           </ul>
         </div>
@@ -31,6 +26,8 @@
     </div>
 
     <places ref="places"></places>
+
+    <place-filters :panel="showFilters" @close="showFilters = false"></place-filters>
 
     <!-- Create Place Modal -->
     <modal v-if="createModal" @close="createModal = false">
@@ -148,7 +145,9 @@ export default {
         profile: {}
       }),
 
-      createModal: false
+      createModal: false,
+
+      showFilters: false
     }
   },
 
