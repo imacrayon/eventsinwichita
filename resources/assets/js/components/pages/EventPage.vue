@@ -37,7 +37,7 @@
       <div class="grid-x grid-margin-x">
         <div class="cell large-8 small-order-2 large-order-1">
 
-          <div class="group">
+          <div class="group" v-if="event.description">
             <h2 class="group-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-list"></use></svg>
               Description
