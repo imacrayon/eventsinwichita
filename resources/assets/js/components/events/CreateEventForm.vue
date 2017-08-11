@@ -124,6 +124,7 @@ export default {
               this.form.end_time = event.end_time
                 ? formatUrlDate(moment(event.end_time))
                 : moment(event.start_time).endOf('day')
+              this.form.description = event.description
               if (event.place && event.place.id) {
                 this.form.place = {
                   name: event.place.name,
