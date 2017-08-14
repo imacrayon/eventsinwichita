@@ -44,7 +44,8 @@ const app = new Vue({
         end_time: getSearchParam('end_time', ''),
         tags: getSearchParam('tags', []),
         user_id: getSearchParam('user_id', ''),
-        place_id: getSearchParam('place_id', '')
+        place_id: getSearchParam('place_id', ''),
+        name: getSearchParam('name', '')
       }
     }
   },

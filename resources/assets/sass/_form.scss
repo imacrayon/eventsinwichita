@@ -64,3 +64,11 @@ textarea {
     }
   }
 }
+
+input.search {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMCAyMCI+ICA8cGF0aCBmaWxsPSIjYzBjMGMwIiBkPSJNMTguODY5IDE5LjE2MmwtNS45NDMtNi40ODRjMS4zMzktMS40MDEgMi4wNzUtMy4yMzMgMi4wNzUtNS4xNzggMC0yLjAwMy0uNzgtMy44ODctMi4xOTctNS4zMDNTOS41MDQgMCA3LjUwMSAwIDMuNjE0Ljc4IDIuMTk4IDIuMTk3LjAwMSA1LjQ5Ny4wMDEgNy41cy43OCAzLjg4NyAyLjE5NyA1LjMwM1M1LjQ5OCAxNSA3LjUwMSAxNWMxLjcyNiAwIDMuMzYyLS41NzkgNC42ODgtMS42NDVsNS45NDMgNi40ODNjLjA5OS4xMDguMjMzLjE2Mi4zNjkuMTYyLjEyMSAwIC4yNDItLjA0My4zMzgtLjEzMS4yMDQtLjE4Ny4yMTctLjUwMy4wMzEtLjcwNnpNMSA3LjVDMSAzLjkxNiAzLjkxNiAxIDcuNSAxUzE0IDMuOTE2IDE0IDcuNSAxMS4wODQgMTQgNy41IDE0IDEgMTEuMDg0IDEgNy41eiIvPjwvc3ZnPg==);
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  background-position: 1rem 50%;
+  padding-left: 2.4rem;
+}

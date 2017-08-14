@@ -21,5 +21,8 @@
     "svgxuse": "^1.2.4",
     "vue": "^2.1.10",
     "vue-directive-tooltip": "^1.0.5"
+  },
+  "dependencies": {
+    "lodash.debounce": "^4.0.8"
   }
 }

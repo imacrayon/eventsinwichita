@@ -88,6 +88,18 @@
       color: inherit;
     }
   }
+
+  input.expanded {
+    width: 100%;
+    max-width: none;
+    border: 0;
+    height: 3rem;
+    line-height: 3rem;
+    outline: 0;
+    box-shadow: none;
+    margin: 0;
+    font-size: 1.125rem;
+  }
 }
 
 .top-bar-container {

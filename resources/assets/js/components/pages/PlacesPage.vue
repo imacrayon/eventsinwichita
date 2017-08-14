@@ -12,6 +12,9 @@
 
     <div class="top-bar">
       <div class="top-bar-container">
+        <div class="top-bar-left">
+          <input type="text" class="search expanded" placeholder="Search" :value="$root.filters.name" @input="filterByName" autofocus>
+        </div>
         <div class="top-bar-right">
           <ul class="menu">
             <li>
@@ -127,6 +130,7 @@ import Modal from '../Modal.vue'
 import Form from '../../utilities/Form'
 import Places from '../places/Places.vue'
 import PlaceFilters from '../places/PlaceFilters.vue'
+import debouce from 'lodash.debounce'
 
 export default {
   components: { Places, PlaceFilters, Modal },
@@ -186,7 +190,11 @@ export default {
           this.createModal = error.response.status === 422
           window.flash('Updating place failed.', 'alert')
         })
-    }
+    },
+
+    filterByName: debouce((e) => {
+      window.filter({name: e.target.value})
+    }, 500)
   }
 }
 </script>
