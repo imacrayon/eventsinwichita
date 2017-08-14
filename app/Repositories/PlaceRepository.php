@@ -148,36 +148,38 @@ class PlaceRepository extends Repository
      */
     public function find(array $data)
     {
+
+        $place = $this->model->query();
+
         // Facebook
         if (isset($data['facebook_id'])) {
-            $place = $this->model->where('facebook_id', $data['facebook_id'])->first();
-            if ($place) return $place;
+            $place->orWhere('facebook_id', $data['facebook_id']);
+        }
+
+        // Meetup
+        if (isset($data['meetup_id'])) {
+            $place->orWhere('meetup_id', $data['meetup_id']);
         }
 
         // Name
         if (isset($data['name'])) {
-            $place = $this->model->where('name', 'like', $data['name'])->first();
-            if ($place) return $place;
+            $place->orWhere('name', 'like', $data['name']);
         }
 
         // Street
         if (isset($data['street'])) {
-            $place = $this->model
-                ->where('street', $data['street'])
-                ->first();
-            if ($place) return $place;
+            $place->orWhere('street', 'like', $data['street']);
         }
 
         // Latitude & Longitude
         if (isset($data['latitude']) && isset($data['longitude'])) {
             // Try to find by coordinates.
-            $place = $this->model
-                ->whereRaw('TRUNCATE(latitude, 2) = ' . bcdiv($data['latitude'], 1, 3))
-                ->whereRaw('TRUNCATE(longitude, 2) = ' . bcdiv($data['longitude'], 1, 3))
-                ->first();
-            if ($place) return $place;
+            $place->orWhere(function ($place) use ($data) {
+                $place->whereRaw('TRUNCATE(latitude, 2) = ' . bcdiv($data['latitude'], 1, 3));
+                $place->whereRaw('TRUNCATE(longitude, 2) = ' . bcdiv($data['longitude'], 1, 3));
+            });
         }
 
-        return null;
+        return $place->first();
     }
 }

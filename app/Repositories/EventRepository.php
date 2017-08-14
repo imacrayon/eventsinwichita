@@ -87,6 +87,13 @@ class EventRepository extends Repository
      */
     public function store(array $data, $user_id)
     {
+        $data['profile'] = [
+            'meetup_url' => array_get($data, 'profile.meetup_url'),
+        ];
+
+        $event = $this->find($data);
+        if ($event) return $event;
+
         $event = $this->save(new Event, $data, $user_id);
 
         // Attach tags
@@ -126,13 +133,34 @@ class EventRepository extends Repository
         $event->delete();
     }
 
-    public function storeOrUpdate(array $attributes, array $data, $user_id)
-    {
-        $event = $this->model->where($attributes)->first();
-        if (!is_null($event)) {
-            return $this->update($data, $event);
+    /**
+     * Find an existing event or new one up
+     *
+     * @param  array $data
+     * @return \App\event
+     */
+     public function find(array $data)
+     {
+        $event = $this->model->query();
+
+        // Facebook
+        if (isset($data['facebook_id'])) {
+            $event->orWhere('facebook_id', $data['facebook_id']);
         }
 
-        return $this->store($data, $user_id);
-    }
+        // Meetup
+        if (isset($data['meetup_id'])) {
+            $event->orWhere('meetup_id', $data['meetup_id']);
+        }
+
+        // Name & time
+        if (isset($data['name']) && isset($data['start_time'])) {
+            $event->orWhere(function ($event) use ($data) {
+                $event->where('name', 'like', $data['name']);
+                $event->where('start_time', $data['start_time']);
+            });
+        }
+
+        return $event->first();
+     }
 }

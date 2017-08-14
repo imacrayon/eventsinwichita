@@ -26,6 +26,7 @@ class StoreEventRequest extends FormRequest
         return [
             'name'        => ['required', 'string', 'max:191'],
             'facebook_id' => ['nullable', 'numeric','unique:events'],
+            'meetup_id'   => ['nullable', 'unique:events'],
             'place_id'    => ['required', 'numeric'],
             'start_time'  => ['required', 'date_format:Y-m-d H:i:s'],
             'end_time'    => ['nullable', 'after:start_time', 'date_format:Y-m-d H:i:s'],

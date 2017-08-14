@@ -53,19 +53,19 @@ class CollectFacebookEvents extends Command
     public function handle()
     {
         $places = $this->place->whereNotNull('facebook_id')->get();
-        $this->info('[' . $this->getTimestamp() .'] Start fetching new Facebook events.');
+        $this->info('[' . $this->getTimestamp() .'] Collecting Facebook events.');
         foreach($places as $place) {
             try {
                 $events = $this->collector->collectEvents($place);
-                $this->info(count($events) . " events updated {$place->name}");
+                $this->info(count($events) . " events collected at {$place->name} ({$place->id})");
             } catch (\GuzzleHttp\Exception\ClientException $e) {
-                $this->error("Error fetching events for {$place->name}:\n{$e->getResponse()->getBody()}");
+                $this->error("Error collecting events at {$place->name} ({$place->id}):\n{$e->getResponse()->getBody()}");
             } catch (\Exception $e) {
-                $this->error("Error fetching events for {$place->name} on line {$e->getLine()} of {$e->getFile()}:\n{$e->getMessage()}");
+                $this->error("Error collecting events at {$place->name} ({$place->id}) on line {$e->getLine()} of {$e->getFile()}:\n{$e->getMessage()}");
             }
             sleep(1);
         }
-        $this->info('[' . $this->getTimestamp() .'] Finish fetching new Facebook events.');
+        $this->info('[' . $this->getTimestamp() .'] Finished collecting Facebook events.');
     }
 
     protected function getTimestamp()

@@ -28,9 +28,9 @@ class Place extends Model
         'zip',
         'latitude',
         'longitude',
+        'profile',
         'facebook_id',
-        'meetup_id',
-        'profile'
+        'meetup_id'
     ];
 
     protected $casts = [

@@ -9,11 +9,13 @@ class PlacesTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function setUp()
+    protected function storePlace($overrides = [])
     {
-        parent::setUp();
+        $this->withExceptionHandling()->signIn();
 
-        $this->place = create('App\Place');
+        $place = make('App\Place', $overrides);
+
+        return $this->post('/api/places', $place->toArray());
     }
 
     /** @test */
@@ -29,9 +31,11 @@ class PlacesTest extends TestCase
     /** @test */
     public function user_can_view_a_single_place()
     {
-        $response = $this->get("/places/{$this->place->id}");
+        $place = create('App\Place');
 
-        $response->assertSee($this->place->name);
+        $response = $this->get("/places/{$place->id}");
+
+        $response->assertSee($place->name);
     }
 
     /** @test */
@@ -56,6 +60,53 @@ class PlacesTest extends TestCase
 
         $this->get("/places/{$response['id']}")
              ->assertSee($place->name);
+    }
+
+    /** @test */
+    function a_place_requires_a_name()
+    {
+        $this->storePlace(['name' => null])
+            ->assertSessionHasErrors('name');
+    }
+
+    /** @test */
+    function a_places_facebook_id_must_be_unique()
+    {
+        $place = create('App\Place');
+
+        $this->storePlace([
+                'name'        => 'Another Place',
+                'facebook_id' => $place->facebook_id
+            ])
+            ->assertSessionHasErrors('facebook_id');
+    }
+
+    /** @test */
+    function a_places_meetup_id_must_be_unique()
+    {
+        $place = create('App\Place');
+
+        $this->storePlace([
+                'name'        => 'Another Place',
+                'meetup_id' => $place->meetup_id
+            ])
+            ->assertSessionHasErrors('meetup_id');
+    }
+
+    /** @test */
+    function duplicate_places_cannot_be_created()
+    {
+        $this->signIn();
+
+        $place = make('App\Place');
+
+        $this->post('/api/places', $place->toArray());
+
+        $this->post('/api/places', [
+            'name' => $place->name
+        ]);
+
+        $this->assertEquals(1, \App\Place::count());
     }
 
     /** @test */

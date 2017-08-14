@@ -30,19 +30,30 @@ abstract class AbstractCollector implements Collector
     {
         // Store will just return a place if it already exists in the database.
         // Otherwise, it will create a new place for user with id `1`.
-        return $this->places->store($data, 1);
+        $place = $this->places->store($data, 1);
+        echo "Created {$place->name} ({$place->id})." . PHP_EOL;
+        return $place;
     }
 
-    protected function storeOrUpdateEvent(array $attributes, array $data)
+    protected function storeOrUpdateEvent(array $data)
     {
         $user_id = $data['place']->user_id;
         $data['place_id'] = $data['place']->id;
+        unset($data['place']);
 
-        return $this->events->storeOrUpdate($attributes, $data, $user_id);
+        $event = $this->events->find($data);
+        echo "Updated {$event->name} ({$event->id})." . PHP_EOL;
+        if ($event) return $this->events->update($data, $event);
+
+        $event = $this->events->store($data, $user_id);
+        echo "Created {$event->name} ({$event->id})." . PHP_EOL;
+        return $event;
     }
 
     protected function truncate($string, $length = 1000, $append = "&hellip;") {
         $string = trim($string);
+
+        $string = strip_tags($string);
 
         if(strlen($string) > $length) {
             $string = wordwrap($string, $length);

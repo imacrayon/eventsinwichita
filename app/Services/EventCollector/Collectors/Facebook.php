@@ -86,31 +86,35 @@ class Facebook extends AbstractCollector implements Collector
      */
     public function collectEvents(Place $place)
     {
-        $updated = [];
-        foreach($this->getEvents($place) as $event)
-        {
+        $found = [];
+        foreach($this->getEvents($place) as $event) {
             // Ignore the event if there is no place set
-            if (isset($event->place)) {
-                if (!isset($event->place->id) || $event->place->id != $place->facebook_id) {
-                    $place = $this->storePlace([
-                        'name'        => $place->name,
-                        'facebook_id' => $place->id,
-                    ]);
-                }
-                $updated[] = $this->storeOrUpdateEvent(['facebook_id' => $event->id], [
-                    'name'        => $event->name,
-                    'facebook_id' => $event->id,
-                    'start_time'  => $this->castToDateTime($event->start_time),
-                    'end_time'    => isset($event->end_time) ? $this->castToDateTime($event->end_time) : null,
-                    'place'       => $place,
-                    'description' => isset($event->description) ? $this->truncate($event->description) : null,
-                    'tags'        => isset($event->category)
-                                          ? strtolower(trim(str_replace(['_', 'EVENT'], [' ', ''], $event->category)))
-                                          : $place->tags->pluck('id')->all()
+            if (!isset($event->place)) return;
+
+            if (!isset($event->place->id)) {
+                $place = $this->storePlace([
+                    'name' => $event->place->name
+                ]);
+            } else if ($event->place->id != $place->facebook_id) {
+                $place = $this->storePlace([
+                    'name' => $event->place->name,
+                    'facebook_id' => $event->place->id
                 ]);
             }
+
+            $found[] = $this->storeOrUpdateEvent([
+                'name'        => $event->name,
+                'facebook_id' => $event->id,
+                'start_time'  => $this->castToDateTime($event->start_time),
+                'end_time'    => isset($event->end_time) ? $this->castToDateTime($event->end_time) : null,
+                'place'       => $place,
+                'description' => isset($event->description) ? $this->truncate($event->description) : null,
+                'tags'        => isset($event->category)
+                                        ? strtolower(trim(str_replace(['_', 'EVENT'], [' ', ''], $event->category)))
+                                        : $place->tags->pluck('id')->all()
+            ]);
         }
 
-        return $updated;
+        return $found;
     }
 }
