@@ -31,7 +31,7 @@ abstract class AbstractCollector implements Collector
         // Store will just return a place if it already exists in the database.
         // Otherwise, it will create a new place for user with id `1`.
         $place = $this->places->store($data, 1);
-        echo "Created {$place->name} ({$place->id})." . PHP_EOL;
+        echo "Created place {$place->name} ({$place->id})" . PHP_EOL;
         return $place;
     }
 
@@ -42,11 +42,10 @@ abstract class AbstractCollector implements Collector
         unset($data['place']);
 
         $event = $this->events->find($data);
-        echo "Updated {$event->name} ({$event->id})." . PHP_EOL;
         if ($event) return $this->events->update($data, $event);
 
         $event = $this->events->store($data, $user_id);
-        echo "Created {$event->name} ({$event->id})." . PHP_EOL;
+        echo "Created event {$event->name} ({$event->id})" . PHP_EOL;
         return $event;
     }
 

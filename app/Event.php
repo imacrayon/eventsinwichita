@@ -35,8 +35,13 @@ class Event extends Model
         'location',
         'description',
         'user_id',
+        'profile',
         'facebook_id',
         'meetup_id'
+    ];
+
+    protected $casts = [
+        'profile' => 'json',
     ];
 
     protected $with = ['tags'];
@@ -57,7 +62,6 @@ class Event extends Model
 
         static::created(function ($event) {
             if (!$event->user->isAdmin()) {
-                $event->load('tags');
                 Mail::to(env('MAIL_CONTACT_ADDRESS'))->send(new NewEvent($event));
             }
         });

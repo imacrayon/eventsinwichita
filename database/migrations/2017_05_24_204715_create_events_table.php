@@ -22,7 +22,7 @@ class CreateEventsTable extends Migration
             $table->text('description')->nullable();
             $table->integer('user_id')->unsigned();
             $table->bigInteger('facebook_id')->unsigned()->nullable()->unique();
-            $table->bigInteger('meetup_id')->unsigned()->nullable()->unique();
+            $table->string('meetup_id')->nullable()->unique();
             $table->timestamps();
         });
     }

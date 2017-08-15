@@ -153,11 +153,12 @@ class EventRepository extends Repository
             $event->orWhere('meetup_id', $data['meetup_id']);
         }
 
-        // Name & time
-        if (isset($data['name']) && isset($data['start_time'])) {
+        // Name, time, place
+        if (isset($data['name']) && isset($data['start_time']) && isset($data['place_id'])) {
             $event->orWhere(function ($event) use ($data) {
-                $event->where('name', 'like', $data['name']);
+                $event->whereRaw("SOUNDEX(`name`) = SOUNDEX('" . $data['name'] . "')");
                 $event->where('start_time', $data['start_time']);
+                $event->where('place_id', $data['place_id']);
             });
         }
 

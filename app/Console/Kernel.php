@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\CollectFacebookEvents::class,
+        Commands\CollectMeetupEvents::class,
     ];
 
     /**
@@ -27,6 +28,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('collect:facebook')
                  ->twiceDaily(3, 14)
                  ->sendOutputTo(storage_path('logs/collector-facebook.log'))
+                 ->emailOutputTo(env('MAIL_CONTACT_ADDRESS'));
+
+        $schedule->command('collect:meetup')
+                 ->twiceDaily(4, 15)
+                 ->sendOutputTo(storage_path('logs/collector-meetup.log'))
                  ->emailOutputTo(env('MAIL_CONTACT_ADDRESS'));
     }
 

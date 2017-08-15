@@ -24,9 +24,9 @@ class CreatePlacesTable extends Migration
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
             $table->integer('user_id')->unsigned()->default(1);
-            $table->bigInteger('facebook_id')->unsigned()->nullable()->index();
-            $table->bigInteger('meetup_id')->unsigned()->nullable()->index();
             $table->json('profile');
+            $table->bigInteger('facebook_id')->unsigned()->nullable()->index();
+            $table->string('meetup_id')->nullable()->index();
             $table->timestamps();
         });
     }

@@ -80,6 +80,14 @@
             <a :href="`https://www.facebook.com/events/${event.facebook_id}`">Facebook Page</a>
           </div>
 
+          <div class="group" v-if="event.profile.meetup_url">
+            <h2 class="group-title">
+              <svg class="icon"><use xlink:href="/images/icons.svg#icon-meetup"></use></svg>
+              Meetup <span class="show-for-sr">for {{ event.name }}</span>
+            </h2>
+            <a :href="event.profile.meetup_url">Meetup Page</a>
+          </div>
+
           <div class="group">
             <h2 class="group-title">
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-user"></use></svg>

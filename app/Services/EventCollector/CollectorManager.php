@@ -27,7 +27,7 @@ class CollectorManager extends Manager implements Contracts\Factory
     /**
      * Create an instance of the specified driver.
      *
-     * @return \Laravel\Socialite\Two\AbstractProvider
+     * @return \App\Services\EventCollector\Collectors\AbstractCollector
      */
     protected function createFacebookDriver()
     {
@@ -38,11 +38,24 @@ class CollectorManager extends Manager implements Contracts\Factory
     }
 
     /**
+     * Create an instance of the specified driver.
+     *
+     * @return \App\Services\EventCollector\Collectors\AbstractCollector
+     */
+     protected function createMeetupDriver()
+     {
+         $config = config('collectors.meetup');
+         return $this->buildProvider(
+             Collectors\Meetup::class, $config
+         );
+     }
+
+    /**
      * Build a provider instance.
      *
      * @param  string  $provider
      * @param  array  $config
-     * @return \Laravel\Socialite\Two\AbstractProvider
+     * @return \App\Services\EventCollector\CollectorServiceProvider
      */
     public function buildProvider($provider, $config)
     {

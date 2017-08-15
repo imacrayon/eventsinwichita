@@ -77,7 +77,10 @@ $factory->define(\App\Event::class, function (Faker\Generator $faker) {
                              return factory(\App\User::class)->create()->id;
                          },
         'facebook_id' => $faker->ean8,
-        'meetup_id'   => $faker->ean8
+        'meetup_id'   => $faker->ean8,
+        'profile'     => [
+            'meetup_url' => $faker->url,
+        ]
     ];
 });
 
