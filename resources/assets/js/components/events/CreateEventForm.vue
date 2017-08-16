@@ -2,7 +2,7 @@
   <div>
 
     <label :class="{'is-invalid-label': collector.errors.has('url')}">Facebook URL
-      <input type="text" v-model="collector.url" :class="{'is-invalid-input': collector.errors.has('url')}" @paste="fetchEvent">
+      <input type="text" v-model="collector.url" :class="{'is-invalid-input': collector.errors.has('url')}" @input="fetchEvent">
       <span :class="['collector-error', {'is-visible': collector.errors.has('url')}]" v-text="collector.errors.get('url')"></span>
     </label>
     <p class="help-text">We'll copy your event from Facebook for you.</p>
@@ -63,6 +63,7 @@
 
 <script>
 import moment from 'moment'
+import debounce from 'lodash.debounce'
 import Form from '../../utilities/Form'
 import DatePicker from '../DatePicker.vue'
 import PlacePicker from '../PlacePicker.vue'
@@ -108,9 +109,8 @@ export default {
         })
     },
 
-    fetchEvent (e) {
-      const clipboardData = e.clipboardData || window.clipboardData
-      const url = clipboardData.getData('text')
+    fetchEvent: debounce(function (e) {
+      const url = e.target.value
       if (url.indexOf('facebook.com') > -1) {
         this.collector.event_id = url.split('/')[4]
         if (this.collector.event_id) {
@@ -141,7 +141,7 @@ export default {
             })
         }
       }
-    }
+    }, 500)
   }
 }
 </script>
