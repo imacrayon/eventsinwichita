@@ -1,6 +1,10 @@
 <template>
   <div>
 
+    <div class="callout alert" v-if="form.errors.has('facebook_id')">
+      This event already exists.
+    </div>
+
     <label :class="{'is-invalid-label': collector.errors.has('url')}">Facebook URL
       <input type="text" v-model="collector.url" :class="{'is-invalid-input': collector.errors.has('url')}" @input="fetchEvent">
       <span :class="['collector-error', {'is-visible': collector.errors.has('url')}]" v-text="collector.errors.get('url')"></span>
@@ -125,11 +129,15 @@ export default {
                 ? formatUrlDate(moment(event.end_time))
                 : moment(event.start_time).endOf('day')
               this.form.description = event.description
+              this.form.facebook_id = event.id
+
               if (event.place && event.place.id) {
                 this.form.place = {
                   name: event.place.name,
                   facebook_id: event.place.id
                 }
+                // TODO: This is lame. Find a cleaner way to programmatically
+                // set a value for the PlacePicker.
                 Vue.nextTick(() => {
                   document.getElementById('place_id').dispatchEvent(new Event('keyup'))
                 })

@@ -72,7 +72,7 @@ export default {
         this.showResults = true
         this.selected = null
         this.results = []
-        this.$emit('input', {name: e.target.value})
+        this.$emit('input', Object.assign(this.value, {name: e.target.value}))
         const value = e.target.value.trim()
         if (value) {
           const query = value.toUpperCase()
@@ -90,7 +90,8 @@ export default {
     },
 
     select (result) {
-      this.$emit('input', result)
+      // Clone the result so the original object remains immutable.
+      this.$emit('input', JSON.parse(JSON.stringify(result)))
       this.selected = null
       this.showResults = false
     }

@@ -220,6 +220,7 @@ export default {
         state: '',
         zip: '',
         profile: {},
+        facebook_id: null,
         tags: []
       }),
 
@@ -272,6 +273,7 @@ export default {
       this.createPlaceForm.state = place.state
       this.createPlaceForm.zip = place.zip
       this.createPlaceForm.profile = place.profile || {}
+      this.createPlaceForm.facebook_id = place.facebook_id
       this.createPlaceForm.tags = place.tags.map(tag => tag.id)
 
       this.getTags()
