@@ -130,7 +130,7 @@ import Modal from '../Modal.vue'
 import Form from '../../utilities/Form'
 import Places from '../places/Places.vue'
 import PlaceFilters from '../places/PlaceFilters.vue'
-import debouce from 'lodash.debounce'
+import debounce from 'lodash.debounce'
 
 export default {
   components: { Places, PlaceFilters, Modal },
@@ -192,7 +192,7 @@ export default {
         })
     },
 
-    filterByName: debouce((e) => {
+    filterByName: debounce((e) => {
       window.filter({name: e.target.value})
     }, 500)
   }
