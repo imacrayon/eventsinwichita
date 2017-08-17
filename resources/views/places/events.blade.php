@@ -28,5 +28,5 @@
     </div>
   </div>
 
-  <events :scope="{{ json_encode(['place_id' => $place->id, 'end_time' => '']) }}"></events>
+  <events :scope="{{ json_encode(['place_id' => $place->id]) }}"></events>
 @endsection
