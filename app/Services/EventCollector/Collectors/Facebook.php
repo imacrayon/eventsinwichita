@@ -96,10 +96,19 @@ class Facebook extends AbstractCollector implements Collector
                     'name' => $event->place->name
                 ]);
             } else if ($event->place->id != $place->facebook_id) {
-                $place = $this->storePlace([
-                    'name' => $event->place->name,
-                    'facebook_id' => $event->place->id
-                ]);
+                // Some Facebook places are associated with multiple page IDs.
+                // We track associated page IDs in the profile of each Place.
+                // If the event is happening at another place check that it is
+                // not a known alias before storing it in the database.
+                $aliases = isset($place->profile['facebook_aliases'])
+                    ? $place->profile['facebook_aliases']
+                    : [];
+                if (!in_array($event->place->id, $aliases)) {
+                    $place = $this->storePlace([
+                        'name' => $event->place->name,
+                        'facebook_id' => $event->place->id
+                    ]);
+                }
             }
 
             $found[] = $this->storeOrUpdateEvent([
