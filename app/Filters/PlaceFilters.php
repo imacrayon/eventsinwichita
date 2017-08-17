@@ -9,7 +9,7 @@ class PlaceFilters extends Filters
      *
      * @var array
      */
-    protected $filters = ['tags', 'user_id', 'name'];
+    protected $filters = ['tags', 'user_id', 'name', 'featured'];
 
     /**
      * Filter the query by a given username.
@@ -36,5 +36,10 @@ class PlaceFilters extends Filters
     protected function name($name)
     {
         $this->builder->where('name', 'like', "%{$name}%");
+    }
+
+    protected function featured($featured)
+    {
+        $this->builder->where('featured', ($featured === 'true'));
     }
 }

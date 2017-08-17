@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <places ref="places"></places>
+    <places ref="places" :scope="{featured: true}"></places>
 
     <place-filters :panel="showFilters" @close="showFilters = false"></place-filters>
 

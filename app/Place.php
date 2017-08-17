@@ -34,6 +34,7 @@ class Place extends Model
     ];
 
     protected $casts = [
+        'featured' => 'boolean',
         'profile' => 'json',
     ];
 

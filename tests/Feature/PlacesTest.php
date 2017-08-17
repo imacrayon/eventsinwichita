@@ -124,6 +124,20 @@ class PlacesTest extends TestCase
     }
 
     /** @test */
+    function user_can_filter_places_by_featured()
+    {
+        $user = create('App\User');
+
+        $placeFeatured = create('App\Place', ['featured' => true]);
+
+        $placeNotFeatured = create('App\Place');
+
+        $this->get('/api/places?featured=true')
+                ->assertJsonFragment(['name' => $placeFeatured->name])
+                ->assertJsonMissing(['name' => $placeNotFeatured->name]);
+    }
+
+    /** @test */
     function unauthenticated_user_cannot_geocode()
     {
         $this->disableExceptionHandling();
