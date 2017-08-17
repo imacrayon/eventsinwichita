@@ -104,7 +104,7 @@
                 Tags
               </h2>
               <p class="event-tags">
-                <span v-for="tag in event.tags" class="label">{{ tag.name }}</span>
+                <a v-for="tag in event.tags" :key="tag.id" :href="`/?tags[]=${tag.id}`">{{ tag.name }}</a>
               </p>
           </div>
 
