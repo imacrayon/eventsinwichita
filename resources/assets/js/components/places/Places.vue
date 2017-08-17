@@ -39,7 +39,7 @@ export default {
   computed: {
     filters () {
       let filters = Object.assign({}, this.$root.filters, this.scope)
-      filters.tags = toArray(filters.tags)
+      filters.tags = toArray(filters.tags).map(tag => Number(tag))
       return filters
     },
   },

@@ -54,7 +54,7 @@ export default {
   computed: {
     filters () {
       let filters = Object.assign({}, this.$root.filters, this.scope)
-      filters.tags = toArray(filters.tags)
+      filters.tags = toArray(filters.tags).map(tag => Number(tag))
       filters.start_time = filters.start_time || formatUrlDate(moment())
       // Don't mess with the end time if there are tag filters
       if (filters.tags.length === 0) {

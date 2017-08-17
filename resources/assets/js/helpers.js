@@ -65,7 +65,7 @@ export function getSearchParam(key, defaultVal)
 
     let found = pairs.reduce((found, pair) => {
       pair = pair.split('=')
-      if (pair[0].replace(/%5B%5D/, '') === key) {
+      if (pair[0].replace(/%5B%5D|\[]/, '') === key) {
         found.push(decodeURIComponent(pair[1]).replace(/\+/g, ' '))
       }
       return found

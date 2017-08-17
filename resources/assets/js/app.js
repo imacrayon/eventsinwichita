@@ -50,7 +50,7 @@ const app = new Vue({
     }
   },
   created () {
-    this.filters.tags = toArray(this.filters.tags)
+    this.filters.tags = toArray(this.filters.tags).map(tag => Number(tag))
 
     window.onpopstate = event => {
       this.filters = event.state || this.filters
