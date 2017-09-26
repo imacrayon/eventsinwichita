@@ -34,7 +34,7 @@ class Facebook extends AbstractCollector implements Collector
      *
      * @var string
      */
-    protected $version = 'v2.8';
+    protected $version = 'v2.10';
 
     protected function getEventUrl($id)
     {
