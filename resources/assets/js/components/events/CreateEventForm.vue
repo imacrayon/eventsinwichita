@@ -116,7 +116,10 @@ export default {
     fetchEvent: debounce(function (e) {
       const url = e.target.value
       if (url.indexOf('facebook.com') > -1) {
-        this.collector.event_id = url.split('/')[4]
+        this.collector.event_id = url
+          .split('/')[4] // Event ID is in this segment
+          .split(/[?#]/)[0] // Remove any lingering query string or hash
+
         if (this.collector.event_id) {
           this.collector.get(`https://graph.facebook.com/v2.10/${this.collector.event_id}?access_token=${window.App.facebook_token}`)
             .then(event => {
