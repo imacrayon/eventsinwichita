@@ -70,19 +70,12 @@
 @import 'content';
 @import 'panel';
 
+html {
+  overflow-y: scroll; // Always show scrollbar to prevent layout jump
+}
+
 html, body {
   height: 100%;
-  position:relative;
-}
-
-html {
-  overflow: hidden;
-}
-
-body {
-  overflow-x: hidden;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
 }
 
 [v-cloak] {
