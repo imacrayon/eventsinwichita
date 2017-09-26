@@ -57,7 +57,8 @@ export default {
       filters.tags = toArray(filters.tags).map(tag => Number(tag))
       filters.start_time = filters.start_time || formatUrlDate(moment())
       // Don't mess with the end time if there are tag filters
-      if (filters.tags.length === 0 && !filters.place_id) {
+      // TODO: User pagination could be refined a little bit.
+      if (filters.tags.length === 0 && !filters.place_id && (!filters.user_id || filters.user_id === 1)) {
         filters.end_time = filters.end_time || formatUrlDate(moment(filters.start_time).add(6, 'days'))
       }
 
