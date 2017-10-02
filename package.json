@@ -13,6 +13,7 @@
     "anchorme": "^1.1.2",
     "autosize": "^3.0.21",
     "axios": "^0.15.3",
+    "core-js": "^2.5.1",
     "cross-env": "^3.2.3",
     "flatpickr": "^3.0.6",
     "foundation-sites": "^6.4.1",
