@@ -3,7 +3,7 @@ import anchorme from 'anchorme'
 
 export function serialize (params, prefix) {
   const query = Object.keys(params).reduce((items, key) => {
-    const value  = params[key];
+    const value  = params[key]
 
     // Ignore "blank" values
     if (value !== null && value !== '' && value !== undefined) {
@@ -54,7 +54,7 @@ export function setSearchParam(key, value)
       pairs[pairs.length] = [key, value].join('=')
     }
 
-    return pairs.join('&');
+    return pairs.join('&')
 }
 
 export function getSearchParam(key, defaultVal)
