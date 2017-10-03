@@ -12,6 +12,10 @@ Events in Wichita is built with [Laravel](http://laravel.com).
 
     npm install
 
+### Compile Front End Assets
+
+    npm run watch
+
 ### Setup Environment
 
 Copy `.env.example`, rename it to `.env`, and update it with your database, email, Facebook API, and Google API credentials.
