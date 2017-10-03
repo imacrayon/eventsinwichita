@@ -24,15 +24,27 @@
     word-break: break-word;
     /* Adds a hyphen where the word breaks, if supported (No Blink) */
     hyphens: auto;
+    a {
+      &:before {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+    }
   }
   &-detail {
-    display: block;
+    display: inline-block;
     font-size: .8rem;
     color: $dark-gray;
     padding-left: 1.5em;
     position: relative;
     margin: .5rem 0;
     line-height: 1.25;
+    z-index: 2;
     svg {
       position: absolute;
       top: 0;
@@ -40,6 +52,8 @@
     }
   }
   &-tags {
+    position: relative;
+    z-index: 2;
     .label {
       font-size: 0.6rem;
       border-radius: 1rem;
