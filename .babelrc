@@ -1,0 +1,18 @@
+{
+    "presets": [
+        [
+            "env",
+            {
+                "modules": false,
+                "targets": {
+                    "browsers": [
+                        "> 2%",
+                        "ie >= 10"
+                    ],
+                    "uglify": true
+                },
+                "useBuiltIns": true
+            }
+        ]
+    ]
+}
