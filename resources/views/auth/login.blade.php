@@ -6,7 +6,7 @@
 
         <div class="card">
             <div class="card-section">
-                <a class="button small" style="background-color: #3b5999;" href="{{ url('/auth/facebook')}}" data-tooltip="Login with Facebook" tabindex="6">
+                <a class="button expanded" style="background-color: #3b5999;" href="{{ url('/auth/facebook')}}" data-tooltip="Login with Facebook" tabindex="6">
                     <svg class="icon" style="font-size: 1.25em;vertical-align: bottom;"><use xlink:href="{{ asset('/images/icons.svg#icon-facebook') }}"></use></svg>
                     Login
                 </a>
