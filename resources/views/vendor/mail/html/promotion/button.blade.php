@@ -4,7 +4,7 @@
             <table border="0" cellpadding="0" cellspacing="0">
                 <tr>
                     <td>
-                        <a href="{{ $url }}" class="button button-red" target="_blank">{{ $slot }}</a>
+                        <a href="{{ $url }}" class="button button-red" target="_blank" rel="noreferrer noopener">{{ $slot }}</a>
                     </td>
                 </tr>
             </table>

@@ -51,7 +51,7 @@
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-pin"></use></svg>
               Location
             </h2>
-            <a target="_blank" :href="place.map">
+            <a target="_blank" rel="noreferrer noopener" :href="place.map">
               {{ place.street }}<br>
               {{ place.city }}, {{ place.state }} {{ place.zip }}
             </a>
@@ -62,7 +62,7 @@
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-earth"></use></svg>
               Website
             </h2>
-            <a target="_blank" :href="place.profile.website">
+            <a target="_blank" rel="noreferrer noopener" :href="place.profile.website">
                 {{ parseUrlHost(place.profile.website) }}
             </a>
           </div>
@@ -82,7 +82,7 @@
               <svg class="icon"><use xlink:href="/images/icons.svg#icon-smartphone"></use></svg>
               Phone
             </h2>
-            <a target="_blank" :href="'tel:' + place.profile.phone">
+            <a target="_blank" rel="noreferrer noopener" :href="'tel:' + place.profile.phone">
               {{ place.profile.phone }}
             </a>
           </div>

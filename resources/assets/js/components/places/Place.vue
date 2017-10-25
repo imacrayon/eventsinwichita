@@ -6,7 +6,7 @@
           {{ place.name }}
         </a>
       </h1>
-      <a v-if="place.street" class="place-detail" target="_blank" :href="place.map">
+      <a v-if="place.street" class="place-detail" target="_blank" rel="noreferrer noopener" :href="place.map">
         <svg class="icon"><use xlink:href="/images/icons.svg#icon-pin"></use></svg>
         {{ place.street }}
       </a>
