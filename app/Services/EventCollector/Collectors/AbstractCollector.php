@@ -32,6 +32,7 @@ abstract class AbstractCollector implements Collector
         // Otherwise, it will create a new place for user with id `1`.
         $place = $this->places->store($data, 1);
         echo "Created place {$place->name} ({$place->id})" . PHP_EOL;
+
         return $place;
     }
 
@@ -46,18 +47,17 @@ abstract class AbstractCollector implements Collector
 
         $event = $this->events->store($data, $user_id);
         echo "Created event {$event->name} ({$event->id})" . PHP_EOL;
+
         return $event;
     }
 
     protected function truncate($string, $length = 1000, $append = "&hellip;") {
         $string = trim($string);
-
         $string = strip_tags($string);
-
-        if(strlen($string) > $length) {
-            $string = wordwrap($string, $length);
-            $string = explode("\n", $string, 2);
-            $string = $string[0] . $append;
+        if (strlen($string) > $length) {
+            $space = strpos($string, ' ', $length);
+            $string = substr($string, 0, $space);
+            $string .= $append;
         }
 
         return $string;
