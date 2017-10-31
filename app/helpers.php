@@ -55,7 +55,7 @@ if (! function_exists('safe_html')) {
         // Check if there is a url in the text
         if (preg_match($rex, $value, $url)) {
             $url = htmlspecialchars($url[0]);
-            $value = preg_replace($rex, '<a target="_blank" href="' . $url . '">' . $url . '</a> ', $value);
+            $value = preg_replace($rex, '<a target="_blank" rel="noreferrer noopener" href="' . $url . '">' . $url . '</a> ', $value);
         }
 
         return nl2br($value);

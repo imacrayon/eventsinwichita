@@ -29,7 +29,7 @@
 
                     @if (strpos($user->avatar, 'gravatar') !== false)
                         <div class="callout">
-                            <p>To change your profile picture use a <a href="https://en.gravatar.com/emails/" target="_blank">Gravatar</a> account.</p>
+                            <p>To change your profile picture use a <a href="https://en.gravatar.com/emails/" target="_blank" rel="noreferrer noopener">Gravatar</a> account.</p>
                         </div>
                     @endif
 
