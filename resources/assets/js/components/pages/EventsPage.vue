@@ -15,6 +15,11 @@
         <div class="top-bar-right">
           <ul class="menu">
             <li>
+              <a :class="{active: $root.filters.all_day}" @click="toggleAllDayFilter">
+                &ldquo;All Day&rdquo; Events
+              </a>
+            </li>
+            <li>
               <a @click="showFilters = true">
                 <svg class="icon"><use xlink:href="/images/icons.svg#icon-funnel"></use></svg>
                 Filter
@@ -345,6 +350,14 @@ export default {
             this.createModal = error.response.status === 422
             window.flash('Creating event failed.', 'alert')
           })
+      }
+    },
+
+    toggleAllDayFilter() {
+      if (!this.$root.filters.all_day) {
+        window.filter({all_day: true})
+      } else {
+        window.filter({all_day: ''})
       }
     }
   }

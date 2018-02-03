@@ -42,6 +42,7 @@ const app = new Vue({
   data () {
     return {
       filters: {
+        all_day: getSearchParam('all_day', ''),
         start_time: getSearchParam('start_time', ''),
         end_time: getSearchParam('end_time', ''),
         tags: getSearchParam('tags', []),
