@@ -98,12 +98,12 @@
           </div>
 
           <label :class="{'is-invalid-label': createPlaceForm.errors.has('name')}">Name
-            <input type="text" v-model="createPlaceForm.name" :class="{'is-invalid-input': createPlaceForm.errors.has('name')}"></textarea>
+            <input type="text" v-model="createPlaceForm.name" :class="{'is-invalid-input': createPlaceForm.errors.has('name')}">
             <span :class="['form-error', {'is-visible': createPlaceForm.errors.has('name')}]" v-text="createPlaceForm.errors.get('name')"></span>
           </label>
 
           <label :class="{'is-invalid-label': createPlaceForm.errors.has('street')}">Street
-            <input type="text" v-model="createPlaceForm.street" :class="{'is-invalid-input': createPlaceForm.errors.has('street')}"></textarea>
+            <input type="text" v-model="createPlaceForm.street" :class="{'is-invalid-input': createPlaceForm.errors.has('street')}">
             <span :class="['form-error', {'is-visible': createPlaceForm.errors.has('street')}]" v-text="createPlaceForm.errors.get('street')"></span>
           </label>
 
@@ -111,7 +111,7 @@
             <div class="small-12 medium-4 cell">
 
               <label :class="{'is-invalid-label': createPlaceForm.errors.has('city')}">City
-                <input type="text" v-model="createPlaceForm.city" :class="{'is-invalid-input': createPlaceForm.errors.has('city')}"></textarea>
+                <input type="text" v-model="createPlaceForm.city" :class="{'is-invalid-input': createPlaceForm.errors.has('city')}">
                 <span :class="['form-error', {'is-visible': createPlaceForm.errors.has('city')}]" v-text="createPlaceForm.errors.get('city')"></span>
               </label>
 
@@ -119,7 +119,7 @@
             <div class="small-12 medium-4 cell">
 
               <label :class="{'is-invalid-label': createPlaceForm.errors.has('state')}">State
-                <input type="text" v-model="createPlaceForm.state" :class="{'is-invalid-input': createPlaceForm.errors.has('state')}"></textarea>
+                <input type="text" v-model="createPlaceForm.state" :class="{'is-invalid-input': createPlaceForm.errors.has('state')}">
                 <span :class="['form-error', {'is-visible': createPlaceForm.errors.has('state')}]" v-text="createPlaceForm.errors.get('state')"></span>
               </label>
 
@@ -127,7 +127,7 @@
             <div class="small-12 medium-4 cell">
 
               <label :class="{'is-invalid-label': createPlaceForm.errors.has('zip')}">Zip
-                <input type="text" v-model="createPlaceForm.zip" :class="{'is-invalid-input': createPlaceForm.errors.has('zip')}"></textarea>
+                <input type="text" v-model="createPlaceForm.zip" :class="{'is-invalid-input': createPlaceForm.errors.has('zip')}">
                 <span :class="['form-error', {'is-visible': createPlaceForm.errors.has('zip')}]" v-text="createPlaceForm.errors.get('zip')"></span>
               </label>
 
@@ -135,17 +135,17 @@
           </div>
 
           <label :class="{'is-invalid-label': createPlaceForm.errors.has('profile.website')}">Website
-            <input type="text" v-model="createPlaceForm.profile.website" :class="{'is-invalid-input': createPlaceForm.errors.has('profile.website')}"></textarea>
+            <input type="text" v-model="createPlaceForm.profile.website" :class="{'is-invalid-input': createPlaceForm.errors.has('profile.website')}">
             <span :class="['form-error', {'is-visible': createPlaceForm.errors.has('profile.website')}]" v-text="createPlaceForm.errors.get('profile.website')"></span>
           </label>
 
           <label :class="{'is-invalid-label': createPlaceForm.errors.has('profile.email')}">Email
-            <input type="email" v-model="createPlaceForm.profile.email" :class="{'is-invalid-input': createPlaceForm.errors.has('profile.email')}"></textarea>
+            <input type="email" v-model="createPlaceForm.profile.email" :class="{'is-invalid-input': createPlaceForm.errors.has('profile.email')}">
             <span :class="['form-error', {'is-visible': createPlaceForm.errors.has('profile.email')}]" v-text="createPlaceForm.errors.get('profile.email')"></span>
           </label>
 
           <label :class="{'is-invalid-label': createPlaceForm.errors.has('profile.phone')}">Phone
-            <input type="text" v-model="createPlaceForm.profile.phone" :class="{'is-invalid-input': createPlaceForm.errors.has('profile.phone')}"></textarea>
+            <input type="text" v-model="createPlaceForm.profile.phone" :class="{'is-invalid-input': createPlaceForm.errors.has('profile.phone')}">
             <span :class="['form-error', {'is-visible': createPlaceForm.errors.has('profile.phone')}]" v-text="createPlaceForm.errors.get('profile.phone')"></span>
           </label>
 
@@ -153,7 +153,7 @@
             <label for="place-create-tags" :class="{'is-invalid-label': createPlaceForm.errors.has('tags')}">Tags</label>
             <div id="place-create-tags" class="tags-field">
               <template v-for="tag in tags">
-                <input type="checkbox" :value="tag.id" v-model="createPlaceForm.tags" :id="'edit-place-tag-' + tag.id">
+                <input type="checkbox" :key="tag.id" :value="tag.id" v-model="createPlaceForm.tags" :id="'edit-place-tag-' + tag.id">
                 <label class="button hollow tiny" :key="tag.id" :for="'edit-place-tag-' + tag.id">{{ tag.name }}</label>
               </template>
             </div>
