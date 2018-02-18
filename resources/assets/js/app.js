@@ -55,9 +55,16 @@ const app = new Vue({
   created () {
     this.filters.tags = toArray(this.filters.tags).map(tag => Number(tag))
 
+    // Initialize the app history
+    const search = serialize(this.filters)
+    window.history.replaceState(this.filters, window.document.title, search ? `?${search}`: location.pathname)
+
     window.onpopstate = event => {
-      this.filters = event.state || this.filters
+      if (event.state && search !== serialize(event.state)) {
+        this.filters = event.state
+      }
     }
+
     window.events.$on('filter', filters => {
       // If the search string is different that the current one
       this.filters = Object.assign(this.filters, filters)
@@ -66,8 +73,5 @@ const app = new Vue({
         window.history.pushState(this.filters, window.document.title, search ? `?${search}` : location.pathname)
       }
     })
-    // Initialize the app history
-    const search = serialize(this.filters)
-    window.history.replaceState(this.filters, window.document.title, search ? `?${search}`: location.pathname)
   }
 })
