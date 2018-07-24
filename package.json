@@ -11,17 +11,18 @@
   },
   "devDependencies": {
     "anchorme": "^1.1.2",
-    "autosize": "^3.0.21",
-    "axios": "^0.15.3",
-    "core-js": "^2.5.1",
-    "cross-env": "^3.2.3",
-    "flatpickr": "^3.0.6",
-    "foundation-sites": "^6.4.1",
-    "laravel-mix": "^0.12.1",
-    "moment": "^2.18.1",
-    "svgxuse": "^1.2.4",
-    "vue": "^2.1.10",
-    "vue-directive-tooltip": "^1.0.5"
+    "autosize": "^4.0.2",
+    "axios": "^0.18.0",
+    "core-js": "^2.5.7",
+    "cross-env": "^5.2.0",
+    "flatpickr": "^4.5.1",
+    "foundation-sites": "^6.5.0-rc.2",
+    "laravel-mix": "^2.1.11",
+    "moment": "^2.22.2",
+    "svgxuse": "^1.2.6",
+    "vue": "^2.5.16",
+    "vue-directive-tooltip": "^1.4.5",
+    "what-input": "^5.1.1"
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8"
