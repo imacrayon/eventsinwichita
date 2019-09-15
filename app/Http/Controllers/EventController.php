@@ -4,99 +4,130 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use Carbon\Carbon;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
-use App\Filters\EventFilters;
-use App\Repositories\EventRepository;
+use Illuminate\Support\Facades\Redirect;
 
 class EventController extends Controller
 {
-    /**
-     * The event repository instance.
-     *
-     * @var \App\Repositories\EventRepository
-     */
-    protected $events;
-
-    public function __construct(EventRepository $events)
+    public function index(Request $request)
     {
-        $this->events = $events;
+        $after = $request->get('after', today());
+        $request->merge([
+            'after' => $after,
+            'before' => $request->get('before', (new Carbon($after))->addWeek()->startOfDay()),
+        ]);
+
+        return Inertia::render('Events/Index', [
+            'events' => Event::filter($request)
+                ->orderBy('start', 'asc')
+                ->get()
+                ->transform(function ($event) {
+                    return $event->only(['id', 'name', 'start', 'end', 'timezone', 'location']);
+                }),
+            'dates' => Event::get(['start'])->pluck('start'),
+        ]);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request, EventFilters $filters)
-    {
-        return view('events.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return Inertia::render('Events/Create', [
+            'locations' => Event::distinct('location')->pluck('location'),
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $event = Event::make($request->validate([
+            'name' => ['required', 'max:255'],
+            'start' => ['required', 'date', 'after:yesterday'],
+            'end' => ['nullable', 'date', 'after:start'],
+            'timezone' => ['required', 'timezone'],
+            'location' => ['required', 'max:255'],
+            'description' => ['nullable', 'max:5000'],
+        ]))->user()->associate($request->user());
+
+        if ($request->user()) {
+            $event->approve();
+        }
+
+        $event->save();
+
+        return Redirect::route('events.index')->with('success', 'Event created.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Event $event)
+    public function show(Request $request, Event $event)
     {
-        $event->load('user', 'place', 'tags', 'comments.user');
-
-        return view('events.show', compact('event'));
+        return Inertia::render('Events/Show', [
+            'event' => [
+                'id' => $event->id,
+                'name' => $event->name,
+                'start' => $event->start,
+                'end' => $event->end,
+                'timezone' => $event->timezone,
+                'location' => $event->location,
+                'description' => $event->html,
+                'deleted_at' => $event->deleted_at,
+                'sources' => $event->sources->transform(function ($source) {
+                    return ['url' => $source->url];
+                }),
+                'can' => [
+                    'update' => optional($request->user())->can('update', $event) ?? false,
+                ],
+            ],
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Event $event)
     {
-        //
+        $this->authorize('update', $event);
+
+        return Inertia::render('Events/Edit', [
+            'event' => $event->only([
+                'id',
+                'name',
+                'start',
+                'end',
+                'timezone',
+                'location',
+                'description',
+                'deleted_at',
+            ]),
+            'locations' => Event::distinct('location')->pluck('location'),
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Event $event)
     {
-        //
+        $this->authorize('update', $event);
+
+        $event = tap($event)->update($request->validate([
+            'name' => ['required', 'max:255'],
+            'start' => ['nullable', 'date', 'after:yesterday'],
+            'end' => ['nullable', 'date', 'after:start'],
+            'timezone' => ['nullable', 'timezone'],
+            'location' => ['nullable', 'max:255'],
+            'description' => ['nullable', 'max:5000'],
+        ]));
+
+        return Redirect::route('events.edit', $event)->with('success', 'Event updated.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Event $event)
     {
-        //
+        $this->authorize('update', $event);
+
+        $event->delete();
+
+        return Redirect::route('events.edit', $event)->with('success', 'Event deleted.');
+    }
+
+    public function restore(Event $event)
+    {
+        $this->authorize('update', $event);
+
+        $event->restore();
+
+        return Redirect::route('events.edit', $event)->with('success', 'Event restored.');
     }
 }

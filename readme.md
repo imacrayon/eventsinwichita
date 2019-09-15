@@ -2,34 +2,78 @@
 
 An online calendar of events happening in Wichita, KS.
 
-## Getting Started
+## Installation
 
-Events in Wichita is built with [Laravel](http://laravel.com).
+Clone the repo locally:
 
-### Install Dependencies
+```sh
+git clone https://github.com/imacrayon/eventsinwichita eventsinwichita
+cd eventsinwichita
+```
 
-    composer install
+Install PHP dependencies:
 
-    npm install
+```sh
+composer install
+```
 
-### Compile Front End Assets
+Install NPM dependencies:
 
-    npm run watch
+```sh
+npm install
+```
 
-### Setup Environment
+Build assets:
 
-Copy `.env.example`, rename it to `.env`, and update it with your database, email, Facebook API, and Google API credentials.
+```sh
+npm run dev
+```
 
-### Setup Database
+Setup configuration:
 
-Define database credentials in your newly created `.env` file, then migrate the database.
+```sh
+cp .env.example .env
+```
 
-    php artisan migrate
+Generate application key:
 
-## Testing
+```sh
+php artisan key:generate
+```
 
-There are tests for most of the basic features.
+Create a SQLite database. You can also use another database (MySQL, Postgres), simply update your configuration accordingly.
 
-    vendor/bin/phpunit
+```sh
+touch database/database.sqlite
+```
 
-*Once in a while the test suit will generate random info that causes a database conflict (such as two users with the same email). Usually running the tests again will fix the problem.*
+Run database migrations:
+
+```sh
+php artisan migrate
+```
+
+Run database seeder:
+
+```sh
+php artisan db:seed
+```
+
+Start the local web server, or use Laravel Valet or Homestead.
+
+```sh
+php artisan serve
+```
+
+You're ready to go! Visit [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser, and login with:
+
+- **Username:** admin@example.com
+- **Password:** secret
+
+## Running tests
+
+To run the Events in Wichita tests, run:
+
+```sh
+vendor/bin/phpunit
+```

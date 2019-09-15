@@ -13,8 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\CollectFacebookEvents::class,
-        Commands\CollectMeetupEvents::class,
+        //
     ];
 
     /**
@@ -25,24 +24,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('collect:facebook')
-                 ->twiceDaily(3, 14)
-                 ->sendOutputTo(storage_path('logs/collector-facebook.log'))
-                 ->emailOutputTo(env('MAIL_CONTACT_ADDRESS'));
-
-        $schedule->command('collect:meetup')
-                 ->twiceDaily(4, 15)
-                 ->sendOutputTo(storage_path('logs/collector-meetup.log'))
-                 ->emailOutputTo(env('MAIL_CONTACT_ADDRESS'));
+        $schedule->command('sync:eventbrite')->daily();
+        $schedule->command('sync:ticketmaster')->daily();
     }
 
     /**
-     * Register the Closure based commands for the application.
+     * Register the commands for the application.
      *
      * @return void
      */
     protected function commands()
     {
+        $this->load(__DIR__.'/Commands');
+
         require base_path('routes/console.php');
     }
 }

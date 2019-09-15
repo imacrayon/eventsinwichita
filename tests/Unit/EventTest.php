@@ -2,26 +2,31 @@
 
 namespace Tests\Unit;
 
+use App\Event;
+use App\Source;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class EventTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     /** @test */
-    public function it_has_a_place()
+    public function it_belongs_to_a_user()
     {
-        $event = create('App\Event');
+        $event = create(Event::class);
 
-        $this->assertInstanceOf('App\Place', $event->place);
+        $this->assertEquals($event->user->id, $event->user_id);
     }
 
     /** @test */
-    public function it_has_a_user()
+    public function it_can_have_sources()
     {
-        $event = create('App\Event');
+        $event = create(Event::class);
 
-        $this->assertInstanceOf('App\User', $event->user);
+        $source = $event->sources()->create(make(Source::class)->toArray());
+
+        $this->assertCount(1, $event->sources);
+        $this->assertTrue($event->sources->contains($source));
     }
 }

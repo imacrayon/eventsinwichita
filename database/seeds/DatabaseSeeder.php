@@ -1,16 +1,26 @@
 <?php
 
+use App\User;
+use App\Event;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seed the application's database.
      *
      * @return void
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        factory(User::class)->create([
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+            'role' => User::ROLE_ADMIN,
+        ]);
+
+        factory(Event::class, 600)->create([
+            'timezone' => 'America/Chicago',
+        ]);
     }
 }

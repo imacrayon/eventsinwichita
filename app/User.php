@@ -2,76 +2,39 @@
 
 namespace App;
 
-use Laravel\Passport\HasApiTokens;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
-class User extends Authenticatable
+class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use HasApiTokens, Notifiable;
+    use Notifiable, SoftDeletes, Authenticatable, Authorizable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password', 'avatar', 'settings'
-    ];
+    const ROLE_ADMIN = 'admin';
 
     protected $casts = [
-        'settings' => 'json',
+        'settings' => 'collection',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    protected static $recordEvents = ['created'];
-
-    public function url()
-    {
-        return "/users/{$this->id}";
-    }
-
-    /**
-     * Check if user is a Admin
-     *
-     * @return boolean
-     */
     public function isAdmin()
     {
-        return $this->role === 1;
+        return $this->role === self::ROLE_ADMIN;
     }
 
-    /**
-     * The user's events.
-     */
-    public function events()
+    public function scopeAdmins($query)
     {
-        return $this->hasMany(Event::class);
+        $query->where('role', self::ROLE_ADMIN);
     }
 
-    /**
-     * The user's places.
-     */
-    public function places()
+    public function getAvatarAttribute()
     {
-        return $this->hasMany(Place::class);
-    }
-
-    public function activities()
-    {
-        return $this->hasMany(Activity::class);
-    }
-
-    public function comments()
-    {
-        return $this->hasMany(Comment::class)->latest();
+        return 'https://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'?s=128&d=mm';
     }
 }

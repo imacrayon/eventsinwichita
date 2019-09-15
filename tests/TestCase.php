@@ -2,51 +2,56 @@
 
 namespace Tests;
 
-use App\Exceptions\Handler;
-use Laravel\Passport\Passport;
-use Illuminate\Contracts\Debug\ExceptionHandler;
+use App\FakeGeocode;
+use Illuminate\Support\Arr;
+use PHPUnit\Framework\Assert;
+use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-
-// TODO: In PHP 7 this can be a anonymous class
-class TestingHandler extends Handler {
-    public function __construct() {}
-    public function report(\Exception $e) {}
-    public function render($request, \Exception $e) {
-        throw $e;
-    }
-}
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->disableExceptionHandling();
-    }
+        app()->bind('geocode', FakeGeocode::class);
 
-    protected function signIn($user = null)
-    {
-        $user = $user ?: factory('App\User')->create();
-        Passport::actingAs($user);
+        TestResponse::macro('props', function ($key = null) {
+            $props = json_decode(json_encode($this->original->getData()['page']['props']), JSON_OBJECT_AS_ARRAY);
 
-        return $this;
-    }
+            if ($key) {
+                return Arr::get($props, $key);
+            }
 
-    // Hat tip, @adamwathan.
-    protected function disableExceptionHandling()
-    {
-        $this->oldExceptionHandler = $this->app->make(ExceptionHandler::class);
+            return $props;
+        });
 
-        $this->app->instance(ExceptionHandler::class, new TestingHandler);
-    }
+        TestResponse::macro('assertHasProp', function ($key) {
+            Assert::assertTrue(Arr::has($this->props(), $key));
 
-    protected function withExceptionHandling()
-    {
-        $this->app->instance(ExceptionHandler::class, $this->oldExceptionHandler);
+            return $this;
+        });
 
-        return $this;
+        TestResponse::macro('assertPropValue', function ($key, $value) {
+            $this->assertHasProp($key);
+
+            if (is_callable($value)) {
+                $value($this->props($key));
+            } else {
+                Assert::assertEquals($this->props($key), $value);
+            }
+
+            return $this;
+        });
+
+        TestResponse::macro('assertPropCount', function ($key, $count) {
+            $this->assertHasProp($key);
+
+            Assert::assertCount($count, $this->props($key));
+
+            return $this;
+        });
     }
 }

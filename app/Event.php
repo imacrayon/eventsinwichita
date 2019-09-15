@@ -2,117 +2,47 @@
 
 namespace App;
 
-use Mail;
-use Carbon\Carbon;
-use App\Mail\NewEvent;
-use App\Traits\Commentable;
-use App\Traits\Subscribable;
-use App\Filters\EventFilters;
-use App\Traits\RecordsActivity;
-use Illuminate\Database\Eloquent\Model;
+use LinkFinder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Model
 {
-    use RecordsActivity, Commentable, Subscribable;
-
-    /**
-     * The attributes that are converted to Carbon instances.
-     *
-     * @var string
-     */
-    protected $dates = ['start_time', 'end_time'];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'start_time',
-        'end_time',
-        'place_id',
-        'location',
-        'description',
-        'user_id',
-        'profile',
-        'facebook_id',
-        'meetup_id'
-    ];
+    use Filterable, SoftDeletes, Approval;
 
     protected $casts = [
-        'profile' => 'json',
+        'start' => 'datetime',
+        'end' => 'datetime',
     ];
 
-    protected $with = ['tags'];
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = ['is_subscribed_to'];
-
-    /**
-     * Boot the event instance.
-     */
-    protected static function boot()
+    protected function filters()
     {
-        parent::boot();
-
-        static::created(function ($event) {
-            if (!$event->user->isAdmin()) {
-                Mail::to(env('MAIL_CONTACT_ADDRESS'))->send(new NewEvent($event));
-            }
-        });
+        return [
+            new Filters\Before,
+            new Filters\After,
+        ];
     }
 
-    public function url()
-    {
-        return "/events/{$this->id}";
-    }
-
-    /**
-     * Place relationship.
-     *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function place()
-    {
-        return $this->belongsTo(Place::class);
-    }
-
-    /**
-     * Tags relationship.
-     *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class);
-    }
-
-    /**
-     * User relationship.
-     *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Apply all relevant filters.
-     *
-     * @param  Builder       $query
-     * @param  EventFilters $filters
-     * @return Builder
-     */
-    public function scopeFilter($query, EventFilters $filters)
+    public function getHtmlAttribute()
     {
-        return $filters->apply($query)
-                       ->orderBy('start_time', 'asc')
-                       ->with('place', 'tags', 'user');
+        return nl2br((new LinkFinder)->process($this->description));
+    }
+
+    public function sources()
+    {
+        return $this->hasMany(Source::class);
+    }
+
+    public function addToCalendarDay($calendar, $start, $end)
+    {
+        $start = $start ?? $this->start->endOfDay();
+
+        if ($this->start->between($start, $end)) {
+            $calendar->put($start, $calendar->get($start, collect())->push($this));
+        }
     }
 }

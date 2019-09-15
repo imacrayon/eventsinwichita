@@ -1,0 +1,11 @@
+@import url('https://rsms.me/inter/inter.css');
+@import 'tailwindcss/base';
+@import 'reset';
+
+@import 'tailwindcss/components';
+
+@import 'btn';
+@import 'nprogress';
+@import 'rich-text';
+
+@import 'tailwindcss/utilities';
