@@ -61,16 +61,6 @@ class SyncTicketmaster extends Command
         return json_decode($response);
     }
 
-    protected function importEvent($event)
-    {
-        if ($source = Source::where($this->source($event))->with('event')->first()) {
-            return $source->event->update($this->event($event));
-        }
-
-        return Event::create($this->event($event))
-            ->sources()->create($this->source($event));
-    }
-
     protected function source($data)
     {
         return [
