@@ -1,0 +1,45 @@
+.autocomplete {
+  & input[aria-expanded='true'] {
+    outline: none;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16);
+    border-color: theme('colors.black');
+    background-color: theme('colors.white');
+  }
+
+  & ul {
+    max-height: 9rem;
+    border: 1px solid theme('colors.black');
+    & > li {
+      &:hover,
+      &[aria-selected='true'] {
+        background-color: theme('colors.gray.100');
+      }
+    }
+  }
+
+  &[data-position='below'] {
+    & input[aria-expanded='true'] {
+      border-bottom-color: transparent;
+      border-radius: 4px 4px 0 0;
+    }
+    & > ul {
+      margin-top: -1px;
+      border-top-color: transparent;
+      border-radius: 0 0 4px 4px;
+    }
+  }
+
+  &[data-position='above'] {
+    & input[aria-expanded='true'] {
+      position: relative;
+      border-top-color: transparent;
+      border-radius: 0 0 4px 4px;
+      z-index: 2;
+    }
+    & > ul {
+      margin-bottom: -1px;
+      border-bottom-color: transparent;
+      border-radius: 4px 4px 0 0;
+    }
+  }
+}

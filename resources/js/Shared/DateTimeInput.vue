@@ -13,7 +13,6 @@
 <script>
 import { DateTime } from 'luxon'
 import flatpickr from 'flatpickr'
-import 'flatpickr/dist/themes/airbnb.css'
 import { dateTokens } from '@/mixins/InteractsWithDates'
 
 export default {
@@ -74,9 +73,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.\!cursor-not-allowed {
-  cursor: not-allowed !important;
-}
-</style>

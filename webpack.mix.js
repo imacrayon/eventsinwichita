@@ -1,9 +1,12 @@
+const cssImport = require('postcss-import')
+const cssNesting = require('postcss-nesting')
 const mix = require('laravel-mix')
+const tailwindcss = require('tailwindcss')
 
 mix
   .webpackConfig({
     output: {
-      chunkFilename: 'js/chunks/[name].js',
+      chunkFilename: 'js/chunks/[name].js?id=[chunkhash]',
     },
     resolve: {
       extensions: ['vue', 'js'],
@@ -13,11 +16,10 @@ mix
     },
   })
   .postCss('resources/css/app.css', 'public/css', [
-    require('postcss-import'),
-    require('tailwindcss'),
-    require('postcss-nesting'),
+    cssImport(),
+    cssNesting(),
+    tailwindcss(),
   ])
-  .babelConfig({
-    plugins: ['@babel/plugin-syntax-dynamic-import'],
-  })
   .js('resources/js/app.js', 'public/js')
+  .sourceMaps()
+  .version()

@@ -17,7 +17,7 @@
               <article
                 v-for="event in day"
                 :key="event.id"
-                class="relative hover:bg-gray-100 p-4 sm:p-6"
+                class="event relative hover:bg-gray-100 p-4 sm:p-6"
               >
                 <formatted-time
                   :value="event.start.toISO()"
@@ -201,14 +201,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-article h2 a:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-</style>
