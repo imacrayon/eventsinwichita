@@ -13,6 +13,7 @@
     "inertiajs/inertia-laravel": "^0.1.2",
     "laravel/framework": "^6.0",
     "laravel/tinker": "^1.0",
+    "symfony/dom-crawler": "^4.3",
     "tightenco/ziggy": "^0.8",
     "yarri/link-finder": "^2.4"
   },
