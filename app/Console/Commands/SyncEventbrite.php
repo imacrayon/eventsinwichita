@@ -56,12 +56,23 @@ class SyncEventbrite extends Command
 
     protected function isValidSource($data)
     {
-        return ! in_array($data->organization_id, [
+        // Ignore spammy events with a general location.
+        if (in_array($this->location($data), ['Wichita, KS', 'Wichita'])) {
+            return false;
+        }
+
+        $badOrganizations = [
             233446054037, 5386334244, 276436486174, 184961650433,
             300421523337, 229369625393, 183656722434, 308256707370,
             328509897191, 3069190992, 309235372404, 270797351629,
             308401027589, 308410324213,
-        ]);
+        ];
+
+        if (in_array($data->organization_id, $badOrganizations)) {
+            return false;
+        }
+
+        return true;
     }
 
     protected function source($data)
