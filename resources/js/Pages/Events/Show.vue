@@ -57,7 +57,7 @@
           class="flex mt-4 text-gray-700 leading-tight"
         >
           <icon name="link" class="inline-block w-5 h-5 mr-2 flex-shrink-0" />
-          <a class="underline" :href="source.url">{{ source.url }}</a>
+          <a class="underline truncate" :href="source.url">{{ source.url }}</a>
         </p>
         <div
           class="mt-10 leading-normal rich-text"
