@@ -87,7 +87,7 @@ class SyncWichita360 extends Command
 
         return [
             'name' => $data->name,
-            'description' => trim($data->description),
+            'description' => htmlspecialchars_decode(trim($data->description)),
             'start' => $start,
             'end' => $end,
             'timezone' => 'America/Chicago',

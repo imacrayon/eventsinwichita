@@ -61,7 +61,7 @@
         </p>
         <div
           class="mt-10 leading-normal rich-text"
-          v-html="event.description"
+          v-html="cleanHtml(event.description)"
         />
         <inertia-link
           :href="
@@ -93,6 +93,14 @@ export default {
 
   props: {
     event: Object,
+  },
+
+  methods: {
+    cleanHtml(str) {
+      let txt = window.document.createElement('textarea')
+      txt.innerHTML = str
+      return txt.value
+    },
   },
 }
 </script>
