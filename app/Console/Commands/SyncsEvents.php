@@ -8,8 +8,6 @@ use Illuminate\Support\Arr;
 
 trait SyncsEvents
 {
-    protected $progress;
-
     protected function sync($data)
     {
         if ($this->isValidSource($data)) {
@@ -32,7 +30,8 @@ trait SyncsEvents
 
     protected function findSource($data)
     {
-        return Source::where(Arr::only($this->source($data), ['name', 'key']))->with('event')->first();
+        return Source::where(Arr::only($this->source($data), ['name', 'key']))
+            ->with('event')->first();
     }
 
     protected function createSource($data)
@@ -43,7 +42,8 @@ trait SyncsEvents
 
     protected function updateSource($source, $data)
     {
-        return tap($source)->update($this->source($data))->event->update($this->event($data));
+        return tap($source)->update($this->source($data))
+            ->event->update($this->event($data));
     }
 
     protected function deleteSource($source)

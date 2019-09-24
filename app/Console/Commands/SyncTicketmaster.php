@@ -16,8 +16,6 @@ class SyncTicketmaster extends Command
 
     protected $description = 'Sync events from Ticketmaster';
 
-    protected $progress;
-
     public function handle()
     {
         $response = Cache::remember('ticketmaster', 3600, function () {
