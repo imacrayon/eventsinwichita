@@ -10,6 +10,8 @@ class Source extends Model
 
     const NAME_WICHITA360 = 'wichita360';
 
+    const NAME_KIRBYS = 'kirbys';
+
     protected $casts = [
         'details' => 'json',
     ];
@@ -25,8 +27,9 @@ class Source extends Model
             self::NAME_EVENTBRITE => "https://www.eventbrite.com/e/{$this->key}",
             self::NAME_TICKETMASTER => "http://www.ticketmaster.com/event/{$this->key}",
             self::NAME_WICHITA360 => "https://www.360wichita.com/event/{$this->key}",
+            self::NAME_KIRBYS => 'http://kirbysbeerstore.com',
         ];
 
-        return $urls[$this->name] ?? '';
+        return $urls[$this->name] ?? null;
     }
 }

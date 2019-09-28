@@ -35,6 +35,10 @@ return [
         'bounds' => '37.534933,-97.560549|37.856121,-97.100140',
     ],
 
+    'google' => [
+        'secret' => env('GOOGLE_SECRET'),
+    ],
+
     'eventbrite' => [
         'secret' => env('EVENTBRITE_SECRET'),
     ],
