@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Event;
 use App\Source;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
