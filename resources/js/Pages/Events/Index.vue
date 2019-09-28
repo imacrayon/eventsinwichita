@@ -49,7 +49,7 @@
         </div>
         <div class="px-6 sm:px-12">
           <loading-button
-            class="btn mt-8 w-full"
+            class="btn mt-8 mb-8 w-full"
             :loading="fetching"
             @click="addOneWeek"
           >
