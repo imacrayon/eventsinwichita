@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('sync:eventbrite')->daily();
         $schedule->command('sync:ticketmaster')->daily();
         $schedule->command('sync:wichita360')->daily();
+        $schedule->command('sync:kirbys')->daily();
     }
 
     /**
