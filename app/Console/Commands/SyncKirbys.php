@@ -53,14 +53,14 @@ class SyncKirbys extends Command
 
     protected function event($data)
     {
-        $start = new Carbon($data->start->dateTime ?? $data->start->date.' 22:00:00');
-        $end = new Carbon($data->end->dateTime ?? $data->end->date.' 23:59:59');
+        $start = new Carbon($data->start->dateTime ?? $data->start->date.'T22:00:00-05:00');
+        $end = new Carbon($data->end->dateTime ?? $data->end->date.'T23:59:59-05:00');
 
         return [
             'name' => $data->summary,
             'description' => $data->description ?? null,
-            'start' => $start,
-            'end' => $end,
+            'start' => $start->timezone('UTC'),
+            'end' => $end->timezone('UTC'),
             'timezone' => 'America/Chicago',
             'location' => $this->location($data),
             'approved_at' => $start->diffInDays($end) <= 7 ? now() : null,
