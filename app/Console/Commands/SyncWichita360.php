@@ -82,14 +82,16 @@ class SyncWichita360 extends Command
 
     protected function event($data)
     {
+        // The timezome is off by one hour for some reason on this site
+        $data->startDate = str_replace('-06:00', '-05:00', $data->startDate);
         $start = new Carbon($data->startDate);
         $end = (new Carbon($start))->endOfDay();
 
         return [
             'name' => $data->name,
             'description' => htmlspecialchars_decode(trim($data->description)),
-            'start' => $start,
-            'end' => $end,
+            'start' => $start->timezone('UTC'),
+            'end' => $end->timezone('UTC'),
             'timezone' => 'America/Chicago',
             'location' => $this->location($data),
             'approved_at' => $start->diffInDays($end) <= 7 ? now() : null,
