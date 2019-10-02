@@ -63,15 +63,26 @@
           class="mt-10 leading-normal rich-text"
           v-html="cleanHtml(event.description)"
         />
-        <inertia-link
-          :href="
-            event.can.update
-              ? route('events.edit', event)
-              : route('events.proposals.create', event)
-          "
-          class="leading-none rounded-full bg-gray-100 absolute top-0 right-0 p-2 m-2 text-gray-500 hover:text-gray-700 hover:bg-gray-200"
-          ><icon name="pencil" class="inline-block w-3 h-3 align-baseline ml-1"
-        /></inertia-link>
+        <div
+          class="absolute top-0 right-0 flex mt-2 mr-2"
+        >
+          <inertia-link
+            :href="route('events.destroy', event)"
+            method="delete"
+            class="leading-none rounded-full bg-gray-100 p-2 mr-2 text-gray-500 hover:text-gray-700 hover:bg-gray-200"
+            v-if="event.can.update"
+            ><icon name="trash" class="fill-current w-3 h-3"
+          /></inertia-link>
+          <inertia-link
+            :href="
+              event.can.update
+                ? route('events.edit', event)
+                : route('events.proposals.create', event)
+            "
+            class="leading-none rounded-full bg-gray-100 p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-200"
+            ><icon name="pencil" class="fill-current w-3 h-3"
+          /></inertia-link>
+        </div>
       </article>
     </div>
   </layout>
