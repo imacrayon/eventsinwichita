@@ -19,6 +19,8 @@ class Event extends Model
         return [
             new Filters\Before,
             new Filters\After,
+            new Filters\Trashed,
+            new Filters\Unapproved,
         ];
     }
 
