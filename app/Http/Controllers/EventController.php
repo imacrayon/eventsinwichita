@@ -12,11 +12,23 @@ class EventController extends Controller
 {
     public function index(Request $request)
     {
-        $after = $request->get('after', today());
-        $request->merge([
+        $after = $request->input('after', today());
+        $before = $request->input('before', (new Carbon($after))->addWeek()->startOfDay());
+        $trashed = $request->input('trashed');
+        $unapproved = $request->has('unapproved');
+
+        $filter = collect([
             'after' => $after,
-            'before' => $request->get('before', (new Carbon($after))->addWeek()->startOfDay()),
+            'before' => $before,
+            'trashed' => $trashed,
+            'unapproved' => $unapproved,
         ]);
+
+        if($request->hasAny('trashed', 'unapproved')) {
+            $filter = $filter->except(['after', 'before']);
+        }
+
+        $request->merge($filter->filter()->all());
 
         return Inertia::render('Events/Index', [
             'events' => Event::filter($request)

@@ -58,6 +58,33 @@
         </div>
       </div>
       <div class="hidden ml-8 xl:block">
+        <dropdown class="mb-4" placement="bottom-start" v-if="$page.auth.user && $page.auth.user.role === 'admin'">
+          <div class="flex items-center cursor-pointer select-none group">
+            <div
+              class="text-gray-800 group-hover:text-red-600 focus:text-red-600 mr-1 whitespace-no-wrap"
+            >
+              Filter Events
+            </div>
+            <icon
+              class="w-5 h-5 group-hover:fill-red-600 fill-gray-800 focus:fill-red-600"
+              name="cheveron-down"
+            />
+          </div>
+          <div slot="menu" class="mt-2 py-2 shadow-lg bg-white rounded text-sm">
+            <inertia-link
+              class="block px-6 py-2 hover:bg-gray-100"
+              :href="route('events.index')"
+              >All events</inertia-link>
+            <inertia-link
+              class="block px-6 py-2 hover:bg-gray-100"
+              :href="route('events.index', {trashed: 'only'})"
+              >Only trashed events</inertia-link>
+            <inertia-link
+              class="block px-6 py-2 hover:bg-gray-100"
+              :href="route('events.index', {unapproved: true})"
+              >Only unapproved events</inertia-link>
+          </div>
+        </dropdown>
         <calendar
           :value="form.after"
           @input="setAfter"
@@ -77,6 +104,8 @@ import LoadingButton from '@/Shared/LoadingButton'
 import { DateTime } from 'luxon'
 import InteractsWithDates from '@/mixins/InteractsWithDates'
 import { FORMAT_MYSQL } from '@/mixins/InteractsWithDates'
+import Dropdown from '@/Shared/Dropdown'
+import Icon from '@/Shared/Icon'
 
 export default {
   components: {
@@ -84,6 +113,8 @@ export default {
     Calendar,
     LoadingButton,
     FormattedTime,
+    Dropdown,
+    Icon
   },
 
   mixins: [InteractsWithDates],
