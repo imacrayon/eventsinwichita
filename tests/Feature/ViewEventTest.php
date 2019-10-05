@@ -30,9 +30,8 @@ class ViewEventTest extends TestCase
                 );
             })
             ->assertSeeInOrder([$now->name, $oneHour->name])
-            //->assertDontSee($pastEvent->name) // Error: Call to undefined method Illuminate\Foundation\Testing\Assert::assertStringContainsString()
-            //->assertDontSee($futureEvent->name)
-        ;
+            ->assertDontSee($pastEvent->name)
+            ->assertDontSee($futureEvent->name);
     }
 
     /** @test */
