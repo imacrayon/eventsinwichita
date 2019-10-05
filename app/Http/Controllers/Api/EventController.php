@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Event;
+use App\Http\Resources\EventResource;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,7 +11,8 @@ class EventController extends Controller
 {
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return EventResource
+     * @throws \Exception
      */
     public function index(Request $request)
     {
@@ -20,13 +22,20 @@ class EventController extends Controller
             'before' => $request->get('before', (new Carbon($after))->addWeek()->startOfDay()),
         ]);
 
-        return response()->json([
-            'results' => Event::filter($request)
-                ->orderBy('start', 'asc')
-                ->get()
-                ->transform(function ($event) {
-                    return $event->only(['id', 'name', 'start', 'end', 'timezone', 'location']);
-                })
-        ]);
+        return EventResource::collection(Event::filter($request)
+            ->orderBy('start', 'asc')
+            ->get());
+    }
+
+
+    /**
+     * @param Event $event
+     * @return EventResource
+     */
+    public function show(Event $event) {
+        // abort if resource is either deleted or not approved
+        abort_if($event->deleted_at !== null || $event->approved_at === null,404);
+
+        return new EventResource($event);
     }
 }

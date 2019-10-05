@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Event;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -20,7 +21,56 @@ class EventTest extends TestCase
 
         $response->assertStatus(200);
 
-        $this->assertArrayHasKey('results', $response->json());
+        $this->assertArrayHasKey('data', $response->json());
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function it_can_get_specified_events()
+    {
+        $event = create(Event::class);
+        $response = $this->get(route('api.events.show',$event));
+
+        $response->assertStatus(200);
+
+        $this->assertArrayHasKey('data', $response->json());
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function cannot_get_deleted_events()
+    {
+        $this->expectException(NotFoundHttpException::class);
+
+        $event = create(Event::class,['deleted_at'=>now()]);
+        $response = $this->get(route('api.events.show',$event));
+
+        $response->assertStatus(404);
+
+        $this->assertArrayHasKey('data', $response->json());
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function cannot_get_unpublished_events()
+    {
+        $this->expectException(NotFoundHttpException::class);
+
+        $event = create(Event::class,['approved_at'=>null]);
+        $response = $this->get(route('api.events.show',$event));
+
+        $response->assertStatus(404);
+
+        $this->assertArrayHasKey('data', $response->json());
     }
 
     /**
@@ -40,7 +90,7 @@ class EventTest extends TestCase
 
         $response->assertOk();
 
-        $this->assertCount(10, $response->json('results'));
+        $this->assertCount(10, $response->json('data'));
     }
 
     /**
@@ -62,6 +112,6 @@ class EventTest extends TestCase
 
         $response->assertOk();
 
-        $this->assertCount(0, $response->json('results'));
+        $this->assertCount(0, $response->json('data'));
     }
 }
