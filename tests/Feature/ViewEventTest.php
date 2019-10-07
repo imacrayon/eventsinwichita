@@ -19,6 +19,7 @@ class ViewEventTest extends TestCase
         $oneHour = create(Event::class, ['start' => now()->addHour(1)]);
         $pastEvent = create(Event::class, ['end' => new Carbon('yesterday')]);
         $futureEvent = create(Event::class, ['start' => new Carbon('next month')]);
+
         $this->get(route('events.index'))
             ->assertOk()
             ->assertPropCount('events', 2)
