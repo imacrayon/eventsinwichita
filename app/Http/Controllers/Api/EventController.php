@@ -34,7 +34,7 @@ class EventController extends Controller
      */
     public function show(Event $event) {
         // abort if resource is either deleted or not approved
-        abort_if($event->deleted_at !== null || $event->approved_at === null,404);
+        abort_if($event->deleted_at !== null || $event->approved_at === null,404,'Event does not exists.');
 
         return new EventResource($event);
     }

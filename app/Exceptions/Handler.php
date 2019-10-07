@@ -3,7 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Str;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +48,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        // ModelNotFoundException is triggered before applying JsonMiddleware.
+        // Therefore we have to check if any API request is being made.
+        if ($exception instanceof ModelNotFoundException && $request->is('api/*')) {
+            return response()->json([
+                'message' => Str::after($exception->getModel(), 'App\\') . ' does not exists.'
+            ], 404);
+        }
         return parent::render($request, $exception);
     }
 }

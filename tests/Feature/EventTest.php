@@ -17,11 +17,12 @@ class EventTest extends TestCase
      */
     public function it_can_get_events()
     {
+        create(Event::class,['start' => now()->addDay(),'end'=>now()->addDays(2)],5);
+
         $response = $this->get(route('api.events.index'));
 
-        $response->assertStatus(200);
-
-        $this->assertArrayHasKey('data', $response->json());
+        $response->assertOk()
+            ->assertJsonCount(5,'data');
     }
 
     /**
@@ -34,9 +35,19 @@ class EventTest extends TestCase
         $event = create(Event::class);
         $response = $this->get(route('api.events.show',$event));
 
-        $response->assertStatus(200);
-
-        $this->assertArrayHasKey('data', $response->json());
+        $response->assertOk()
+            ->assertJsonStructure([
+                'data' => [
+                    'id',
+                    'name',
+                    'start',
+                    'end',
+                    'timezone',
+                    'location',
+                    'created_at',
+                    'updated_at',
+                ]
+            ]);
     }
 
     /**
@@ -44,16 +55,26 @@ class EventTest extends TestCase
      *
      * @return void
      */
-    public function cannot_get_deleted_events()
+    public function cannot_view_non_existing_event()
     {
-        $this->expectException(NotFoundHttpException::class);
+        $response = $this->get(route('api.events.show',9000));
 
+        $response->assertNotFound()
+            ->assertJson(['message' => 'Event does not exists.']);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function cannot_view_deleted_event()
+    {
         $event = create(Event::class,['deleted_at'=>now()]);
         $response = $this->get(route('api.events.show',$event));
 
-        $response->assertStatus(404);
-
-        $this->assertArrayHasKey('data', $response->json());
+        $response->assertNotFound()
+            ->assertJson(['message' => 'Event does not exists.']);
     }
 
     /**
@@ -61,16 +82,13 @@ class EventTest extends TestCase
      *
      * @return void
      */
-    public function cannot_get_unpublished_events()
+    public function cannot_view_unpublished_event()
     {
-        $this->expectException(NotFoundHttpException::class);
-
         $event = create(Event::class,['approved_at'=>null]);
         $response = $this->get(route('api.events.show',$event));
 
-        $response->assertStatus(404);
-
-        $this->assertArrayHasKey('data', $response->json());
+        $response->assertNotFound()
+            ->assertJson(['message' => 'Event does not exists.']);
     }
 
     /**
@@ -88,9 +106,8 @@ class EventTest extends TestCase
 
         $response = $this->get(route('api.events.index')."?after={$start}&before={$end}");
 
-        $response->assertOk();
-
-        $this->assertCount(10, $response->json('data'));
+        $response->assertOk()
+            ->assertJsonCount(10,'data');
     }
 
     /**
@@ -106,12 +123,11 @@ class EventTest extends TestCase
 
         $nonExistingBeforeDate = now()->subDays(14);
 
-        factory(Event::class, 10)->create(['start' => $start, 'end' => $end]);
+        create(Event::class,['start' => $start, 'end' => $end], 10);
 
         $response = $this->get(route('api.events.index')."?before={$nonExistingBeforeDate}");
 
-        $response->assertOk();
-
-        $this->assertCount(0, $response->json('data'));
+        $response->assertOk()
+            ->assertJsonCount(0,'data');
     }
 }
