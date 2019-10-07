@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\SchemaOrg\Schema;
 
 class EventController extends Controller
 {
@@ -70,6 +71,15 @@ class EventController extends Controller
 
     public function show(Request $request, Event $event)
     {
+        $schema = Schema::event()
+            ->name($event->name)
+            ->about($event->html)
+            ->doorTime($event->start)
+            ->startDate($event->start)
+            ->endDate($event->end)
+            ->location($event->location)
+            ->url(route('events.show',$event));
+
         return Inertia::render('Events/Show', [
             'event' => [
                 'id' => $event->id,
@@ -87,7 +97,8 @@ class EventController extends Controller
                     'update' => optional($request->user())->can('update', $event) ?? false,
                 ],
             ],
-        ]);
+        ])->withViewData(compact('schema'));
+
     }
 
     public function edit(Event $event)
