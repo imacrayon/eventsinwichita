@@ -87,6 +87,11 @@ class EventController extends Controller
                     'update' => optional($request->user())->can('update', $event) ?? false,
                 ],
             ],
+        ])->withViewData([
+            'meta' => [
+                'title' => $event->name,
+                'description' => strip_tags($event->html)
+            ]
         ]);
     }
 
