@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\SchemaOrg\Schema;
 use Illuminate\Support\Str;
 
 class EventController extends Controller
@@ -98,7 +99,15 @@ class EventController extends Controller
                 'article:published_time' => $event->created_at->toIso8601String(),
                 'article:modified_time' => $event->updated_at->toIso8601String(),
                 'article:expiration_time' => $event->end->toIso8601String(),
-            ]
+            ],
+            'schema' => Schema::event()
+                ->name($event->name)
+                ->about($event->html)
+                ->doorTime($event->start)
+                ->startDate($event->start)
+                ->endDate($event->end)
+                ->location($event->location)
+                ->url(route('events.show',$event))
         ]);
     }
 
