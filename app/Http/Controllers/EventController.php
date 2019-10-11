@@ -92,7 +92,7 @@ class EventController extends Controller
         ])->withViewData([
             'meta' => [
                 'title' => $event->name,
-                'description' => Str::limit(strip_tags($event->html), 137, '...'),
+                'description' => Str::limit(strip_tags($event->description), 137, '...'),
                 'og:title' => $event->name,
                 'og:url' => route('events.show', $event),
                 'og:type' => 'article',
@@ -102,7 +102,7 @@ class EventController extends Controller
             ],
             'schema' => Schema::event()
                 ->name($event->name)
-                ->about($event->html)
+                ->about($event->description)
                 ->doorTime($event->start)
                 ->startDate($event->start)
                 ->endDate($event->end)
