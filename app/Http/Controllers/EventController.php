@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 
 class EventController extends Controller
 {
@@ -87,6 +88,17 @@ class EventController extends Controller
                     'update' => optional($request->user())->can('update', $event) ?? false,
                 ],
             ],
+        ])->withViewData([
+            'meta' => [
+                'title' => $event->name,
+                'description' => Str::limit(strip_tags($event->html) , 137, '...'),
+                'og:title' => $event->name,
+                'og:url' => route('events.show', $event),
+                'og:type' => 'article',
+                'article:published_time' => $event->created_at->toIso8601String(),
+                'article:modified_time' => $event->updated_at->toIso8601String(),
+                'article:expiration_time' => $event->end->toIso8601String(),
+            ]
         ]);
     }
 

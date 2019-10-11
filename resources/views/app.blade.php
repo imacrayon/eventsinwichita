@@ -12,6 +12,12 @@
     <meta name="msapplication-TileColor" content="#2d3748">
     <meta name="theme-color" content="#ffffff">
 
+    @if(isset($meta))
+        @foreach($meta as $name => $content)
+            <meta name="{{$name}}" content="{{$content}}">
+        @endforeach
+    @endif
+
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <script src="{{ mix('/js/app.js') }}" defer></script>
     @routes
