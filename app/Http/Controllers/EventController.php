@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\SchemaOrg\Schema;
+use Illuminate\Support\Str;
 
 class EventController extends Controller
 {
@@ -71,15 +72,6 @@ class EventController extends Controller
 
     public function show(Request $request, Event $event)
     {
-        $schema = Schema::event()
-            ->name($event->name)
-            ->about($event->html)
-            ->doorTime($event->start)
-            ->startDate($event->start)
-            ->endDate($event->end)
-            ->location($event->location)
-            ->url(route('events.show',$event));
-
         return Inertia::render('Events/Show', [
             'event' => [
                 'id' => $event->id,
@@ -97,8 +89,26 @@ class EventController extends Controller
                     'update' => optional($request->user())->can('update', $event) ?? false,
                 ],
             ],
-        ])->withViewData(compact('schema'));
-
+        ])->withViewData([
+            'meta' => [
+                'title' => $event->name,
+                'description' => Str::limit(strip_tags($event->html) , 137, '...'),
+                'og:title' => $event->name,
+                'og:url' => route('events.show', $event),
+                'og:type' => 'article',
+                'article:published_time' => $event->created_at->toIso8601String(),
+                'article:modified_time' => $event->updated_at->toIso8601String(),
+                'article:expiration_time' => $event->end->toIso8601String(),
+            ],
+            'schema' => Schema::event()
+                ->name($event->name)
+                ->about($event->html)
+                ->doorTime($event->start)
+                ->startDate($event->start)
+                ->endDate($event->end)
+                ->location($event->location)
+                ->url(route('events.show',$event))
+        ]);
     }
 
     public function edit(Event $event)
