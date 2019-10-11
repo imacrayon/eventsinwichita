@@ -29,8 +29,8 @@ class ProfileController extends Controller
 
         $user = tap($request->user())->update($request->only(['name', 'email']));
 
-        if ($request->get('password')) {
-            $user->update(['password' => Hash::make($request->get('password'))]);
+        if ($request->input('password')) {
+            $user->update(['password' => Hash::make($request->input('password'))]);
         }
 
         return Redirect::route('profile.edit')->with('success', 'Profile updated.');
