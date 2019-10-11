@@ -4,8 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-    @isset($schema)
-    {!! $schema !!}
+    @isset($meta)
+        @foreach($meta as $name => $content)
+            <meta name="{{ $name }}" content="{{ $content }}">
+        @endforeach
     @endisset
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -16,14 +18,12 @@
     <meta name="msapplication-TileColor" content="#2d3748">
     <meta name="theme-color" content="#ffffff">
 
-    @if(isset($meta))
-        @foreach($meta as $name => $content)
-            <meta name="{{$name}}" content="{{$content}}">
-        @endforeach
-    @endif
-
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <script src="{{ mix('/js/app.js') }}" defer></script>
+
+    @isset($schema)
+        {!! $schema !!}
+    @endisset
 
     @routes
 </head>

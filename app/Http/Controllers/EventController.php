@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Event;
 use Carbon\Carbon;
 use Inertia\Inertia;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use Spatie\SchemaOrg\Schema;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Spatie\SchemaOrg\Schema;
+use Illuminate\Support\Facades\Redirect;
 
 class EventController extends Controller
 {
@@ -26,7 +26,7 @@ class EventController extends Controller
             'unapproved' => $unapproved,
         ]);
 
-        if($request->hasAny('trashed', 'unapproved')) {
+        if ($request->hasAny('trashed', 'unapproved')) {
             $filter = $filter->except(['after', 'before']);
         }
 
@@ -92,7 +92,7 @@ class EventController extends Controller
         ])->withViewData([
             'meta' => [
                 'title' => $event->name,
-                'description' => Str::limit(strip_tags($event->html) , 137, '...'),
+                'description' => Str::limit(strip_tags($event->html), 137, '...'),
                 'og:title' => $event->name,
                 'og:url' => route('events.show', $event),
                 'og:type' => 'article',
@@ -107,7 +107,7 @@ class EventController extends Controller
                 ->startDate($event->start)
                 ->endDate($event->end)
                 ->location($event->location)
-                ->url(route('events.show',$event))
+                ->url(route('events.show', $event)),
         ]);
     }
 
