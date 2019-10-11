@@ -24,10 +24,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('sync:eventbrite')->daily();
-        $schedule->command('sync:ticketmaster')->daily();
-        $schedule->command('sync:wichita360')->daily();
-        $schedule->command('sync:kirbys')->daily();
+        $email = config('eventsinwichita.mail.admin');
+        $schedule->command('sync:eventbrite')->daily()->emailOutputOnFailure($email);
+        $schedule->command('sync:ticketmaster')->daily()->emailOutputOnFailure($email);
+        $schedule->command('sync:wichita360')->daily()->emailOutputOnFailure($email);
+        $schedule->command('sync:kirbys')->daily()->emailOutputOnFailure($email);
     }
 
     /**
